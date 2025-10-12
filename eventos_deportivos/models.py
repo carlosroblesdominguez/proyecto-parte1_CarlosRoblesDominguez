@@ -56,9 +56,11 @@ class EquipoJugador(models.Model):
         Equipo,
         on_delete=models.CASCADE
     )
+    fecha_ingreso = models.DateField()
+    capitan = models.BooleanField(default=False)
     
     def __str__(self):
-        return f"{self.jugador} en {self.equipo}"
+        return f"{self.jugador.nombre} {self.jugador.apellido} - {self.equipo.nombre} ({'Capitán' if self.capitan else 'Jugador'})"
     
 # Torneo
 class Torneo(models.Model):
