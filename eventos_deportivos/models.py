@@ -10,7 +10,7 @@ class EstadisticasJugador(models.Model):
     tarjetas = models.IntegerField()
     
     def __str__(self):
-        return f"Estadisticas de jugador ID {self.id}"
+        return f"Estadisticas de jugador Ipython manage.py migrateD {self.id}"
 
 # Jugador    
 class Jugador(models.Model):
@@ -77,5 +77,73 @@ class Partido(models.Model):
         on_delete=models.CASCADE,
         related_name='partidos_local'
     )
-    equipo_visitante
+    equipo_visitante = models.ForeignKey(
+        Equipo,
+        on_delete=models.CASCADE,
+        related_name='partidos_visitante'
+    )
+    fecha = models.DateTimeField()
+    resultado = models.CharField(max_length=20)
+    torneo = models.ForeignKey(
+        Torneo,
+        on_delete=models.CASCADE
+    )
     
+    def __str__(self):
+        return f"{self.equipo_local} vs {self.equipo_visitante}"
+
+# Arbitro    
+class Arbitro(models.Model):
+    nombre = models.CharField(max_length=100)
+    apellido = models.CharField(max_length=100)
+    licencia = models.CharField(
+        max_length=50,
+        unique=True
+    )
+    partidos = models.ManyToManyField(Partido)
+    
+    def __str__(self):
+        return f"{self.nombre} {self.apellido}"
+    
+# Estadio
+class Estadio(models.Model):
+    nombre = models.CharField(max_length=100)
+    ciudad = models.CharField(max_length=100)
+    capacidad = models.IntegerField()
+    cubierto = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return f"{self.nombre}"
+    
+# Sponsor
+class Sponsor(models.Model):
+    nombre = models.CharField(max_length=100)
+    monto = models.DecimalField(
+        max_digits=10,
+        decimal_places=2
+    )
+    pais = models.CharField(max_length=50)
+    equipos = models.ManyToManyField(Equipo)
+    
+    def __str__(self):
+        return f"{self.nombre}"
+    
+class Premio(models.Model):
+    nombre = models.CharField(max_length=100)
+    monto = models.DecimalField(
+        max_digits=10,
+        decimal_places=2
+    )
+    torneo = models.ForeignKey(
+        Torneo,
+        on_delete=models.CASCADE
+    )
+    ganador = models.ForeignKey(
+        Equipo,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
+    
+    def __str__(self):
+        return f"{self.nombre}"
