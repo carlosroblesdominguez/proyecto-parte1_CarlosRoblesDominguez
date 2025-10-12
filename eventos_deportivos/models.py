@@ -37,7 +37,7 @@ class Jugador(models.Model):
         return f"{self.nombre} {self.apellido}"
 
 # Equipo
-class Equipo(models.model):
+class Equipo(models.Model):
     nombre = models.CharField(max_length=100)
     ciudad = models.CharField(max_length=100)
     fundacion = models.DateField()
