@@ -133,6 +133,31 @@ El proyecto está desarrollado en **Django**, y permite:
 
 ---
 
+## Código no visto en clase (Eliminatorio)
+
+Algunos fragmentos de código que no se vieron en clase y requieren explicación:
+
+### 1. Faker
+- Librería de Python para generar datos falsos.
+- Se instala con `pip install faker`.
+- Permite crear nombres, fechas, ciudades, empresas y números aleatorios, lo que es útil para poblar la base de datos con datos de prueba.
+
+### 2. Comandos personalizados de Django
+- Se crean dentro de `torneos/management/commands/`.
+- Heredan de `BaseCommand` de `django.core.management.base`.
+- Se ejecutan con `python manage.py <nombre_del_comando>`.
+- Permiten automatizar tareas como generar datos de prueba, limpiar la base de datos, crear backups, etc.
+
+### 3. Funciones y parámetros usados
+- `random.randint(a, b)`: Devuelve un entero aleatorio entre `a` y `b`.
+- `Model.objects.create(...)`: Crea un objeto del modelo y lo guarda en la base de datos.
+- `queryset.set([...])`: Asigna objetos a un campo ManyToMany.
+- `fake.date_of_birth(minimum_age, maximum_age)`: Genera una fecha de nacimiento aleatoria.
+- `fake.boolean()`: Genera True o False aleatoriamente.
+- `fake.company()`, `fake.city()`, `fake.country()`, `fake.first_name()`, `fake.last_name()`: Generan nombres de empresas, ciudades, países o personas aleatorios.
+
+---
+
 ## Esquema Modelo Entidad-Relación (ER)
 
 ```text
