@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import *
 
 # Create your views here.
@@ -27,3 +27,37 @@ def lista_jugadores(request):
     # Contexto con todos los jugadores
     contexto = {"jugadores": jugadores}
     return render(request, "eventos_deportivos/lista_jugadores.html", contexto)
+
+# vista: Detalle de un jugador por ID
+def detalle_jugador(request, jugador_id):
+    """
+    Vista que muestra todos los datos de un jugador específico,
+    incluyendo estadísticas y equipos asociados.
+    
+    Parámetro:
+    - jugador_id (int): ID del jugador a mostrar.
+
+    Relaciones utilizadas:
+    - OneToOne: estadisticas
+    - ManyToMany: equipos a través de EquipoJugador
+
+    Query SQL equivalente:
+    SELECT j.id, j.nombre, j.apellido, j.fecha_nacimiento, j.posicion,
+           es.partidos_jugados, es.goles, es.asistencias, es.tarjetas,
+           e.nombre AS equipo, ej.fecha_ingreso, ej.capitan
+    FROM eventos_deportivos_jugador j
+    INNER JOIN eventos_deportivos_estadisticasjugador es ON j.estadisticas_id = es.id
+    LEFT JOIN eventos_deportivos_equipojugador ej ON ej.jugador_id = j.id
+    LEFT JOIN eventos_deportivos_equipo e ON ej.equipo_id = e.id
+    WHERE j.id = jugador_id;
+    """
+    
+    jugador = get_object_or_404(
+        Jugador.objects
+        .select_related("estadisticas")  # Relación OneToOne
+        .prefetch_related("equiposjugador_set__equipo"),  # Relación ManyToMany a través de EquipoJugador
+        pk=jugador_id
+    )
+    
+    contexto = {"jugador": jugador}
+    return render(request, "eventos_deportivos/detalle_jugador.html", contexto)

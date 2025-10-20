@@ -160,6 +160,34 @@ ORDER BY j.nombre;
 
 ---
 
+### URL 2 - Detalle de Jugador
+**Ruta:** `/jugadores/<int:jugador_id>/`  
+**Vista:** `detalle_jugador`  
+**Descripción:** Muestra los detalles de un jugador específico, incluyendo estadísticas y equipos asociados.
+
+**Relaciones utilizadas:**
+- `Jugador` → `EstadisticasJugador` (OneToOne)
+- `Jugador` → `Equipo` a través de `EquipoJugador` (ManyToMany mediante tabla intermedia)
+
+**Funciones vistas en clase:**
+- `select_related()` → optimiza la relación OneToOne.
+- `prefetch_related()` → optimiza la relación ManyToMany mediante tabla intermedia.
+- `get_object_or_404()` → obtiene el objeto o devuelve un 404 si no existe.
+
+**Equivalente SQL:**
+```sql
+SELECT j.id, j.nombre, j.apellido, j.fecha_nacimiento, j.posicion,
+       es.partidos_jugados, es.goles, es.asistencias, es.tarjetas,
+       e.nombre AS equipo, ej.fecha_ingreso, ej.capitan
+FROM eventos_deportivos_jugador j
+INNER JOIN eventos_deportivos_estadisticasjugador es ON j.estadisticas_id = es.id
+LEFT JOIN eventos_deportivos_equipojugador ej ON ej.jugador_id = j.id
+LEFT JOIN eventos_deportivos_equipo e ON ej.equipo_id = e.id
+WHERE j.id = jugador_id;
+```
+
+---
+
 ## Código no visto en clase (Eliminatorio)
 
 Algunos fragmentos de código que no se vieron en clase y requieren explicación:
