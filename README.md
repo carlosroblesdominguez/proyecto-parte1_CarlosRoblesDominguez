@@ -133,6 +133,33 @@ El proyecto está desarrollado en **Django**, y permite:
 
 ---
 
+### URL 1 - Listado de Jugadores
+**Ruta:** `/jugadores/`  
+**Vista:** `lista_jugadores`  
+**Descripción:** Muestra todos los jugadores registrados en la base de datos, sus estadísticas y los equipos a los que pertenecen.
+
+**Relaciones utilizadas:**
+- `Jugador` → `EstadisticasJugador` (OneToOneField)
+- `Jugador` → `Equipo` a través de la tabla intermedia `EquipoJugador` (ManyToMany mediante tabla intermedia)
+
+**Funciones vistas en clase:**
+- `select_related()` → optimiza la obtención de la relación OneToOne (`estadisticas`).  
+- `prefetch_related()` → optimiza la obtención de las relaciones ManyToMany mediante la tabla intermedia (`equiposjugador_set__equipo`).  
+- `get_posicion_display` → devuelve el valor legible del campo `choices`.  
+
+**Equivalente SQL:**
+```sql
+SELECT j.id, j.nombre, j.apellido, j.fecha_nacimiento, j.posicion,
+       es.goles, es.asistencias, e.nombre AS equipo
+FROM eventos_deportivos_jugador j
+INNER JOIN eventos_deportivos_estadisticasjugador es ON j.estadisticas_id = es.id
+LEFT JOIN eventos_deportivos_equipojugador ej ON ej.jugador_id = j.id
+LEFT JOIN eventos_deportivos_equipo e ON ej.equipo_id = e.id
+ORDER BY j.nombre;
+```
+
+---
+
 ## Código no visto en clase (Eliminatorio)
 
 Algunos fragmentos de código que no se vieron en clase y requieren explicación:
@@ -170,3 +197,4 @@ Premio 1 --- 1 Torneo
 Premio 1 --- 1 Equipo (ganador)
 Arbitro M --- M Partido
 Sponsor M --- M Equipo
+```
