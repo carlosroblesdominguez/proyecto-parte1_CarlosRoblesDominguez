@@ -187,8 +187,6 @@ ORDER BY j.nombre;
 - Aumenta la **robustez** del código, ya que no es necesario manejar manualmente las excepciones `DoesNotExist`.  
 - Es más **seguro y limpio**, ideal para vistas públicas donde el usuario puede modificar parámetros en la URL.  
 
----
-
 **Equivalente SQL:**
 ```sql
 SELECT j.id, j.nombre, j.apellido, j.fecha_nacimiento, j.posicion,
