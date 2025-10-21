@@ -174,6 +174,21 @@ ORDER BY j.nombre;
 - `prefetch_related()` → optimiza la relación ManyToMany mediante tabla intermedia.
 - `get_object_or_404()` → obtiene el objeto o devuelve un 404 si no existe.
 
+#### Diferencias entre `get()` y `get_object_or_404()`
+
+| Función | Comportamiento | Resultado si no se encuentra el objeto |
+|----------|----------------|----------------------------------------|
+| `get()` | Obtiene un único objeto del modelo que cumple con los filtros dados. | Lanza una excepción `DoesNotExist` que produce un error 500 (Internal Server Error) si no se controla. |
+| `get_object_or_404()` | Intenta obtener el objeto y, si no existe, devuelve directamente una **respuesta HTTP 404 (Not Found)** de forma automática. | Devuelve una respuesta 404 amigable al usuario, sin provocar un error del servidor. |
+
+**Ventajas de `get_object_or_404()`:**
+- Evita que el servidor lance un error 500 cuando el objeto no existe.  
+- Mejora la **experiencia de usuario**, mostrando una página de error 404 estándar y entendible.  
+- Aumenta la **robustez** del código, ya que no es necesario manejar manualmente las excepciones `DoesNotExist`.  
+- Es más **seguro y limpio**, ideal para vistas públicas donde el usuario puede modificar parámetros en la URL.  
+
+---
+
 **Equivalente SQL:**
 ```sql
 SELECT j.id, j.nombre, j.apellido, j.fecha_nacimiento, j.posicion,
