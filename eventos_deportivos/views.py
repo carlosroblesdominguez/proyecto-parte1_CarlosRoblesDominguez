@@ -55,7 +55,7 @@ def detalle_jugador(request, jugador_id):
     jugador = get_object_or_404(
         Jugador.objects
         .select_related("estadisticas")  # Relación OneToOne
-        .prefetch_related("equiposjugador_set__equipo"),  # Relación ManyToMany a través de EquipoJugador
+        .prefetch_related("equipojugador_set__equipo"),  # Relación ManyToMany a través de EquipoJugador
         pk=jugador_id
     )
     
