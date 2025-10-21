@@ -19,7 +19,7 @@ def lista_jugadores(request):
     jugadores = (
         Jugador.objects
         .select_related("estadisticas") # Solo la relación OneToOne directa
-        .prefetch_related("equiposjugador_set__equipo") # Trae los equipos relacionados de manera eficiente
+        .prefetch_related("equipojugador_set__equipo") # Trae los equipos relacionados de manera eficiente
         .all()
         .order_by("nombre") # orden alfabetico
     )
