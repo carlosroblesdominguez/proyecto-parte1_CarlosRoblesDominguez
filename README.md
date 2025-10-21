@@ -201,6 +201,32 @@ WHERE j.id = jugador_id;
 
 ---
 
+## URL3: Detalle de Equipo
+
+**URL:** `/equipos/<int:equipo_id>/`  
+**Vista:** `detalle_equipo`  
+**Función:** Muestra la información completa de un equipo específico y todos sus jugadores asociados.
+
+### Parámetros
+- `equipo_id` (int): ID del equipo que se desea mostrar.
+
+### Relaciones utilizadas
+- **ManyToMany a través de `EquipoJugador`**: permite obtener todos los jugadores asociados al equipo.  
+- No se utilizan relaciones OneToOne en esta vista.
+
+**Equivalente SQL:**
+```sql
+SELECT e.id, e.nombre, e.ciudad, e.fundacion, e.activo,
+       j.id AS jugador_id, j.nombre AS jugador_nombre, j.apellido AS jugador_apellido,
+       ej.fecha_ingreso, ej.capitan
+FROM eventos_deportivos_equipo e
+LEFT JOIN eventos_deportivos_equipojugador ej ON ej.equipo_id = e.id
+LEFT JOIN eventos_deportivos_jugador j ON ej.jugador_id = j.id
+WHERE e.id = equipo_id;
+```
+
+---
+
 ## Código no visto en clase (Eliminatorio)
 
 Algunos fragmentos de código que no se vieron en clase y requieren explicación:

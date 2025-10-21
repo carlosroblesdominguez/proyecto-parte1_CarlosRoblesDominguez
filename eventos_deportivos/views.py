@@ -61,3 +61,32 @@ def detalle_jugador(request, jugador_id):
     
     contexto = {"jugador": jugador}
     return render(request, "eventos_deportivos/detalle_jugador.html", contexto)
+
+def detalle_equipo(request, equipo_id):
+    """
+    Vista que muestra todos los datos de un equipo específico,
+    incluyendo los jugadores asociados a través de la tabla intermedia EquipoJugador.
+
+    Parámetro:
+    - equipo_id (int): ID del equipo a mostrar.
+
+    Relaciones utilizadas:
+    - ManyToMany: jugadores a través de EquipoJugador
+
+    Query SQL equivalente:
+    SELECT e.id, e.nombre, e.ciudad, e.fundacion, e.activo,
+           j.id AS jugador_id, j.nombre AS jugador_nombre, j.apellido AS jugador_apellido,
+           ej.fecha_ingreso, ej.capitan
+    FROM eventos_deportivos_equipo e
+    LEFT JOIN eventos_deportivos_equipojugador ej ON ej.equipo_id = e.id
+    LEFT JOIN eventos_deportivos_jugador j ON ej.jugador_id = j.id
+    WHERE e.id = equipo_id;
+    """
+    
+    equipo = get_object_or_404(
+        Equipo.objects.prefetch_related('equipojugador_set__jugador'),
+        pk=equipo_id
+    )
+    
+    contexto = {"equipo": equipo}
+    return render(request, "eventos_deportivos/detalle_equipo.html", contexto)
