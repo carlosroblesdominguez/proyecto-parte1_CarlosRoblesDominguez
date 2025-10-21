@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Partidos</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f2f2f2; padding: 20px; }
+        h1 { text-align: center; }
+        table { width: 80%; margin: 0 auto; border-collapse: collapse; background: white; }
+        th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
+        th { background: #4CAF50; color: white; }
+    </style>
+</head>
+<body>
+    <h1>Lista de Partidos</h1>
+    <table>
+        <tr>
+            <th>Fecha</th>
+            <th>Local</th>
+            <th>Visitante</th>
+            <th>Resultado</th>
+            <th>Torneo</th>
+        </tr>
+        {% for partido in partidos %}
+        <tr>
+            <td>{{ partido.fecha }}</td>
+            <td>{{ partido.equipo_local.nombre }}</td>
+            <td>{{ partido.equipo_visitante.nombre }}</td>
+            <td>{{ partido.resultado }}</td>
+            <td>{{ partido.torneo.nombre }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" style="text-align:center;">No hay partidos disponibles</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

@@ -90,3 +90,29 @@ def detalle_equipo(request, equipo_id):
     
     contexto = {"equipo": equipo}
     return render(request, "eventos_deportivos/detalle_equipo.html", contexto)
+
+def lista_partidos(request):
+    """
+    Vista que obtiene todos los partidos de la base de datos junto con los equipos local y visitante, y el torneo.
+
+    Relaciones utilizadas:
+    - ManyToOne: equipo_local, equipo_visitante, torneo
+
+    Query SQL equivalente:
+    SELECT p.id, p.fecha, p.resultado,
+           el.nombre AS equipo_local, ev.nombre AS equipo_visitante,
+           t.nombre AS torneo
+    FROM eventos_deportivos_partido p
+    INNER JOIN eventos_deportivos_equipo el ON p.equipo_local_id = el.id
+    INNER JOIN eventos_deportivos_equipo ev ON p.equipo_visitante_id = ev.id
+    INNER JOIN eventos_deportivos_torneo t ON p.torneo_id = t.id;
+    """
+    partidos = (
+        Partido.objects
+        .select_related("equipo_local", "equipo_visitante", "torneo")
+        .all()
+        .order_by("fecha")
+    )
+    
+    contexto = {"partidos": partidos}
+    return render(request, "eventos_deportivos/lista_partidos.html", contexto)

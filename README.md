@@ -227,6 +227,34 @@ WHERE e.id = equipo_id;
 
 ---
 
+### URL4 - Lista de Partidos
+**Ruta:** `/partidos/`  
+**Vista:** `lista_partidos`  
+**Descripción:** Muestra todos los partidos registrados en la base de datos, incluyendo equipos local y visitante, resultado y torneo asociado.
+
+**Relaciones utilizadas:**
+- `Partido` → `Equipo` (ManyToOne) para `equipo_local`  
+- `Partido` → `Equipo` (ManyToOne) para `equipo_visitante`  
+- `Partido` → `Torneo` (ManyToOne)
+
+**Funciones vistas en clase:**
+- `select_related()` → optimiza la obtención de relaciones ManyToOne (`equipo_local`, `equipo_visitante`, `torneo`).  
+- `order_by()` → ordena los partidos por fecha.  
+
+**Equivalente SQL:**
+```sql
+SELECT p.id, p.fecha, p.resultado,
+       el.nombre AS equipo_local, ev.nombre AS equipo_visitante,
+       t.nombre AS torneo
+FROM eventos_deportivos_partido p
+INNER JOIN eventos_deportivos_equipo el ON p.equipo_local_id = el.id
+INNER JOIN eventos_deportivos_equipo ev ON p.equipo_visitante_id = ev.id
+INNER JOIN eventos_deportivos_torneo t ON p.torneo_id = t.id
+ORDER BY p.fecha;
+```
+
+---
+
 ## Código no visto en clase (Eliminatorio)
 
 Algunos fragmentos de código que no se vieron en clase y requieren explicación:
