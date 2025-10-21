@@ -42,6 +42,10 @@ class Equipo(models.Model):
     ciudad = models.CharField(max_length=100)
     fundacion = models.DateField()
     activo = models.BooleanField(default=True)
+    jugadores = models.ManyToManyField(
+        Jugador, 
+        through='EquipoJugador',
+    )
     
     def __str__(self):
         return f"{self.nombre}"
