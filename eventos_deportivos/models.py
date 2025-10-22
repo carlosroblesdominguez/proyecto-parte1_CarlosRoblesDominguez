@@ -46,6 +46,13 @@ class Equipo(models.Model):
         Jugador, 
         through='EquipoJugador',
     )
+    estadio_principal = models.OneToOneField(
+        'Estadio',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='torneo_dirigido'
+    )
     
     def __str__(self):
         return f"{self.nombre}"
@@ -72,6 +79,12 @@ class Torneo(models.Model):
     pais = models.CharField(max_length=50)
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField()
+    arbitro_principal = models.OneToOneField(
+        'Arbitro',
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='torneo_dirigido'
+    )
     
     def __str__(self):
         return f"{self.nombre}"
