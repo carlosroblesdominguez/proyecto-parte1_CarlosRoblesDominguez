@@ -253,6 +253,36 @@ ORDER BY ej.fecha_ingreso;
 
 ---
 
+### 4 Lista de Partidos
+
+- **URL:** `/partidos/`
+- **Vista:** `lista_partidos`
+- **Método HTTP:** GET
+- **Descripción:** 
+  Muestra un listado de todos los partidos registrados, incluyendo:
+  - Fecha del partido
+  - Equipo local y visitante
+  - Resultado
+  - Torneo al que pertenece
+- **QuerySet optimizado:** 
+  - Se utiliza `select_related('equipo_local', 'equipo_visitante', 'torneo')` para optimizar las relaciones ManyToOne.
+- **Equivalente SQL (usando raw()):**
+```python
+sql = """
+SELECT p.id, p.fecha, p.resultado,
+       el.id as equipo_local_id, el.nombre as equipo_local_nombre,
+       ev.id as equipo_visitante_id, ev.nombre as equipo_visitante_nombre,
+       t.id as torneo_id, t.nombre as torneo_nombre
+FROM eventos_deportivos_partido p
+INNER JOIN eventos_deportivos_equipo el ON p.equipo_local_id = el.id
+INNER JOIN eventos_deportivos_equipo ev ON p.equipo_visitante_id = ev.id
+INNER JOIN eventos_deportivos_torneo t ON p.torneo_id = t.id
+ORDER BY p.fecha;
+"""
+```
+
+---
+
 ## Esquema Modelo Entidad-Relación (ER)
 
 ```text

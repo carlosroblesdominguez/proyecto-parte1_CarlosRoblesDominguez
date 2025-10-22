@@ -112,3 +112,39 @@ def detalle_equipo(request, equipo_id):
         "jugadores_sql": jugadores_sql  # Para mostrar que se puede usar raw()
     }
     return render(request, "eventos_deportivos/detalle_equipo.html", contexto)
+
+def lista_partidos(request):
+    """
+    Vista que muestra todos los partidos registrados en la base de datos.
+    Incluye equipos local y visitante, resultado y torneo al que pertenece.
+    
+    Se utiliza select_related para optimizar las relaciones ManyToOne con Equipo y Torneo.
+    """
+    # QuerySet optimizado
+    partidos = (
+        Partido.objects
+        .select_related('equipo_local', 'equipo_visitante', 'torneo')
+        .all()
+        .order_by('fecha')
+    )
+
+    # Equivalente SQL usando raw()
+    sql = """
+    SELECT p.id, p.fecha, p.resultado,
+           el.id as equipo_local_id, el.nombre as equipo_local_nombre,
+           ev.id as equipo_visitante_id, ev.nombre as equipo_visitante_nombre,
+           t.id as torneo_id, t.nombre as torneo_nombre
+    FROM eventos_deportivos_partido p
+    INNER JOIN eventos_deportivos_equipo el ON p.equipo_local_id = el.id
+    INNER JOIN eventos_deportivos_equipo ev ON p.equipo_visitante_id = ev.id
+    INNER JOIN eventos_deportivos_torneo t ON p.torneo_id = t.id
+    ORDER BY p.fecha;
+    """
+    partidos_sql = Partido.objects.raw(sql)
+
+    contexto = {
+        "partidos": partidos,         # Para usar QuerySet optimizado
+        "partidos_sql": partidos_sql  # Para mostrar que se puede usar raw()
+    }
+
+    return render(request, "eventos_deportivos/lista_partidos.html", contexto)
