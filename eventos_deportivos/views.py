@@ -72,3 +72,43 @@ def detalle_jugador(request, jugador_id):
     }
     return render(request, "eventos_deportivos/detalle_jugador.html", contexto)
 
+def detalle_equipo(request, equipo_id):
+    """
+    Vista que muestra todos los datos de un equipo específico,
+    incluyendo los jugadores asociados a través de la tabla intermedia EquipoJugador.
+    
+    Se utiliza get_object_or_404 para manejar de forma segura la búsqueda:
+    - Si el equipo no existe, devuelve un error 404.
+    - Es más seguro que usar get(), que lanzaría una excepción si no se encuentra.
+    """
+
+    # Obtener el equipo
+    equipo = get_object_or_404(
+        Equipo.objects.select_related('estadio_principal'), 
+        pk=equipo_id
+    )
+
+    # Obtener jugadores del equipo de manera optimizada
+    jugadores_equipo = (
+        EquipoJugador.objects
+        .select_related('jugador')  # Relación ManyToOne hacia Jugador
+        .filter(equipo=equipo)
+        .order_by('fecha_ingreso')
+    )
+
+    # Equivalente SQL usando raw()
+    sql = """
+    SELECT ej.id, j.nombre, j.apellido, ej.fecha_ingreso, ej.capitan
+    FROM eventos_deportivos_equipojugador ej
+    INNER JOIN eventos_deportivos_jugador j ON ej.jugador_id = j.id
+    WHERE ej.equipo_id = %s
+    ORDER BY ej.fecha_ingreso;
+    """
+    jugadores_sql = EquipoJugador.objects.raw(sql, [equipo_id])
+
+    contexto = {
+        "equipo": equipo,
+        "jugadores_equipo": jugadores_equipo,
+        "jugadores_sql": jugadores_sql  # Para mostrar que se puede usar raw()
+    }
+    return render(request, "eventos_deportivos/detalle_equipo.html", contexto)

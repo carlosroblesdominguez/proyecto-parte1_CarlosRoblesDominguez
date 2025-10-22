@@ -225,6 +225,31 @@ LEFT JOIN eventos_deportivos_equipo e ON ej.equipo_id = e.id
 WHERE j.id = %s;
 """
 ```
+---
+
+### 3 Detalle de Equipo
+
+- **URL:** `/equipos/<int:equipo_id>/`
+- **Vista:** `detalle_equipo`
+- **Método HTTP:** GET
+- **Descripción:** 
+  Muestra todos los datos de un equipo específico, incluyendo:
+  - Nombre, Ciudad, Fundación, Activo
+  - Estadio principal
+  - Lista de jugadores asociados con fecha de ingreso y rol (Capitán/Jugador)
+- **QuerySet optimizado:** 
+  - `select_related('estadio_principal')` para la relación OneToOne con Estadio.
+  - `select_related('jugador')` en EquipoJugador para obtener los jugadores de forma eficiente.
+- **Equivalente SQL (usando raw()):**
+```python
+sql = """
+SELECT ej.id, j.nombre, j.apellido, ej.fecha_ingreso, ej.capitan
+FROM eventos_deportivos_equipojugador ej
+INNER JOIN eventos_deportivos_jugador j ON ej.jugador_id = j.id
+WHERE ej.equipo_id = %s
+ORDER BY ej.fecha_ingreso;
+"""
+```
 
 ---
 
