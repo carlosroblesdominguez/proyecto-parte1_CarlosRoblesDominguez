@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Jugadores</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f2f2f2; padding: 20px; }
+        h1 { text-align: center; }
+        table { width: 100%; border-collapse: collapse; background: white; }
+        th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
+        th { background: #4CAF50; color: white; }
+    </style>
+</head>
+<body>
+    <h1>Listado de Jugadores</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Posición</th>
+                <th>Partidos Jugados</th>
+                <th>Goles</th>
+                <th>Asistencias</th>
+                <th>Equipos</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for jugador in jugadores %}
+            <tr>
+                <td>{{ jugador.nombre }}</td>
+                <td>{{ jugador.apellido }}</td>
+                <td>{{ jugador.fecha_nacimiento }}</td>
+                <td>{{ jugador.get_posicion_display }}</td>
+                <td>{{ jugador.estadisticas.partidos_jugados }}</td>
+                <td>{{ jugador.estadisticas.goles }}</td>
+                <td>{{ jugador.estadisticas.asistencias }}</td>
+                <td>
+                    {% for equipo in jugador.equipos.all %}
+                        {{ equipo.nombre }}{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        Sin equipo
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
