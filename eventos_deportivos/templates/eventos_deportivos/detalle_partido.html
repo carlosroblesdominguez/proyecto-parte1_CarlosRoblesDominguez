@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle de Partido</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f2f2f2; padding: 20px; }
+        h1 { text-align: center; }
+        table { width: 60%; margin: 0 auto; border-collapse: collapse; background: white; }
+        th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
+        th { background: #4CAF50; color: white; }
+    </style>
+</head>
+<body>
+    <h1>Detalle de Partido: {{ partido.equipo_local.nombre }} vs {{ partido.equipo_visitante.nombre }}</h1>
+    <table>
+        <tr>
+            <th>Equipo Local</th>
+            <td>{{ partido.equipo_local.nombre }}</td>
+        </tr>
+        <tr>
+            <th>Equipo Visitante</th>
+            <td>{{ partido.equipo_visitante.nombre }}</td>
+        </tr>
+        <tr>
+            <th>Resultado</th>
+            <td>{{ partido.resultado }}</td>
+        </tr>
+        <tr>
+            <th>Fecha</th>
+            <td>{{ partido.fecha }}</td>
+        </tr>
+        <tr>
+            <th>Torneo</th>
+            <td>{{ partido.torneo.nombre }}</td>
+        </tr>
+        <tr>
+            <th>Arbitros</th>
+            <td>
+                {% for arbitro in arbitros %}
+                    {{ arbitro.nombre }} {{ arbitro.apellido }}{% if not forloop.last %}, {% endif %}
+                {% empty %}
+                    Sin arbitros
+                {% endfor %}
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

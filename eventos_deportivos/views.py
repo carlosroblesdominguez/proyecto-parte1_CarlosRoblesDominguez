@@ -148,3 +148,39 @@ def lista_partidos(request):
     }
 
     return render(request, "eventos_deportivos/lista_partidos.html", contexto)
+
+def detalle_partido(request, partido_id):
+    """
+    Vista que muestra todos los datos de un partido específico,
+    incluyendo equipos, resultado, fecha, torneo y árbitros.
+    """
+
+    # Obtener el partido y sus relaciones OneToOne/ForeignKey
+    partido = get_object_or_404(
+        Partido.objects.select_related("equipo_local", "equipo_visitante", "torneo"),
+        pk=partido_id
+    )
+
+    # Obtener los árbitros que están asignados a este partido
+    arbitros = partido.arbitro_set.all()  # Muchos a Muchos: Arbitro.partidos
+
+    # SQL equivalente usando raw()
+    sql = """
+    SELECT p.id, p.fecha, p.resultado,
+           el.nombre as equipo_local_nombre,
+           ev.nombre as equipo_visitante_nombre,
+           t.nombre as torneo_nombre
+    FROM eventos_deportivos_partido p
+    INNER JOIN eventos_deportivos_equipo el ON p.equipo_local_id = el.id
+    INNER JOIN eventos_deportivos_equipo ev ON p.equipo_visitante_id = ev.id
+    INNER JOIN eventos_deportivos_torneo t ON p.torneo_id = t.id
+    WHERE p.id = %s;
+    """
+    partido_sql = Partido.objects.raw(sql, [partido_id])
+
+    contexto = {
+        "partido": partido,
+        "arbitros": arbitros,
+        "partido_sql": partido_sql
+    }
+    return render(request, "eventos_deportivos/detalle_partido.html", contexto)

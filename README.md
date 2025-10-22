@@ -283,6 +283,38 @@ ORDER BY p.fecha;
 
 ---
 
+### 5 Detalle de Partido
+
+- **URL:** `/partidos/<int:partido_id>/`
+- **Vista:** `detalle_partido`
+- **Método HTTP:** GET
+- **Descripción:** 
+  Muestra toda la información de un partido específico, incluyendo:
+  - Equipo local y visitante
+  - Resultado
+  - Fecha
+  - Torneo asociado
+  - Árbitros del torneo
+- **QuerySet optimizado:** 
+  - Se utiliza `select_related("equipo_local", "equipo_visitante", "torneo")` para relaciones ManyToOne.
+  - Se utiliza `prefetch_related("torneo__arbitro_set")` para relaciones ManyToMany de arbitros.
+- **Equivalente SQL (usando raw()):**
+```python
+sql = """
+SELECT p.id, p.fecha, p.resultado,
+       el.nombre as equipo_local_nombre,
+       ev.nombre as equipo_visitante_nombre,
+       t.nombre as torneo_nombre
+FROM eventos_deportivos_partido p
+INNER JOIN eventos_deportivos_equipo el ON p.equipo_local_id = el.id
+INNER JOIN eventos_deportivos_equipo ev ON p.equipo_visitante_id = ev.id
+INNER JOIN eventos_deportivos_torneo t ON p.torneo_id = t.id
+WHERE p.id = %s;
+"""
+```
+
+---
+
 ## Esquema Modelo Entidad-Relación (ER)
 
 ```text
