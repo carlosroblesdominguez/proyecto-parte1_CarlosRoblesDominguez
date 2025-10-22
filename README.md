@@ -158,6 +158,75 @@ Algunos fragmentos de código que no se vieron en clase y requieren explicación
 
 ---
 
+## URLs implementadas
+
+### 1 Lista de Jugadores
+
+- **URL:** `/jugadores/`
+- **Vista:** `lista_jugadores`
+- **Método HTTP:** GET
+- **Descripción:** 
+  Muestra un listado de todos los jugadores registrados, incluyendo:
+  - Nombre y Apellido
+  - Fecha de nacimiento
+  - Posición
+  - Estadísticas (Goles, Asistencias)
+  - Equipos asociados (a través de la tabla intermedia `EquipoJugador`)
+- **QuerySet optimizado:** 
+  - Se utiliza `select_related('estadisticas')` para obtener la relación OneToOne con `EstadisticasJugador`.
+  - Se utiliza `prefetch_related('equipojugador_set')` para obtener los equipos asociados de manera eficiente.
+- **Equivalente SQL (usando raw()):**
+```python
+sql = """
+SELECT j.id, j.nombre, j.apellido, j.fecha_nacimiento, j.posicion,
+       es.partidos_jugados, es.goles, es.asistencias, es.tarjetas,
+       e.id as equipo_id, e.nombre as equipo_nombre, ej.fecha_ingreso, ej.capitan
+FROM eventos_deportivos_jugador j
+INNER JOIN eventos_deportivos_estadisticasjugador es ON j.estadisticas_id = es.id
+LEFT JOIN eventos_deportivos_equipojugador ej ON ej.jugador_id = j.id
+LEFT JOIN eventos_deportivos_equipo e ON ej.equipo_id = e.id
+ORDER BY j.nombre;
+"""
+```
+
+---
+
+### 2 Detalle de Jugador
+
+- **URL:** `/jugadores/<int:jugador_id>/`
+- **Vista:** `detalle_jugador`
+- **Método HTTP:** GET
+- **Descripción:**  
+  Muestra el detalle completo de un jugador específico, incluyendo:  
+  - Nombre y Apellido  
+  - Fecha de nacimiento  
+  - Posición  
+  - Estadísticas completas (partidos jugados, goles, asistencias, tarjetas)  
+  - Equipos asociados con fecha de ingreso y rol (capitán/jugador)  
+
+- **QuerySet optimizado:**  
+  - Se utiliza `select_related('estadisticas')` para obtener la relación OneToOne con `EstadisticasJugador`.  
+  - Se utiliza `prefetch_related('equipos')` para obtener los equipos asociados de manera eficiente.  
+  - Se usa `get_object_or_404` para obtener el jugador o devolver un error 404 si no existe.  
+    Esto es mejor que usar `get()` porque:  
+      - `get()` lanza una excepción `DoesNotExist` que habría que capturar manualmente para mostrar un error de página.  
+      - `get_object_or_404` maneja automáticamente la excepción y devuelve una página 404 estándar si no se encuentra el objeto, haciendo el código más limpio y seguro.
+
+- **Equivalente SQL (usando raw()):**  
+```python
+sql = """
+SELECT j.id, j.nombre, j.apellido, j.fecha_nacimiento, j.posicion,
+       es.partidos_jugados, es.goles, es.asistencias, es.tarjetas,
+       e.id as equipo_id, e.nombre as equipo_nombre, ej.fecha_ingreso, ej.capitan
+FROM eventos_deportivos_jugador j
+INNER JOIN eventos_deportivos_estadisticasjugador es ON j.estadisticas_id = es.id
+LEFT JOIN eventos_deportivos_equipojugador ej ON ej.jugador_id = j.id
+LEFT JOIN eventos_deportivos_equipo e ON ej.equipo_id = e.id
+WHERE j.id = %s;
+"""
+```
+
+---
 
 ## Esquema Modelo Entidad-Relación (ER)
 
