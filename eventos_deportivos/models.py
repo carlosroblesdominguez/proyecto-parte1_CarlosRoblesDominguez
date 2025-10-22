@@ -10,7 +10,7 @@ class EstadisticasJugador(models.Model):
     tarjetas = models.IntegerField()
     
     def __str__(self):
-        return f"Estadisticas de jugador Ipython manage.py migrateD {self.id}"
+        return f"Estadisticas de jugador #{self.id}"
 
 # Jugador    
 class Jugador(models.Model):
@@ -109,7 +109,7 @@ class Partido(models.Model):
     )
     
     def __str__(self):
-        return f"{self.equipo_local} vs {self.equipo_visitante}"
+        return f"{self.equipo_local.nombre} vs {self.equipo_visitante.nombre}"
 
 # Arbitro    
 class Arbitro(models.Model):
