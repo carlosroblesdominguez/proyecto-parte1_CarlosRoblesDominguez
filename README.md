@@ -158,6 +158,7 @@ Algunos fragmentos de código que no se vieron en clase y requieren explicación
 
 ---
 
+
 ## Esquema Modelo Entidad-Relación (ER)
 
 ```text
