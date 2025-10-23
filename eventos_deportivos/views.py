@@ -184,3 +184,37 @@ def detalle_partido(request, partido_id):
         "partido_sql": partido_sql
     }
     return render(request, "eventos_deportivos/detalle_partido.html", contexto)
+
+def lista_equipos(request):
+    """
+    Vista que obtiene todos los equipos registrados en la base de datos,
+    incluyendo información básica y opcionalmente número de jugadores asociados.
+    
+    Relaciones utilizadas:
+    - ManyToMany: jugadores a través de EquipoJugador
+    """
+    
+    # QuerySet optimizado
+    equipos = (
+        Equipo.objects
+        .prefetch_related('jugadores')  # ManyToMany: jugadores asociados
+        .all()
+        .order_by('nombre')
+    )
+    
+    # Equivalente SQL usando raw()
+    sql = """
+    SELECT e.id, e.nombre, e.ciudad, e.fundacion, e.activo,
+           ej.jugador_id, j.nombre as jugador_nombre, j.apellido as jugador_apellido
+    FROM eventos_deportivos_equipo e
+    LEFT JOIN eventos_deportivos_equipojugador ej ON ej.equipo_id = e.id
+    LEFT JOIN eventos_deportivos_jugador j ON j.id = ej.jugador_id
+    ORDER BY e.nombre;
+    """
+    equipos_sql = Equipo.objects.raw(sql)
+    
+    contexto = {
+        "equipos": equipos,           # Para usar QuerySet optimizado
+        "equipos_sql": equipos_sql    # Para mostrar que se puede usar raw()
+    }
+    return render(request, "eventos_deportivos/lista_equipos.html", contexto)

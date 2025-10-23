@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Equipos</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f2f2f2; padding: 20px; }
+        h1 { text-align: center; }
+        table { width: 100%; border-collapse: collapse; background: white; }
+        th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
+        th { background: #4CAF50; color: white; }
+        ul { list-style-type: none; padding: 0; margin: 0; }
+        li { margin-bottom: 3px; }
+    </style>
+</head>
+<body>
+    <h1>Listado de Equipos</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Ciudad</th>
+                <th>Fundación</th>
+                <th>Activo</th>
+                <th>Jugadores</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for equipo in equipos %}
+                <tr>
+                    <td>{{ equipo.nombre }}</td>
+                    <td>{{ equipo.ciudad }}</td>
+                    <td>{{ equipo.fundacion }}</td>
+                    <td>{% if equipo.activo %}Sí{% else %}No{% endif %}</td>
+                    <td>
+                        <ul>
+                            {% for jugador in equipo.jugadores.all %}
+                                <li>{{ jugador.nombre }} {{ jugador.apellido }}</li>
+                            {% empty %}
+                                <li>Sin jugadores</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
