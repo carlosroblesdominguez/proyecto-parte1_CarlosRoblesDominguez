@@ -3,6 +3,13 @@ from django.db.models import Prefetch
 from .models import *
 
 # Create your views here.
+def index(request):
+    """
+    Página principal del proyecto.
+    Muestra enlaces a todas las URLs implementadas.
+    Permite búsqueda rápida para URLs que requieren parámetros.
+    """
+    return render(request, "eventos_deportivos/index.html")
 
 def lista_jugadores(request):
     """

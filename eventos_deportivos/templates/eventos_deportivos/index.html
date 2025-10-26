@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Página Principal - Eventos Deportivos</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f2f2f2; padding: 20px; }
+        h1, h2 { text-align: center; }
+        ul { list-style-type: none; padding: 0; }
+        li { margin-bottom: 10px; }
+        a { text-decoration: none; color: #4CAF50; }
+        a:hover { text-decoration: underline; }
+        .param-form { display: inline-block; margin-left: 10px; }
+        input[type="text"], input[type="number"] { padding: 5px; margin-right: 5px; }
+        button { padding: 5px 10px; background: #4CAF50; color: white; border: none; cursor: pointer; }
+        button:hover { background: #45a049; }
+    </style>
+</head>
+<body>
+    <h1>Página Principal - Eventos Deportivos</h1>
+
+    <h2>URLs sin parámetros</h2>
+    <ul>
+        <li><a href="{% url 'lista_jugadores' %}">1. Lista de Jugadores</a></li>
+        <li><a href="{% url 'lista_equipos' %}">2. Lista de Equipos</a></li>
+        <li><a href="{% url 'lista_partidos' %}">3. Lista de Partidos</a></li>
+        <li><a href="{% url 'lista_torneos' %}">4. Lista de Torneos</a></li>
+    </ul>
+
+    <h2>URLs con parámetros</h2>
+    <ul>
+        <li>
+            Jugador por ID: <code>jugadores/&lt;int:jugador_id&gt;/</code>
+            <form class="param-form" action="" method="get" onsubmit="window.location.href='/jugadores/'+this.jugador_id.value+'/' ; return false;">
+                <input type="number" name="jugador_id" placeholder="ID del jugador" required>
+                <button type="submit">Ir</button>
+            </form>
+        </li>
+
+        <li>
+            Equipo por ID: <code>equipos/&lt;int:equipo_id&gt;/</code>
+            <form class="param-form" action="" method="get" onsubmit="window.location.href='/equipos/'+this.equipo_id.value+'/' ; return false;">
+                <input type="number" name="equipo_id" placeholder="ID del equipo" required>
+                <button type="submit">Ir</button>
+            </form>
+        </li>
+
+        <li>
+            Partido por ID: <code>partidos/&lt;int:partido_id&gt;/</code>
+            <form class="param-form" action="" method="get" onsubmit="window.location.href='/partidos/'+this.partido_id.value+'/' ; return false;">
+                <input type="number" name="partido_id" placeholder="ID del partido" required>
+                <button type="submit">Ir</button>
+            </form>
+        </li>
+
+        <li>
+            Detalle Torneo por nombre: <code>torneos/&lt;str:nombre_torneo&gt;/</code>
+            <form class="param-form" action="" method="get" onsubmit="window.location.href='/torneos/'+this.nombre_torneo.value+'/' ; return false;">
+                <input type="text" name="nombre_torneo" placeholder="Nombre del torneo" required>
+                <button type="submit">Ir</button>
+            </form>
+        </li>
+
+        <li>
+            Árbitro en Torneo: <code>arbitros/&lt;int:arbitro_id&gt;/torneo/&lt;int:torneo_id&gt;/</code>
+            <form class="param-form" action="" method="get" onsubmit="window.location.href='/arbitros/'+this.arbitro_id.value+'/torneo/'+this.torneo_id.value+'/' ; return false;">
+                <input type="number" name="arbitro_id" placeholder="ID árbitro" required>
+                <input type="number" name="torneo_id" placeholder="ID torneo" required>
+                <button type="submit">Ir</button>
+            </form>
+        </li>
+
+        <li>
+            Sponsors filtrados: <code>sponsors/&lt;str:pais&gt;/&lt;int:monto_min&gt;/</code>
+            <form class="param-form" action="" method="get" onsubmit="window.location.href='/sponsors/'+this.pais.value+'/'+this.monto_min.value+'/' ; return false;">
+                <input type="text" name="pais" placeholder="País" required>
+                <input type="number" name="monto_min" placeholder="Monto mínimo" required>
+                <button type="submit">Ir</button>
+            </form>
+        </li>
+    </ul>
+</body>
+</html>
