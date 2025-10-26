@@ -255,3 +255,41 @@ def detalle_torneo(request, nombre_torneo):
         "torneos_sql": torneos_sql    # Para mostrar que se puede usar raw()
     }
     return render(request, "eventos_deportivos/detalle_torneo.html", contexto)
+
+# Vista: Lista de todos los torneos con sus partidos
+def lista_torneos(request):
+    """
+    Muestra todos los torneos registrados en la base de datos.
+    Incluye todos los partidos asociados a cada torneo, y los equipos de cada partido.
+    Se utiliza Prefetch para optimizar la obtención de los partidos (ManyToOne) y 
+    select_related para obtener los equipos de manera eficiente.
+    """
+    torneos = (
+        Torneo.objects
+        .prefetch_related(
+            Prefetch(
+                'partido_set',
+                queryset=Partido.objects.select_related('equipo_local', 'equipo_visitante')
+            )
+        )
+        .order_by('fecha_inicio')
+    )
+
+    # Equivalente SQL usando raw()
+    sql = """
+    SELECT t.id, t.nombre, t.pais, t.fecha_inicio, t.fecha_fin,
+           p.id AS partido_id, p.resultado, p.fecha,
+           el.nombre AS equipo_local, ev.nombre AS equipo_visitante
+    FROM eventos_deportivos_torneo t
+    LEFT JOIN eventos_deportivos_partido p ON p.torneo_id = t.id
+    LEFT JOIN eventos_deportivos_equipo el ON p.equipo_local_id = el.id
+    LEFT JOIN eventos_deportivos_equipo ev ON p.equipo_visitante_id = ev.id
+    ORDER BY t.fecha_inicio;
+    """
+    torneos_sql = Torneo.objects.raw(sql)
+
+    contexto = {
+        "torneos": torneos,           # QuerySet optimizado
+        "torneos_sql": torneos_sql    # Para mostrar que se puede usar raw()
+    }
+    return render(request, "eventos_deportivos/lista_torneos.html", contexto)

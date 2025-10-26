@@ -350,8 +350,8 @@ WHERE e.id = {id};
 
 ### 7 Lista de Torneos por Nombre
 
-- **URL:** `/torneos/nombre/<nombre_torneo>/`
-- **Vista:** `lista_torneos_nombre`
+- **URL:** `/torneos/<nombre_torneo>/`
+- **Vista:** `detalle_torneo`
 - **Método HTTP:** GET
 - **Descripción:** 
   Muestra todos los torneos cuyo nombre coincide con el parámetro `nombre_torneo`.  
@@ -376,6 +376,36 @@ LEFT JOIN eventos_deportivos_partido p ON p.torneo_id = t.id
 LEFT JOIN eventos_deportivos_equipo el ON p.equipo_local_id = el.id
 LEFT JOIN eventos_deportivos_equipo ev ON p.equipo_visitante_id = ev.id
 WHERE t.nombre = '{nombre_torneo}'
+ORDER BY t.fecha_inicio;
+"""
+```
+
+---
+
+### 8 Lista de Torneos
+
+- **URL:** `/torneos/`
+- **Vista:** `lista_torneos`
+- **Método HTTP:** GET
+- **Descripción:** 
+  Muestra un listado de todos los torneos registrados, incluyendo:
+  - Nombre del torneo
+  - País
+  - Fecha de inicio y fin
+  - Partidos asociados con equipos locales y visitantes
+- **QuerySet optimizado:** 
+  - Se utiliza `prefetch_related` con `Prefetch` para obtener todos los partidos asociados a cada torneo.
+  - Se utiliza `select_related` dentro del Prefetch para optimizar la obtención de los equipos (ManyToOne).
+- **Equivalente SQL (usando raw()):**
+```python
+sql = """
+SELECT t.id, t.nombre, t.pais, t.fecha_inicio, t.fecha_fin,
+       p.id AS partido_id, p.resultado, p.fecha,
+       el.nombre AS equipo_local, ev.nombre AS equipo_visitante
+FROM eventos_deportivos_torneo t
+LEFT JOIN eventos_deportivos_partido p ON p.torneo_id = t.id
+LEFT JOIN eventos_deportivos_equipo el ON p.equipo_local_id = el.id
+LEFT JOIN eventos_deportivos_equipo ev ON p.equipo_visitante_id = ev.id
 ORDER BY t.fecha_inicio;
 """
 ```

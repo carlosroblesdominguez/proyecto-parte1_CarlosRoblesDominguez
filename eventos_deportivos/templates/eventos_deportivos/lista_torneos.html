@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Torneos</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f2f2f2; padding: 20px; }
+        h1 { text-align: center; }
+        table { width: 100%; border-collapse: collapse; background: white; }
+        th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
+        th { background: #4CAF50; color: white; }
+        ul { list-style-type: none; padding: 0; margin: 0; }
+        li { margin-bottom: 3px; }
+    </style>
+</head>
+<body>
+    <h1>Lista de Torneos</h1>
+    {% for torneo in torneos %}
+        <table>
+            <tr><th>Nombre</th><td>{{ torneo.nombre }}</td></tr>
+            <tr><th>País</th><td>{{ torneo.pais }}</td></tr>
+            <tr><th>Fecha Inicio</th><td>{{ torneo.fecha_inicio }}</td></tr>
+            <tr><th>Fecha Fin</th><td>{{ torneo.fecha_fin }}</td></tr>
+            <tr>
+                <th>Partidos</th>
+                <td>
+                    {% if torneo.partido_set.all %}
+                        <ul>
+                            {% for partido in torneo.partido_set.all %}
+                                <li>{{ partido.equipo_local.nombre }} vs {{ partido.equipo_visitante.nombre }} - {{ partido.resultado }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        No hay partidos asociados
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+        <hr>
+    {% empty %}
+        <p>No se encontraron torneos.</p>
+    {% endfor %}
+</body>
+</html>
