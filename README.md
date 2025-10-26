@@ -315,6 +315,73 @@ WHERE p.id = %s;
 
 ---
 
+### 6 Detalle de Equipo
+
+- **URL:** `/equipos/<int:id>/`
+- **Vista:** `detalle_equipo`
+- **Método HTTP:** GET
+- **Descripción:** 
+  Muestra la información completa de un equipo específico identificado por su `id`.  
+  Incluye:
+  - Nombre del equipo
+  - Ciudad
+  - Fecha de fundación
+  - Estado activo/inactivo
+  - Jugadores asociados (nombre, apellido, fecha de ingreso y rol: jugador o capitán)
+- **QuerySet optimizado:** 
+  - Se utiliza `prefetch_related('jugadores')` para obtener todos los jugadores asociados al equipo de manera eficiente (ManyToMany vía `EquipoJugador`).
+  - Se utiliza `select_related('estadisticas')` en los jugadores para obtener las estadísticas de cada jugador en la misma consulta (OneToOne).
+- **Equivalente SQL (usando raw()):**
+```python
+sql = f"""
+SELECT e.id, e.nombre, e.ciudad, e.fundacion, e.activo,
+       j.id AS jugador_id, j.nombre AS jugador_nombre, j.apellido AS jugador_apellido,
+       ej.fecha_ingreso, ej.capitan,
+       es.partidos_jugados, es.goles, es.asistencias, es.tarjetas
+FROM eventos_deportivos_equipo e
+LEFT JOIN eventos_deportivos_equipojugador ej ON ej.equipo_id = e.id
+LEFT JOIN eventos_deportivos_jugador j ON ej.jugador_id = j.id
+LEFT JOIN eventos_deportivos_estadisticasjugador es ON j.estadisticas_id = es.id
+WHERE e.id = {id};
+"""
+```
+
+---
+
+### 7 Lista de Torneos por Nombre
+
+- **URL:** `/torneos/nombre/<nombre_torneo>/`
+- **Vista:** `lista_torneos_nombre`
+- **Método HTTP:** GET
+- **Descripción:** 
+  Muestra todos los torneos cuyo nombre coincide con el parámetro `nombre_torneo`.  
+  Cada torneo incluye:
+  - Nombre
+  - País
+  - Fecha de inicio y fin
+  - Lista de partidos asociados (equipo local, equipo visitante y resultado)  
+  Se devuelve **toda la información de todos los torneos que coincidan**, incluso si hay más de uno con el mismo nombre.
+- **QuerySet optimizado:** 
+  - Se utiliza `prefetch_related` para obtener los partidos asociados de manera eficiente (ManyToOne).
+  - Dentro de `prefetch_related` usamos `Prefetch` junto con `select_related` para obtener la información de los equipos de cada partido en la misma consulta y evitar consultas N+1.
+  - `from django.db.models import Prefetch` se importa específicamente para crear el objeto `Prefetch` que permite personalizar el queryset de la relación.
+- **Equivalente SQL (usando raw()):**
+```python
+sql = f"""
+SELECT t.id, t.nombre, t.pais, t.fecha_inicio, t.fecha_fin,
+       p.id AS partido_id, p.resultado, p.fecha,
+       el.nombre AS equipo_local, ev.nombre AS equipo_visitante
+FROM eventos_deportivos_torneo t
+LEFT JOIN eventos_deportivos_partido p ON p.torneo_id = t.id
+LEFT JOIN eventos_deportivos_equipo el ON p.equipo_local_id = el.id
+LEFT JOIN eventos_deportivos_equipo ev ON p.equipo_visitante_id = ev.id
+WHERE t.nombre = '{nombre_torneo}'
+ORDER BY t.fecha_inicio;
+"""
+```
+
+---
+
 ## Esquema Modelo Entidad-Relación (ER)
 
 ```text

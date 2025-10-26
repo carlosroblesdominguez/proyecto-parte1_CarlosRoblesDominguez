@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.db.models import Prefetch
 from .models import *
 
 # Create your views here.
@@ -218,3 +219,39 @@ def lista_equipos(request):
         "equipos_sql": equipos_sql    # Para mostrar que se puede usar raw()
     }
     return render(request, "eventos_deportivos/lista_equipos.html", contexto)
+
+# Vista: Lista torneos por nombre (puede haber varios con el mismo nombre)
+def lista_torneos_nombre(request, nombre_torneo):
+    """
+    Muestra todos los torneos cuyo nombre coincide con 'nombre_torneo'.
+    Incluye todos los partidos asociados a cada torneo.
+    Se utiliza Prefetch para optimizar la obtención de partidos (ManyToOne).
+    """
+    torneos = (
+        Torneo.objects
+        .prefetch_related(
+            Prefetch('partido_set', queryset=Partido.objects.select_related('equipo_local', 'equipo_visitante'))
+        )
+        .filter(nombre=nombre_torneo)
+        .order_by('fecha_inicio')
+    )
+
+    # Equivalente SQL usando raw()
+    sql = f"""
+    SELECT t.id, t.nombre, t.pais, t.fecha_inicio, t.fecha_fin,
+           p.id AS partido_id, p.resultado, p.fecha,
+           el.nombre AS equipo_local, ev.nombre AS equipo_visitante
+    FROM eventos_deportivos_torneo t
+    LEFT JOIN eventos_deportivos_partido p ON p.torneo_id = t.id
+    LEFT JOIN eventos_deportivos_equipo el ON p.equipo_local_id = el.id
+    LEFT JOIN eventos_deportivos_equipo ev ON p.equipo_visitante_id = ev.id
+    WHERE t.nombre = '{nombre_torneo}'
+    ORDER BY t.fecha_inicio;
+    """
+    torneos_sql = Torneo.objects.raw(sql)
+
+    contexto = {
+        "torneos": torneos,           # QuerySet optimizado
+        "torneos_sql": torneos_sql    # Para mostrar que se puede usar raw()
+    }
+    return render(request, "eventos_deportivos/lista_torneos.html", contexto)
