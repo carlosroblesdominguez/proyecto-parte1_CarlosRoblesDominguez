@@ -420,7 +420,7 @@ ORDER BY t.fecha_inicio;
 - **Descripción:** 
   Muestra los detalles de un árbitro específico y todos los partidos que dirigió en un torneo concreto.
 - **Parámetros:**
-  - `arbitro_id` (int): Identificador del árbitro.
+  - `arbitro_id` (int): Identificador del árbitro.j
   - `torneo_id` (int): Identificador del torneo.
 - **QuerySet optimizado:** 
   - Se utiliza `select_related('equipo_local', 'equipo_visitante', 'torneo')` para obtener los datos relacionados de manera eficiente.
@@ -443,6 +443,56 @@ INNER JOIN eventos_deportivos_equipo ev ON p.equipo_visitante_id = ev.id
 INNER JOIN eventos_deportivos_torneo t ON p.torneo_id = t.id
 WHERE a.id = {arbitro_id} AND p.torneo_id = {torneo_id}
 ORDER BY p.fecha;
+"""
+```
+
+---
+
+### 10 Lista de Sponsors por país y monto mínimo
+
+- **URL:** `/sponsors/<str:pais>/<int:monto_min>/`
+- **Vista:** `lista_sponsors`
+- **Método HTTP:** GET
+- **Descripción:** 
+  Muestra todos los sponsors cuyo país coincide con el parámetro `pais` y cuyo monto es mayor o igual a `monto_min`.  
+  Incluye los equipos asociados a cada sponsor (relación ManyToMany).
+- **Parámetros:**
+  - `pais` (str): País del sponsor.
+  - `monto_min` (int): Monto mínimo del sponsor.
+- **QuerySet optimizado:** 
+  - Se filtra primero por país y luego por monto con filtros encadenados (AND implícito).  
+  - Se utiliza `prefetch_related('equipos')` para obtener los equipos asociados de manera eficiente.  
+  - Se ordena por nombre del sponsor (`order_by('nombre')`).  
+- **Uso de `get_object_or_404`:** 
+  - Se podría usar si se quisiera obtener un sponsor único por ID, asegurando que si no existe devuelve automáticamente un 404.  
+  - En este caso, como devolvemos varios registros, se utiliza `filter()` para listar todos los sponsors que cumplen los criterios.
+  ## Uso de `.filter()` y `.exclude()` en Django QuerySets
+
+Django proporciona métodos muy útiles para filtrar registros en QuerySets:
+
+### `.filter()`
+- **Descripción:** Devuelve un QuerySet que contiene solo los objetos que cumplen las condiciones especificadas.  
+- **Sintaxis básica:**
+```python
+Modelo.objects.filter(campo1=valor1, campo2=valor2)
+```
+
+### `.exclude()`
+- **Descripción:** Devuelve un QuerySet excluyendo los objetos que cumplen las condiciones especificadas.
+- **Sintaxis básica:**
+```python
+Modelo.objects.exclude(campo1=valor1)
+```
+
+- **Equivalente SQL (usando raw()):**
+```python
+sql = f"""
+SELECT s.id, s.nombre, s.monto, s.pais, e.id AS equipo_id, e.nombre AS equipo_nombre
+FROM eventos_deportivos_sponsor s
+LEFT JOIN eventos_deportivos_sponsor_equipos se ON s.id = se.sponsor_id
+LEFT JOIN eventos_deportivos_equipo e ON se.equipo_id = e.id
+WHERE s.pais = '{pais}' AND s.monto >= {monto_min}
+ORDER BY s.nombre;
 """
 ```
 

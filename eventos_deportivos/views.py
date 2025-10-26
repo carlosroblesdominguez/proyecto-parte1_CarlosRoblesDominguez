@@ -334,3 +334,34 @@ def detalle_arbitro_torneo(request, arbitro_id, torneo_id):
         "partidos_sql": partidos_sql
     }
     return render(request, "eventos_deportivos/detalle_arbitro_torneo.html", contexto)
+
+# Vista: Lista de Sponsors por país y monto mínimo
+def lista_sponsors(request, pais, monto_min):
+    """
+    Muestra todos los Sponsors cuyo país coincide con 'pais' y cuyo monto es mayor o igual a 'monto_min'.
+    Se combinan filtros (AND) directamente en el QuerySet.
+    """
+    sponsors = (
+        Sponsor.objects
+        .filter(pais=pais)              # filtro por país
+        .filter(monto__gte=monto_min)   # filtro por monto >= monto_min (AND implícito)
+        .prefetch_related('equipos')    # obtener los equipos relacionados eficientemente
+        .order_by('nombre')
+    )
+
+    # Equivalente SQL usando raw()
+    sql = f"""
+    SELECT s.id, s.nombre, s.monto, s.pais, e.id AS equipo_id, e.nombre AS equipo_nombre
+    FROM eventos_deportivos_sponsor s
+    LEFT JOIN eventos_deportivos_sponsor_equipos se ON s.id = se.sponsor_id
+    LEFT JOIN eventos_deportivos_equipo e ON se.equipo_id = e.id
+    WHERE s.pais = '{pais}' AND s.monto >= {monto_min}
+    ORDER BY s.nombre;
+    """
+    sponsors_sql = Sponsor.objects.raw(sql)
+
+    contexto = {
+        "sponsors": sponsors,
+        "sponsors_sql": sponsors_sql
+    }
+    return render(request, "eventos_deportivos/lista_sponsors.html", contexto)
