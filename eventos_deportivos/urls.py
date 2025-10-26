@@ -10,4 +10,5 @@ urlpatterns = [
     path('equipos/', views.lista_equipos, name='lista_equipos'), #URL6 Lista de equipos
     path('torneos/<str:nombre_torneo>/', views.detalle_torneo, name='detalle_torneo'), #URL7 detalle un torneo (r_path)
     path('torneos/', views.lista_torneos, name='lista_torneos'), # URL8 lista de torneos
+    path('arbitros/<int:arbitro_id>/torneo/<int:torneo_id>/', views.detalle_arbitro_torneo, name='detalle_arbitro_torneo'), # URL9: Detalle de un árbitro en un torneo específico
 ]

@@ -293,3 +293,44 @@ def lista_torneos(request):
         "torneos_sql": torneos_sql    # Para mostrar que se puede usar raw()
     }
     return render(request, "eventos_deportivos/lista_torneos.html", contexto)
+
+# Vista: Detalle de un árbitro en un torneo específico
+def detalle_arbitro_torneo(request, arbitro_id, torneo_id):
+    """
+    Muestra los detalles de un árbitro y los partidos que dirigió en un torneo concreto.
+    Se utiliza get_object_or_404 para asegurar que el árbitro existe.
+    Se optimiza la obtención de partidos con select_related para los equipos.
+    """
+    arbitro = get_object_or_404(Arbitro, pk=arbitro_id)
+
+    # QuerySet optimizado: obtenemos partidos del torneo filtrado
+    partidos = (
+        arbitro.partidos
+        .filter(torneo_id=torneo_id)
+        .select_related('equipo_local', 'equipo_visitante', 'torneo')
+        .order_by('fecha')
+    )
+
+    # Equivalente SQL usando raw()
+    sql = f"""
+    SELECT a.id AS arbitro_id, a.nombre, a.apellido, a.licencia,
+           p.id AS partido_id, p.fecha, p.resultado,
+           el.nombre AS equipo_local, ev.nombre AS equipo_visitante,
+           t.nombre AS torneo_nombre
+    FROM eventos_deportivos_arbitro a
+    INNER JOIN eventos_deportivos_partidos_arbitros pa ON a.id = pa.arbitro_id
+    INNER JOIN eventos_deportivos_partido p ON pa.partido_id = p.id
+    INNER JOIN eventos_deportivos_equipo el ON p.equipo_local_id = el.id
+    INNER JOIN eventos_deportivos_equipo ev ON p.equipo_visitante_id = ev.id
+    INNER JOIN eventos_deportivos_torneo t ON p.torneo_id = t.id
+    WHERE a.id = {arbitro_id} AND p.torneo_id = {torneo_id}
+    ORDER BY p.fecha;
+    """
+    partidos_sql = Partido.objects.raw(sql)
+
+    contexto = {
+        "arbitro": arbitro,
+        "partidos": partidos,
+        "partidos_sql": partidos_sql
+    }
+    return render(request, "eventos_deportivos/detalle_arbitro_torneo.html", contexto)

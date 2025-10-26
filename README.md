@@ -412,6 +412,42 @@ ORDER BY t.fecha_inicio;
 
 ---
 
+### 9 Detalle de Árbitro en un Torneo
+
+- **URL:** `/arbitros/<int:arbitro_id>/torneo/<int:torneo_id>/`
+- **Vista:** `detalle_arbitro_torneo`
+- **Método HTTP:** GET
+- **Descripción:** 
+  Muestra los detalles de un árbitro específico y todos los partidos que dirigió en un torneo concreto.
+- **Parámetros:**
+  - `arbitro_id` (int): Identificador del árbitro.
+  - `torneo_id` (int): Identificador del torneo.
+- **QuerySet optimizado:** 
+  - Se utiliza `select_related('equipo_local', 'equipo_visitante', 'torneo')` para obtener los datos relacionados de manera eficiente.
+  - Se filtra por torneo con `.filter(torneo_id=torneo_id)`.
+- **Uso de `get_object_or_404`:** 
+  - Se emplea para asegurar que el árbitro existe en la base de datos.
+  - Es más seguro que `get()` porque devuelve un error 404 automáticamente si no se encuentra el registro, evitando excepciones no controladas.
+- **Equivalente SQL (usando raw()):**
+```python
+sql = f"""
+SELECT a.id AS arbitro_id, a.nombre, a.apellido, a.licencia,
+       p.id AS partido_id, p.fecha, p.resultado,
+       el.nombre AS equipo_local, ev.nombre AS equipo_visitante,
+       t.nombre AS torneo_nombre
+FROM eventos_deportivos_arbitro a
+INNER JOIN eventos_deportivos_partido_partidos a ON a.id = pa.arbitro_id
+INNER JOIN eventos_deportivos_partido p ON pa.partido_id = p.id
+INNER JOIN eventos_deportivos_equipo el ON p.equipo_local_id = el.id
+INNER JOIN eventos_deportivos_equipo ev ON p.equipo_visitante_id = ev.id
+INNER JOIN eventos_deportivos_torneo t ON p.torneo_id = t.id
+WHERE a.id = {arbitro_id} AND p.torneo_id = {torneo_id}
+ORDER BY p.fecha;
+"""
+```
+
+---
+
 ## Esquema Modelo Entidad-Relación (ER)
 
 ```text
