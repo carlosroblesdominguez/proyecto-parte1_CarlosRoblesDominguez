@@ -220,8 +220,8 @@ def lista_equipos(request):
     }
     return render(request, "eventos_deportivos/lista_equipos.html", contexto)
 
-# Vista: Lista torneos por nombre (puede haber varios con el mismo nombre)
-def lista_torneos_nombre(request, nombre_torneo):
+# Vista: detalles de un torneo por nombre
+def detalle_torneo(request, nombre_torneo):
     """
     Muestra todos los torneos cuyo nombre coincide con 'nombre_torneo'.
     Incluye todos los partidos asociados a cada torneo.
@@ -254,4 +254,4 @@ def lista_torneos_nombre(request, nombre_torneo):
         "torneos": torneos,           # QuerySet optimizado
         "torneos_sql": torneos_sql    # Para mostrar que se puede usar raw()
     }
-    return render(request, "eventos_deportivos/lista_torneos.html", contexto)
+    return render(request, "eventos_deportivos/detalle_torneo.html", contexto)
