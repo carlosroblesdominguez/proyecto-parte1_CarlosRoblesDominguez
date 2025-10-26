@@ -495,6 +495,44 @@ WHERE s.pais = '{pais}' AND s.monto >= {monto_min}
 ORDER BY s.nombre;
 """
 ```
+---
+
+### Páginas de Error Personalizadas
+
+Se han creado páginas de error personalizadas para los 4 tipos de error más comunes en Django. Todas heredan de `error_base.html` y mantienen un estilo uniforme con el resto del proyecto.
+
+#### Archivos de Templates
+- **`error_base.html`**  
+  Plantilla base para los errores. Incluye:
+  - Estructura HTML común.
+  - Bloques `{% block title %}` y `{% block content %}` para sobreescribir el título y contenido específico de cada error.
+  - Estilo uniforme (fuente Arial, fondo gris claro, botón de volver al inicio).
+
+- **`error_400.html`**  
+  - Hereda de `error_base.html`.
+  - Muestra un mensaje de "Bad Request" indicando que la solicitud no puede ser procesada por el servidor.
+  
+- **`error_403.html`**  
+  - Hereda de `error_base.html`.
+  - Muestra un mensaje de "Forbidden" indicando que el usuario no tiene permisos para acceder a la página.
+  
+- **`error_404.html`**  
+  - Hereda de `error_base.html`.
+  - Muestra un mensaje de "Not Found" indicando que la página solicitada no existe.
+
+- **`error_500.html`**  
+  - Hereda de `error_base.html`.
+  - Muestra un mensaje de "Internal Server Error" indicando que se produjo un error en el servidor.
+
+#### Funcionamiento
+- Cada página utiliza los bloques de `error_base.html` para personalizar el título y el contenido del error.
+- Se proporciona un enlace de navegación para volver a la página principal.
+- Permite mantener un diseño coherente con los demás templates del proyecto.
+- Para probar los errores:
+  - **404:** acceder a una URL inexistente.
+  - **400:** enviar una solicitud inválida.
+  - **403:** intentar acceder a un recurso sin permisos.
+  - **500:** provocar un fallo interno en una vista.
 
 ---
 
