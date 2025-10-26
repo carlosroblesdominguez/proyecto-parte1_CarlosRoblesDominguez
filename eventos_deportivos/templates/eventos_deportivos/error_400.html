@@ -1,0 +1,9 @@
+{% extends "eventos_deportivos/error_base.html" %}
+
+{% block title %}Solicitud incorrecta (400){% endblock %}
+
+{% block content %}
+<h1>400 - Solicitud incorrecta</h1>
+<p>La solicitud que has realizado no es válida.</p>
+<a href="{% url 'index' %}">Volver a la página principal</a>
+{% endblock %}

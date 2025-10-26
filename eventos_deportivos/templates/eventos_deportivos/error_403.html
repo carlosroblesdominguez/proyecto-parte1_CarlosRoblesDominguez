@@ -1,0 +1,9 @@
+{% extends "eventos_deportivos/error_base.html" %}
+
+{% block title %}Prohibido (403){% endblock %}
+
+{% block content %}
+<h1>403 - Acceso prohibido</h1>
+<p>No tienes permisos para acceder a esta página.</p>
+<a href="{% url 'index' %}">Volver a la página principal</a>
+{% endblock %}

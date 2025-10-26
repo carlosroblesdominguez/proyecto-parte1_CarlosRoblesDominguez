@@ -11,6 +11,18 @@ def index(request):
     """
     return render(request, "eventos_deportivos/index.html")
 
+def error_404(request, exception):
+    return render(request, 'eventos_deportivos/error_404.html', status=404)
+
+def error_500(request):
+    return render(request, 'eventos_deportivos/error_500.html', status=500)
+
+def error_403(request, exception):
+    return render(request, 'eventos_deportivos/error_403.html', status=403)
+
+def error_400(request, exception):
+    return render(request, 'eventos_deportivos/error_400.html', status=400)
+
 def lista_jugadores(request):
     """
     Vista que lista todos los jugadores con sus estadísticas y equipos.

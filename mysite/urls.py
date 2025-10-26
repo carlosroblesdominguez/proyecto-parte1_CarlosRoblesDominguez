@@ -21,3 +21,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('eventos_deportivos.urls')),
 ]
+
+handler404 = "eventos_deportivos.views.error_404"
+handler500 = "eventos_deportivos.views.error_500"
+handler403 = "eventos_deportivos.views.error_403"
+handler400 = "eventos_deportivos.views.error_400"
