@@ -48,11 +48,11 @@ def lista_jugadores(request):
     LEFT JOIN eventos_deportivos_equipo e ON ej.equipo_id = e.id
     ORDER BY j.nombre;
     """
-    jugadores_sql = Jugador.objects.raw(sql)
+    #jugadores_sql = Jugador.objects.raw(sql)
 
     contexto = {
         "jugadores": jugadores,
-        "jugadores_sql": jugadores_sql
+        #"jugadores_sql": jugadores_sql
     }
 
     return render(request, "eventos_deportivos/lista_jugadores.html", contexto)
@@ -83,12 +83,12 @@ def detalle_jugador(request, jugador_id):
     LEFT JOIN eventos_deportivos_equipo e ON ej.equipo_id = e.id
     WHERE j.id = {jugador_id};
     """
-    jugador_sql = Jugador.objects.raw(sql)
+    #jugador_sql = Jugador.objects.raw(sql)
 
     contexto = {
         "jugador": jugador,
         "equipos_jugador": equipos_jugador,
-        "jugador_sql": jugador_sql
+        #"jugador_sql": jugador_sql
     }
     return render(request, "eventos_deportivos/detalle_jugador.html", contexto)
 
@@ -124,12 +124,12 @@ def detalle_equipo(request, equipo_id):
     WHERE ej.equipo_id = %s
     ORDER BY ej.fecha_ingreso;
     """
-    jugadores_sql = EquipoJugador.objects.raw(sql, [equipo_id])
+    #jugadores_sql = EquipoJugador.objects.raw(sql, [equipo_id])
 
     contexto = {
         "equipo": equipo,
         "jugadores_equipo": jugadores_equipo,
-        "jugadores_sql": jugadores_sql  # Para mostrar que se puede usar raw()
+        #"jugadores_sql": jugadores_sql  # Para mostrar que se puede usar raw()
     }
     return render(request, "eventos_deportivos/detalle_equipo.html", contexto)
 
@@ -160,11 +160,11 @@ def lista_partidos(request):
     INNER JOIN eventos_deportivos_torneo t ON p.torneo_id = t.id
     ORDER BY p.fecha;
     """
-    partidos_sql = Partido.objects.raw(sql)
+    #partidos_sql = Partido.objects.raw(sql)
 
     contexto = {
         "partidos": partidos,         # Para usar QuerySet optimizado
-        "partidos_sql": partidos_sql  # Para mostrar que se puede usar raw()
+        #"partidos_sql": partidos_sql  # Para mostrar que se puede usar raw()
     }
 
     return render(request, "eventos_deportivos/lista_partidos.html", contexto)
@@ -196,12 +196,12 @@ def detalle_partido(request, partido_id):
     INNER JOIN eventos_deportivos_torneo t ON p.torneo_id = t.id
     WHERE p.id = %s;
     """
-    partido_sql = Partido.objects.raw(sql, [partido_id])
+    #partido_sql = Partido.objects.raw(sql, [partido_id])
 
     contexto = {
         "partido": partido,
         "arbitros": arbitros,
-        "partido_sql": partido_sql
+        #"partido_sql": partido_sql
     }
     return render(request, "eventos_deportivos/detalle_partido.html", contexto)
 
@@ -231,11 +231,11 @@ def lista_equipos(request):
     LEFT JOIN eventos_deportivos_jugador j ON j.id = ej.jugador_id
     ORDER BY e.nombre;
     """
-    equipos_sql = Equipo.objects.raw(sql)
+    #equipos_sql = Equipo.objects.raw(sql)
     
     contexto = {
         "equipos": equipos,           # Para usar QuerySet optimizado
-        "equipos_sql": equipos_sql    # Para mostrar que se puede usar raw()
+        #"equipos_sql": equipos_sql    # Para mostrar que se puede usar raw()
     }
     return render(request, "eventos_deportivos/lista_equipos.html", contexto)
 
@@ -267,11 +267,11 @@ def detalle_torneo(request, nombre_torneo):
     WHERE t.nombre = '{nombre_torneo}'
     ORDER BY t.fecha_inicio;
     """
-    torneos_sql = Torneo.objects.raw(sql)
+    #torneos_sql = Torneo.objects.raw(sql)
 
     contexto = {
         "torneos": torneos,           # QuerySet optimizado
-        "torneos_sql": torneos_sql    # Para mostrar que se puede usar raw()
+        #"torneos_sql": torneos_sql    # Para mostrar que se puede usar raw()
     }
     return render(request, "eventos_deportivos/detalle_torneo.html", contexto)
 
@@ -305,11 +305,11 @@ def lista_torneos(request):
     LEFT JOIN eventos_deportivos_equipo ev ON p.equipo_visitante_id = ev.id
     ORDER BY t.fecha_inicio;
     """
-    torneos_sql = Torneo.objects.raw(sql)
+    #torneos_sql = Torneo.objects.raw(sql)
 
     contexto = {
         "torneos": torneos,           # QuerySet optimizado
-        "torneos_sql": torneos_sql    # Para mostrar que se puede usar raw()
+        #"torneos_sql": torneos_sql    # Para mostrar que se puede usar raw()
     }
     return render(request, "eventos_deportivos/lista_torneos.html", contexto)
 
@@ -345,12 +345,12 @@ def detalle_arbitro_torneo(request, arbitro_id, torneo_id):
     WHERE a.id = {arbitro_id} AND p.torneo_id = {torneo_id}
     ORDER BY p.fecha;
     """
-    partidos_sql = Partido.objects.raw(sql)
+    #partidos_sql = Partido.objects.raw(sql)
 
     contexto = {
         "arbitro": arbitro,
         "partidos": partidos,
-        "partidos_sql": partidos_sql
+        #"partidos_sql": partidos_sql
     }
     return render(request, "eventos_deportivos/detalle_arbitro_torneo.html", contexto)
 
@@ -377,10 +377,10 @@ def lista_sponsors(request, pais, monto_min):
     WHERE s.pais = '{pais}' AND s.monto >= {monto_min}
     ORDER BY s.nombre;
     """
-    sponsors_sql = Sponsor.objects.raw(sql)
+    #sponsors_sql = Sponsor.objects.raw(sql)
 
     contexto = {
         "sponsors": sponsors,
-        "sponsors_sql": sponsors_sql
+        #"sponsors_sql": sponsors_sql
     }
     return render(request, "eventos_deportivos/lista_sponsors.html", contexto)
