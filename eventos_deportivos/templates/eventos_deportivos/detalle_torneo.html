@@ -2,41 +2,42 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Torneos: {{ torneos.0.nombre }}</title>
+    <title>Detalle Torneo</title>
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; background: #f2f2f2; }
-        h1 { text-align: center; }
-        table { width: 80%; margin: 0 auto; border-collapse: collapse; background: white; }
-        th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
+        body { font-family: Arial, sans-serif; background: #f2f2f2; padding: 20px; }
+        h1, h2 { text-align: center; }
+        table { width: 100%; border-collapse: collapse; background: white; margin-bottom: 20px; }
+        th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
         th { background: #4CAF50; color: white; }
     </style>
 </head>
 <body>
-    <h1>Lista de Torneos: {{ torneos.0.nombre }}</h1>
+    <h1>Torneos: {{ torneos.0.nombre if torneos else 'No hay torneos' }}</h1>
     {% for torneo in torneos %}
+        <h2>{{ torneo.nombre }} ({{ torneo.pais }})</h2>
+        <p>Desde: {{ torneo.fecha_inicio }} Hasta: {{ torneo.fecha_fin }}</p>
         <table>
-            <tr><th>Nombre</th><td>{{ torneo.nombre }}</td></tr>
-            <tr><th>País</th><td>{{ torneo.pais }}</td></tr>
-            <tr><th>Fecha Inicio</th><td>{{ torneo.fecha_inicio }}</td></tr>
-            <tr><th>Fecha Fin</th><td>{{ torneo.fecha_fin }}</td></tr>
-            <tr>
-                <th>Partidos</th>
-                <td>
-                    {% if torneo.partido_set.all %}
-                        <ul>
-                            {% for partido in torneo.partido_set.all %}
-                                <li>{{ partido.equipo_local.nombre }} vs {{ partido.equipo_visitante.nombre }} - {{ partido.resultado }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        No hay partidos asociados
-                    {% endif %}
-                </td>
-            </tr>
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Equipo Local</th>
+                    <th>Equipo Visitante</th>
+                    <th>Resultado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for partido in torneo.partido_set.all %}
+                <tr>
+                    <td>{{ partido.fecha }}</td>
+                    <td>{{ partido.equipo_local.nombre }}</td>
+                    <td>{{ partido.equipo_visitante.nombre }}</td>
+                    <td>{{ partido.resultado }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4">No hay partidos</td></tr>
+                {% endfor %}
+            </tbody>
         </table>
-        <hr>
-    {% empty %}
-        <p>No se encontraron torneos con el nombre '{{ nombre_torneo }}'</p>
     {% endfor %}
 </body>
 </html>

@@ -2,67 +2,30 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Detalle de Jugador</title>
+    <title>Detalle Jugador</title>
     <style>
         body { font-family: Arial, sans-serif; background: #f2f2f2; padding: 20px; }
-        h1 { text-align: center; }
-        table { width: 60%; margin: 0 auto; border-collapse: collapse; background: white; }
-        th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
-        th { background: #4CAF50; color: white; }
+        h1, h2 { text-align: center; }
+        ul { list-style: none; padding: 0; }
+        li { margin: 5px 0; }
     </style>
 </head>
 <body>
-    <h1>Detalle de {{ jugador.nombre }} {{ jugador.apellido }}</h1>
-    <table>
-        <tr>
-            <th>Nombre</th>
-            <td>{{ jugador.nombre }}</td>
-        </tr>
-        <tr>
-            <th>Apellido</th>
-            <td>{{ jugador.apellido }}</td>
-        </tr>
-        <tr>
-            <th>Fecha de Nacimiento</th>
-            <td>{{ jugador.fecha_nacimiento }}</td>
-        </tr>
-        <tr>
-            <th>Posición</th>
-            <td>{{ jugador.get_posicion_display }}</td>
-        </tr>
-        <tr>
-            <th>Partidos Jugados</th>
-            <td>{{ jugador.estadisticas.partidos_jugados }}</td>
-        </tr>
-        <tr>
-            <th>Goles</th>
-            <td>{{ jugador.estadisticas.goles }}</td>
-        </tr>
-        <tr>
-            <th>Asistencias</th>
-            <td>{{ jugador.estadisticas.asistencias }}</td>
-        </tr>
-        <tr>
-            <th>Tarjetas</th>
-            <td>{{ jugador.estadisticas.tarjetas }}</td>
-        </tr>
-        <tr>
-            <th>Equipos</th>
-            <td>
-                {% if equipos_jugador %}
-                    <ul>
-                        {% for ej in equipos_jugador %}
-                            <li>
-                                {{ ej.equipo.nombre }} - Ingreso: {{ ej.fecha_ingreso }} - 
-                                {% if ej.capitan %}Capitán{% else %}Jugador{% endif %}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    Sin equipos asociados
-                {% endif %}
-            </td>
-        </tr>
-    </table>
+    <h1>{{ jugador.nombre }} {{ jugador.apellido }}</h1>
+    <h2>Estadísticas</h2>
+    <ul>
+        <li>Partidos jugados: {{ jugador.estadisticas.partidos_jugados }}</li>
+        <li>Goles: {{ jugador.estadisticas.goles }}</li>
+        <li>Asistencias: {{ jugador.estadisticas.asistencias }}</li>
+        <li>Tarjetas: {{ jugador.estadisticas.tarjetas }}</li>
+    </ul>
+    <h2>Equipos</h2>
+    <ul>
+        {% for ej in equipos_jugador %}
+        <li>{{ ej.equipo.nombre }} ({{ ej.capitan|yesno:"Capitán,Jugador" }})</li>
+        {% empty %}
+        <li>Sin equipos</li>
+        {% endfor %}
+    </ul>
 </body>
 </html>

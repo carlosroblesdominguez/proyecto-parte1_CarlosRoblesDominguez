@@ -2,48 +2,44 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Listado de Sponsors</title>
+    <title>Lista de Sponsors</title>
     <style>
         body { font-family: Arial, sans-serif; background: #f2f2f2; padding: 20px; }
         h1 { text-align: center; }
         table { width: 100%; border-collapse: collapse; background: white; }
         th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
         th { background: #4CAF50; color: white; }
-        ul { list-style-type: none; padding: 0; margin: 0; }
+        ul { list-style: none; padding: 0; margin: 0; }
         li { margin-bottom: 3px; }
     </style>
 </head>
 <body>
-    <h1>Listado de Sponsors: {{ sponsors|length }} encontrados</h1>
+    <h1>Lista de Sponsors</h1>
     <table>
         <thead>
             <tr>
                 <th>Nombre</th>
-                <th>Monto</th>
                 <th>País</th>
-                <th>Equipos asociados</th>
+                <th>Monto</th>
+                <th>Equipos</th>
             </tr>
         </thead>
         <tbody>
             {% for sponsor in sponsors %}
-                <tr>
-                    <td>{{ sponsor.nombre }}</td>
-                    <td>{{ sponsor.monto }}</td>
-                    <td>{{ sponsor.pais }}</td>
-                    <td>
-                        <ul>
-                            {% for equipo in sponsor.equipos.all %}
-                                <li>{{ equipo.nombre }}</li>
-                            {% empty %}
-                                <li>Sin equipos</li>
-                            {% endfor %}
-                        </ul>
-                    </td>
-                </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="4">No se encontraron sponsors para estos filtros</td>
-                </tr>
+            <tr>
+                <td>{{ sponsor.nombre }}</td>
+                <td>{{ sponsor.pais }}</td>
+                <td>{{ sponsor.monto }}</td>
+                <td>
+                    <ul>
+                        {% for equipo in sponsor.equipos.all %}
+                        <li>{{ equipo.nombre }}</li>
+                        {% empty %}
+                        <li>Sin equipos</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
             {% endfor %}
         </tbody>
     </table>

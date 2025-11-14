@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.db.models import Prefetch
+from django.db.models import Prefetch, Count, Max
 from .models import *
 
 # Create your views here.
@@ -23,18 +23,22 @@ def error_403(request, exception):
 def error_400(request, exception):
     return render(request, 'eventos_deportivos/error_400.html', status=400)
 
+# ----------------------------
+# URL1: Lista todos los jugadores
+# ----------------------------
 def lista_jugadores(request):
     """
     Vista que lista todos los jugadores con sus estadísticas y equipos.
+    Incluye filtro OR para mostrar Porteros o Defensas.
     """
+    # QuerySet optimizado con OR (sin usar Q)
+    jugadores_porteros = Jugador.objects.filter(posicion="POR").select_related('estadisticas')
+    jugadores_defensas = Jugador.objects.filter(posicion="DEF").select_related('estadisticas')
+    jugadores = (jugadores_porteros | jugadores_defensas).order_by('nombre')
 
-    # QuerySet optimizado
-    jugadores = (
-        Jugador.objects
-        .select_related('estadisticas')  # OneToOne: EstadisticasJugador
-        .prefetch_related('equipojugador_set')  # Trae la tabla intermedia correctamente
-        .all()
-        .order_by('nombre')
+    # Obtener equipos de cada jugador usando prefetch_related en tabla intermedia
+    jugadores = jugadores.prefetch_related(
+        Prefetch('equipojugador_set', queryset=EquipoJugador.objects.select_related('equipo'))
     )
 
     # SQL equivalente usando raw()
@@ -51,26 +55,24 @@ def lista_jugadores(request):
     #jugadores_sql = Jugador.objects.raw(sql)
 
     contexto = {
-        "jugadores": jugadores,
-        #"jugadores_sql": jugadores_sql
+        "jugadores": jugadores
     }
-
     return render(request, "eventos_deportivos/lista_jugadores.html", contexto)
 
+# ----------------------------
+# URL2: Detalle de un jugador
+# ----------------------------
 def detalle_jugador(request, jugador_id):
     """
     Vista que muestra el detalle de un jugador específico,
-    incluyendo sus estadísticas y los equipos a los que ha pertenecido.
-    
+    incluyendo sus estadísticas y equipos asociados.
     """
-    # Obtener el jugador con sus estadísticas
     jugador = get_object_or_404(
-        Jugador.objects.select_related('estadisticas'),
+        Jugador.objects.select_related('estadisticas'), 
         pk=jugador_id
     )
 
-    # Obtener equipos del jugador mediante la tabla intermedia
-    equipos_jugador = EquipoJugador.objects.filter(jugador=jugador).select_related('equipo')
+    equipos_jugador = jugador.equipojugador_set.select_related('equipo').order_by('fecha_ingreso')
 
     # Raw SQL equivalente
     sql = f"""
@@ -87,34 +89,25 @@ def detalle_jugador(request, jugador_id):
 
     contexto = {
         "jugador": jugador,
-        "equipos_jugador": equipos_jugador,
-        #"jugador_sql": jugador_sql
+        "equipos_jugador": equipos_jugador
     }
     return render(request, "eventos_deportivos/detalle_jugador.html", contexto)
 
+# ----------------------------
+# URL3: Detalle de un equipo
+# ----------------------------
 def detalle_equipo(request, equipo_id):
     """
     Vista que muestra todos los datos de un equipo específico,
-    incluyendo los jugadores asociados a través de la tabla intermedia EquipoJugador.
-    
-    Se utiliza get_object_or_404 para manejar de forma segura la búsqueda:
-    - Si el equipo no existe, devuelve un error 404.
-    - Es más seguro que usar get(), que lanzaría una excepción si no se encuentra.
+    incluyendo los jugadores asociados.
     """
-
-    # Obtener el equipo
     equipo = get_object_or_404(
         Equipo.objects.select_related('estadio_principal'), 
         pk=equipo_id
     )
 
-    # Obtener jugadores del equipo de manera optimizada
-    jugadores_equipo = (
-        EquipoJugador.objects
-        .select_related('jugador')  # Relación ManyToOne hacia Jugador
-        .filter(equipo=equipo)
-        .order_by('fecha_ingreso')
-    )
+    # Obtener jugadores asociados evitando *_set
+    jugadores_equipo = EquipoJugador.objects.filter(equipo=equipo).select_related('jugador').order_by('fecha_ingreso')
 
     # Equivalente SQL usando raw()
     sql = """
@@ -128,25 +121,22 @@ def detalle_equipo(request, equipo_id):
 
     contexto = {
         "equipo": equipo,
-        "jugadores_equipo": jugadores_equipo,
-        #"jugadores_sql": jugadores_sql  # Para mostrar que se puede usar raw()
+        "jugadores_equipo": jugadores_equipo
     }
     return render(request, "eventos_deportivos/detalle_equipo.html", contexto)
 
+# ----------------------------
+# URL4: Lista de partidos
+# ----------------------------
 def lista_partidos(request):
     """
-    Vista que muestra todos los partidos registrados en la base de datos.
-    Incluye equipos local y visitante, resultado y torneo al que pertenece.
-    
-    Se utiliza select_related para optimizar las relaciones ManyToOne con Equipo y Torneo.
+    Vista que muestra todos los partidos con equipos y torneo.
+    Incluye aggregate (conteo total de partidos y fecha última).
     """
-    # QuerySet optimizado
-    partidos = (
-        Partido.objects
-        .select_related('equipo_local', 'equipo_visitante', 'torneo')
-        .all()
-        .order_by('fecha')
-    )
+    partidos = Partido.objects.select_related('equipo_local', 'equipo_visitante', 'torneo').order_by('fecha')
+
+    # Aggregate
+    stats = Partido.objects.aggregate(total_partidos=Count('id'), ultimo_partido=Max('fecha'))
 
     # Equivalente SQL usando raw()
     sql = """
@@ -163,26 +153,25 @@ def lista_partidos(request):
     #partidos_sql = Partido.objects.raw(sql)
 
     contexto = {
-        "partidos": partidos,         # Para usar QuerySet optimizado
-        #"partidos_sql": partidos_sql  # Para mostrar que se puede usar raw()
+        "partidos": partidos,
+        "stats": stats
     }
-
     return render(request, "eventos_deportivos/lista_partidos.html", contexto)
 
+# ----------------------------
+# URL5: Detalle de un partido
+# ----------------------------
 def detalle_partido(request, partido_id):
     """
-    Vista que muestra todos los datos de un partido específico,
-    incluyendo equipos, resultado, fecha, torneo y árbitros.
+    Vista que muestra los datos de un partido, incluyendo árbitros.
     """
-
-    # Obtener el partido y sus relaciones OneToOne/ForeignKey
     partido = get_object_or_404(
-        Partido.objects.select_related("equipo_local", "equipo_visitante", "torneo"),
+        Partido.objects.select_related('equipo_local', 'equipo_visitante', 'torneo'),
         pk=partido_id
     )
 
-    # Obtener los árbitros que están asignados a este partido
-    arbitros = partido.arbitro_set.all()  # Muchos a Muchos: Arbitro.partidos
+    # Mejor filtrado ManyToMany: arbitros del partido
+    arbitros = Arbitro.objects.filter(partidos=partido)
 
     # SQL equivalente usando raw()
     sql = """
@@ -200,27 +189,18 @@ def detalle_partido(request, partido_id):
 
     contexto = {
         "partido": partido,
-        "arbitros": arbitros,
-        #"partido_sql": partido_sql
+        "arbitros": arbitros
     }
     return render(request, "eventos_deportivos/detalle_partido.html", contexto)
 
+# ----------------------------
+# URL6: Lista de equipos
+# ----------------------------
 def lista_equipos(request):
     """
-    Vista que obtiene todos los equipos registrados en la base de datos,
-    incluyendo información básica y opcionalmente número de jugadores asociados.
-    
-    Relaciones utilizadas:
-    - ManyToMany: jugadores a través de EquipoJugador
+    Muestra todos los equipos, incluyendo equipos sin estadio (None).
     """
-    
-    # QuerySet optimizado
-    equipos = (
-        Equipo.objects
-        .prefetch_related('jugadores')  # ManyToMany: jugadores asociados
-        .all()
-        .order_by('nombre')
-    )
+    equipos = Equipo.objects.select_related('estadio_principal').prefetch_related('jugadores').filter(estadio_principal__isnull=True).order_by('nombre')
     
     # Equivalente SQL usando raw()
     sql = """
@@ -234,25 +214,19 @@ def lista_equipos(request):
     #equipos_sql = Equipo.objects.raw(sql)
     
     contexto = {
-        "equipos": equipos,           # Para usar QuerySet optimizado
-        #"equipos_sql": equipos_sql    # Para mostrar que se puede usar raw()
+        "equipos": equipos
     }
     return render(request, "eventos_deportivos/lista_equipos.html", contexto)
 
-# Vista: detalles de un torneo por nombre
+# ----------------------------
+# URL7: Detalle de torneos por nombre (r_path)
+# ----------------------------
 def detalle_torneo(request, nombre_torneo):
     """
-    Muestra todos los torneos cuyo nombre coincide con 'nombre_torneo'.
-    Incluye todos los partidos asociados a cada torneo.
-    Se utiliza Prefetch para optimizar la obtención de partidos (ManyToOne).
+    Muestra todos los torneos que coincidan con el nombre.
     """
-    torneos = (
-        Torneo.objects
-        .prefetch_related(
-            Prefetch('partido_set', queryset=Partido.objects.select_related('equipo_local', 'equipo_visitante'))
-        )
-        .filter(nombre=nombre_torneo)
-        .order_by('fecha_inicio')
+    torneos = Torneo.objects.filter(nombre=nombre_torneo).order_by('fecha_inicio').prefetch_related(
+        Prefetch('partido_set', queryset=Partido.objects.select_related('equipo_local', 'equipo_visitante'))
     )
 
     # Equivalente SQL usando raw()
@@ -270,103 +244,50 @@ def detalle_torneo(request, nombre_torneo):
     #torneos_sql = Torneo.objects.raw(sql)
 
     contexto = {
-        "torneos": torneos,           # QuerySet optimizado
-        #"torneos_sql": torneos_sql    # Para mostrar que se puede usar raw()
+        "torneos": torneos
     }
     return render(request, "eventos_deportivos/detalle_torneo.html", contexto)
 
-# Vista: Lista de todos los torneos con sus partidos
+# ----------------------------
+# URL8: Lista de torneos
+# ----------------------------
 def lista_torneos(request):
     """
-    Muestra todos los torneos registrados en la base de datos.
-    Incluye todos los partidos asociados a cada torneo, y los equipos de cada partido.
-    Se utiliza Prefetch para optimizar la obtención de los partidos (ManyToOne) y 
-    select_related para obtener los equipos de manera eficiente.
+    Lista todos los torneos con sus partidos y equipos.
     """
-    torneos = (
-        Torneo.objects
-        .prefetch_related(
-            Prefetch(
-                'partido_set',
-                queryset=Partido.objects.select_related('equipo_local', 'equipo_visitante')
-            )
-        )
-        .order_by('fecha_inicio')
-    )
-
-    # Equivalente SQL usando raw()
-    sql = """
-    SELECT t.id, t.nombre, t.pais, t.fecha_inicio, t.fecha_fin,
-           p.id AS partido_id, p.resultado, p.fecha,
-           el.nombre AS equipo_local, ev.nombre AS equipo_visitante
-    FROM eventos_deportivos_torneo t
-    LEFT JOIN eventos_deportivos_partido p ON p.torneo_id = t.id
-    LEFT JOIN eventos_deportivos_equipo el ON p.equipo_local_id = el.id
-    LEFT JOIN eventos_deportivos_equipo ev ON p.equipo_visitante_id = ev.id
-    ORDER BY t.fecha_inicio;
-    """
-    #torneos_sql = Torneo.objects.raw(sql)
+    torneos = Torneo.objects.prefetch_related(
+        Prefetch('partido_set', queryset=Partido.objects.select_related('equipo_local', 'equipo_visitante'))
+    ).order_by('fecha_inicio')
 
     contexto = {
-        "torneos": torneos,           # QuerySet optimizado
-        #"torneos_sql": torneos_sql    # Para mostrar que se puede usar raw()
+        "torneos": torneos
     }
     return render(request, "eventos_deportivos/lista_torneos.html", contexto)
 
-# Vista: Detalle de un árbitro en un torneo específico
+# ----------------------------
+# URL9: Detalle de árbitro en un torneo
+# ----------------------------
 def detalle_arbitro_torneo(request, arbitro_id, torneo_id):
     """
-    Muestra los detalles de un árbitro y los partidos que dirigió en un torneo concreto.
-    Se utiliza get_object_or_404 para asegurar que el árbitro existe.
-    Se optimiza la obtención de partidos con select_related para los equipos.
+    Detalle de un árbitro y sus partidos en un torneo.
     """
     arbitro = get_object_or_404(Arbitro, pk=arbitro_id)
-
-    # QuerySet optimizado: obtenemos partidos del torneo filtrado
-    partidos = (
-        arbitro.partidos
-        .filter(torneo_id=torneo_id)
-        .select_related('equipo_local', 'equipo_visitante', 'torneo')
-        .order_by('fecha')
-    )
-
-    # Equivalente SQL usando raw()
-    sql = f"""
-    SELECT a.id AS arbitro_id, a.nombre, a.apellido, a.licencia,
-           p.id AS partido_id, p.fecha, p.resultado,
-           el.nombre AS equipo_local, ev.nombre AS equipo_visitante,
-           t.nombre AS torneo_nombre
-    FROM eventos_deportivos_arbitro a
-    INNER JOIN eventos_deportivos_partidos_arbitros pa ON a.id = pa.arbitro_id
-    INNER JOIN eventos_deportivos_partido p ON pa.partido_id = p.id
-    INNER JOIN eventos_deportivos_equipo el ON p.equipo_local_id = el.id
-    INNER JOIN eventos_deportivos_equipo ev ON p.equipo_visitante_id = ev.id
-    INNER JOIN eventos_deportivos_torneo t ON p.torneo_id = t.id
-    WHERE a.id = {arbitro_id} AND p.torneo_id = {torneo_id}
-    ORDER BY p.fecha;
-    """
-    #partidos_sql = Partido.objects.raw(sql)
+    partidos = arbitro.partidos.filter(torneo_id=torneo_id).select_related('equipo_local', 'equipo_visitante', 'torneo').order_by('fecha')
 
     contexto = {
         "arbitro": arbitro,
-        "partidos": partidos,
-        #"partidos_sql": partidos_sql
+        "partidos": partidos
     }
     return render(request, "eventos_deportivos/detalle_arbitro_torneo.html", contexto)
 
-# Vista: Lista de Sponsors por país y monto mínimo
+# ----------------------------
+# URL10: Lista de Sponsors
+# ----------------------------
 def lista_sponsors(request, pais, monto_min):
     """
-    Muestra todos los Sponsors cuyo país coincide con 'pais' y cuyo monto es mayor o igual a 'monto_min'.
-    Se combinan filtros (AND) directamente en el QuerySet.
+    Lista todos los sponsors filtrando por país y monto, y usando ManyToMany para equipos.
     """
-    sponsors = (
-        Sponsor.objects
-        .filter(pais=pais)              # filtro por país
-        .filter(monto__gte=monto_min)   # filtro por monto >= monto_min (AND implícito)
-        .prefetch_related('equipos')    # obtener los equipos relacionados eficientemente
-        .order_by('nombre')
-    )
+    sponsors = Sponsor.objects.filter(pais=pais).filter(monto__gte=monto_min).prefetch_related('equipos').order_by('nombre')
 
     # Equivalente SQL usando raw()
     sql = f"""
@@ -380,7 +301,6 @@ def lista_sponsors(request, pais, monto_min):
     #sponsors_sql = Sponsor.objects.raw(sql)
 
     contexto = {
-        "sponsors": sponsors,
-        #"sponsors_sql": sponsors_sql
+        "sponsors": sponsors
     }
     return render(request, "eventos_deportivos/lista_sponsors.html", contexto)
