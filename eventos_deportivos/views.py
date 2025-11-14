@@ -34,7 +34,7 @@ def lista_jugadores(request):
     # QuerySet optimizado con OR (sin usar Q)
     jugadores_porteros = Jugador.objects.filter(posicion="POR").select_related('estadisticas')
     jugadores_defensas = Jugador.objects.filter(posicion="DEF").select_related('estadisticas')
-    jugadores = (jugadores_porteros | jugadores_defensas).order_by('nombre')
+    jugadores = (jugadores_porteros | jugadores_defensas).all().order_by('nombre')
 
     # Obtener equipos de cada jugador usando prefetch_related en tabla intermedia
     jugadores = jugadores.prefetch_related(
@@ -225,7 +225,7 @@ def detalle_torneo(request, nombre_torneo):
     """
     Muestra todos los torneos que coincidan con el nombre.
     """
-    torneos = Torneo.objects.filter(nombre=nombre_torneo).order_by('fecha_inicio').prefetch_related(
+    torneos = Torneo.objects.filter(nombre=nombre_torneo).all().order_by('fecha_inicio').prefetch_related(
         Prefetch('partido_set', queryset=Partido.objects.select_related('equipo_local', 'equipo_visitante'))
     )
 
@@ -257,7 +257,7 @@ def lista_torneos(request):
     """
     torneos = Torneo.objects.prefetch_related(
         Prefetch('partido_set', queryset=Partido.objects.select_related('equipo_local', 'equipo_visitante'))
-    ).order_by('fecha_inicio')
+    ).all().order_by('fecha_inicio')
 
     contexto = {
         "torneos": torneos
@@ -287,7 +287,7 @@ def lista_sponsors(request, pais, monto_min):
     """
     Lista todos los sponsors filtrando por país y monto, y usando ManyToMany para equipos.
     """
-    sponsors = Sponsor.objects.filter(pais=pais).filter(monto__gte=monto_min).prefetch_related('equipos').order_by('nombre')
+    sponsors = Sponsor.objects.filter(pais=pais).filter(monto__gte=monto_min).all().prefetch_related('equipos').order_by('nombre')
 
     # Equivalente SQL usando raw()
     sql = f"""
