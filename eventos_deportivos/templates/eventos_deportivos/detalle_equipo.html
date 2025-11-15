@@ -1,27 +1,21 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Detalle Equipo</title>
-    <style>
-        body { font-family: Arial, sans-serif; background: #f2f2f2; padding: 20px; }
-        h1, h2 { text-align: center; }
-        ul { list-style: none; padding: 0; }
-        li { margin: 5px 0; }
-    </style>
-</head>
-<body>
-    <h1>{{ equipo.nombre }}</h1>
-    <p>Ciudad: {{ equipo.ciudad }}</p>
-    <p>Fundación: {{ equipo.fundacion }}</p>
-    <p>Activo: {{ equipo.activo|yesno:"Sí,No" }}</p>
-    <h2>Jugadores</h2>
+{% extends "./base.html" %}
+{% block title %}Detalle Equipo{% endblock %}
+
+{% block contenido %}
+<h1>{{ equipo.nombre }}</h1>
+
+<div class="card">
+    <p><strong>Ciudad:</strong> {{ equipo.ciudad }}</p>
+    <p><strong>Fundación:</strong> {{ equipo.fundacion|date:"Y" }}</p>
+    <p><strong>Activo:</strong> {% if equipo.activo %}Sí{% else %}No{% endif %}</p>
+
+    <p><strong>Jugadores:</strong></p>
     <ul>
-        {% for ej in jugadores_equipo %}
-        <li>{{ ej.jugador.nombre }} {{ ej.jugador.apellido }} ({{ ej.capitan|yesno:"Capitán,Jugador" }})</li>
+        {% for ej in equipo.equipojugador_set.all %}
+        <li>{{ ej.jugador.nombre }} {{ ej.jugador.apellido }} — {{ ej.fecha_ingreso }} {% if ej.capitan %}(Capitán){% endif %}</li>
         {% empty %}
-        <li>Sin jugadores</li>
+        <li>Sin jugadores asignados</li>
         {% endfor %}
     </ul>
-</body>
-</html>
+</div>
+{% endblock %}

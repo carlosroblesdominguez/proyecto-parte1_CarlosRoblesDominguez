@@ -1,22 +1,18 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Detalle Partido</title>
-    <style>
-        body { font-family: Arial, sans-serif; background: #f2f2f2; padding: 20px; }
-        h1, h2 { text-align: center; }
-        ul { list-style: none; padding: 0; }
-        li { margin: 5px 0; }
-    </style>
-</head>
-<body>
-    <h1>{{ partido.equipo_local.nombre }} vs {{ partido.equipo_visitante.nombre }}</h1>
-    <p>Fecha: {{ partido.fecha }}</p>
-    <p>Resultado: {{ partido.resultado }}</p>
-    <p>Torneo: {{ partido.torneo.nombre }}</p>
+{% extends "./base.html" %}
 
-    <h2>Árbitros</h2>
+{% block cabecera %}
+<h1>{{ partido.equipo_local.nombre }} vs {{ partido.equipo_visitante.nombre }}</h1>
+{% endblock %}
+
+{% block contenido %}
+<h1>{{ partido.equipo_local.nombre }} vs {{ partido.equipo_visitante.nombre }}</h1>
+
+<div class="card">
+    <p><strong>Fecha:</strong> {{ partido.fecha|date:"d/m/Y H:i" }}</p>
+    <p><strong>Resultado:</strong> {{ partido.resultado }}</p>
+    <p><strong>Torneo:</strong> {{ partido.torneo.nombre }}</p>
+
+    <p><strong>Árbitros:</strong></p>
     <ul>
         {% for arbitro in arbitros %}
         <li>{{ arbitro.nombre }} {{ arbitro.apellido }}</li>
@@ -24,5 +20,5 @@
         <li>Sin árbitros asignados</li>
         {% endfor %}
     </ul>
-</body>
-</html>
+</div>
+{% endblock %}

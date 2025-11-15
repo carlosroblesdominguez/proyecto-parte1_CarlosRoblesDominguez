@@ -1,49 +1,28 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Lista de Equipos</title>
-    <style>
-        body { font-family: Arial, sans-serif; background: #f2f2f2; padding: 20px; }
-        h1 { text-align: center; }
-        table { width: 100%; border-collapse: collapse; background: white; }
-        th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
-        th { background: #4CAF50; color: white; }
-        ul { list-style: none; padding: 0; margin: 0; }
-        li { margin-bottom: 3px; }
-    </style>
-</head>
-<body>
-    <h1>Lista de Equipos</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Ciudad</th>
-                <th>Fundación</th>
-                <th>Activo</th>
-                <th>Jugadores</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for equipo in equipos %}
-            <tr>
-                <td>{{ equipo.nombre }}</td>
-                <td>{{ equipo.ciudad }}</td>
-                <td>{{ equipo.fundacion }}</td>
-                <td>{{ equipo.activo|yesno:"Sí,No" }}</td>
-                <td>
-                    <ul>
-                        {% for jugador in equipo.jugadores.all %}
-                        <li>{{ jugador.nombre }} {{ jugador.apellido }}</li>
-                        {% empty %}
-                        <li>Sin jugadores</li>
-                        {% endfor %}
-                    </ul>
-                </td>
-            </tr>
+{% extends "./base.html" %}
+{% block title %}Lista de Equipos{% endblock %}
+
+{% block contenido %}
+<h1>Lista de Equipos</h1>
+
+<div class="grid-container">
+    {% for equipo in equipos %}
+    <div class="card">
+        <h2>{{ equipo.nombre }}</h2>
+        <p><strong>Ciudad:</strong> {{ equipo.ciudad }}</p>
+        <p><strong>Fundación:</strong> {{ equipo.fundacion|date:"Y" }}</p>
+        <p><strong>Activo:</strong> {% if equipo.activo %}Sí{% else %}No{% endif %}</p>
+        <p><strong>Jugadores:</strong></p>
+        <ul>
+            {% for jugador in equipo.jugadores.all %}
+            <li>{{ jugador.nombre }} {{ jugador.apellido }}</li>
+            {% empty %}
+            <li>Sin jugadores</li>
             {% endfor %}
-        </tbody>
-    </table>
-</body>
-</html>
+        </ul>
+        <a href="{% url 'detalle_equipo' equipo.id %}" class="btn">Ver detalles</a>
+    </div>
+    {% empty %}
+    <p>No hay equipos disponibles.</p>
+    {% endfor %}
+</div>
+{% endblock %}

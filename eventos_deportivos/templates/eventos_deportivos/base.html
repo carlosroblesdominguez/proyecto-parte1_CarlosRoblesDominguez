@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Mi Proyecto{% endblock %}</title>
+    {% load static %}
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'eventos_deportivos/css/styles.css' %}">
+
+    <!-- JS -->
+    <script src="{% static 'eventos_deportivos/js/app.js' %}" defer></script>
+
+    {% block cabecera %}{% endblock %}
+</head>
+<body>
+
+<header>
+    <nav>
+        <img src="{% static 'eventos_deportivos/img/logo.png' %}" alt="Logo" style="height:50px">
+
+        <ul>
+            <li><a href="{% url 'index' %}">Inicio</a></li>
+            <li><a href="{% url 'lista_jugadores' %}">Jugadores</a></li>
+            <li><a href="{% url 'lista_equipos' %}">Equipos</a></li>
+            <li><a href="{% url 'lista_partidos' %}">Partidos</a></li>
+            <li><a href="{% url 'lista_torneos' %}">Torneos</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    {% block contenido %}{% endblock %}
+</main>
+
+<footer>
+    <p>Proyecto Django — {{ now|date:"Y" }}</p>
+</footer>
+
+</body>
+</html>

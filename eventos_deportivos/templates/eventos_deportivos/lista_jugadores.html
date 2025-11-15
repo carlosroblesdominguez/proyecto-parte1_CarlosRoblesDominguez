@@ -1,55 +1,26 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Lista de Jugadores</title>
-    <style>
-        body { font-family: Arial, sans-serif; background: #f2f2f2; padding: 20px; }
-        h1 { text-align: center; }
-        table { width: 100%; border-collapse: collapse; background: white; }
-        th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
-        th { background: #4CAF50; color: white; }
-        ul { list-style: none; padding: 0; margin: 0; }
-        li { margin-bottom: 3px; }
-    </style>
-</head>
-<body>
-    <h1>Lista de Jugadores</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Posición</th>
-                <th>Partidos</th>
-                <th>Goles</th>
-                <th>Asistencias</th>
-                <th>Tarjetas</th>
-                <th>Equipos</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for jugador in jugadores %}
-            <tr>
-                <td>{{ jugador.nombre }}</td>
-                <td>{{ jugador.apellido }}</td>
-                <td>{{ jugador.posicion }}</td>
-                <td>{{ jugador.estadisticas.partidos_jugados }}</td>
-                <td>{{ jugador.estadisticas.goles }}</td>
-                <td>{{ jugador.estadisticas.asistencias }}</td>
-                <td>{{ jugador.estadisticas.tarjetas }}</td>
-                <td>
-                    <ul>
-                        {% for ej in jugador.equipojugador_set.all %}
-                        <li>{{ ej.equipo.nombre }} ({{ ej.capitan|yesno:"Capitán,Jugador" }})</li>
-                        {% empty %}
-                        <li>Sin equipos</li>
-                        {% endfor %}
-                    </ul>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
-</html>
+{% extends "./base.html" %}
+{% block title %}Lista de Jugadores{% endblock %}
+
+{% block contenido %}
+<h1>Lista de Jugadores</h1>
+
+<div class="grid-container">
+    {% for jugador in jugadores %}
+    <div class="card">
+        <h2>{{ jugador.nombre }} {{ jugador.apellido }}</h2>
+        <p><strong>Fecha de nacimiento:</strong> {{ jugador.fecha_nacimiento|date:"d/m/Y" }}</p>
+        <p><strong>Posición:</strong> {{ jugador.get_posicion_display }}</p>
+        <p><strong>Estadísticas:</strong></p>
+        <ul>
+            <li>Partidos jugados: {{ jugador.estadisticas.partidos_jugados }}</li>
+            <li>Goles: {{ jugador.estadisticas.goles }}</li>
+            <li>Asistencias: {{ jugador.estadisticas.asistencias }}</li>
+            <li>Tarjetas: {{ jugador.estadisticas.tarjetas }}</li>
+        </ul>
+        <a href="{% url 'detalle_jugador' jugador.id %}" class="btn">Ver detalles</a>
+    </div>
+    {% empty %}
+    <p>No hay jugadores disponibles.</p>
+    {% endfor %}
+</div>
+{% endblock %}
