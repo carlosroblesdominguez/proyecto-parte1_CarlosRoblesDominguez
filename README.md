@@ -549,3 +549,66 @@ Premio 1 --- 1 Equipo (ganador)
 Arbitro M --- M Partido
 Sponsor M --- M Equipo
 ```
+
+# Proyecto Django — Uso de Template Tags y Filters
+
+Este proyecto utiliza múltiples **template tags**, **operadores en condicionales** y **template filters** para mostrar la información de manera clara y dinámica.
+
+---
+
+## 1. Template Tags usados (al menos 5)
+
+| Tag             | Páginas donde se usa                     | Comentario |
+|-----------------|----------------------------------------|------------|
+| `{% for ... %}` | Todas las páginas de listas y detalles | Para iterar sobre QuerySets, por ejemplo jugadores, equipos, partidos, torneos, sponsors, árbitros. |
+| `{% empty %}`   | Todas las páginas de listas             | Para mostrar un mensaje cuando no hay registros. Ej.: `No hay jugadores registrados`. |
+| `{% if ... %}`  | `lista_equipos.html`, `detalle_jugador.html` | Para mostrar valores por defecto o controlar visualización. |
+| `{% else %}`    | `lista_equipos.html`, `detalle_jugador.html` | Complementa los if para casos alternativos. |
+| `{% block ... %}` | Todas las páginas principales         | Para definir bloques heredables de `base.html` (contenido, cabecera, título). |
+| `{% extends ... %}` | Todas las páginas principales       | Para heredar la estructura de `base.html`. |
+| `{% load static %}` | `base.html`                          | Para cargar archivos estáticos (CSS, JS, imágenes). |
+
+---
+
+## 2. Operadores diferentes usados en los `if` (al menos 5)
+
+| Operador        | Página donde se usa                       | Ejemplo |
+|-----------------|-----------------------------------------|---------|
+| `==`             | `detalle_jugador.html`                  | `{% if jugador.posicion == "Delantero" %}` |
+| `!=`             | `lista_equipos.html`                    | `{% if equipo.activo != False %}` |
+| `>`              | `lista_sponsors.html`                    | `{% if sponsor.monto > 10000 %}` |
+| `<`              | `lista_sponsors.html`                    | `{% if sponsor.monto < 50000 %}` |
+| `>=`             | `lista_sponsors.html`                    | `{% if sponsor.monto >= 20000 %}` |
+| `<=`             | `detalle_jugador.html`                   | `{% if jugador.estadisticas.goles <= 0 %}` |
+| `and`            | `detalle_arbitro_torneo.html`            | `{% if partidos|length > 0 and arbitro.nombre %}` |
+| `or`             | `detalle_partido.html`                    | `{% if arbitros|length == 0 or partido.resultado == None %}` |
+
+> Nota: Se han usado **8 operadores distintos**, cumpliendo y superando el mínimo de 5.
+
+---
+
+## 3. Template Filters usados (al menos 10)
+
+| Filter                  | Páginas donde se usa                     | Comentario |
+|--------------------------|----------------------------------------|------------|
+| `date:"d/m/Y"`           | Todas las páginas con fechas (`detalle_jugador`, `lista_equipos`, `detalle_partido`, etc.) | Formato de fecha día/mes/año. |
+| `time:"H:i"`             | `detalle_partido.html`, `lista_partidos.html` | Mostrar solo hora y minutos de la fecha. |
+| `upper`                  | `detalle_jugador.html`, `detalle_arbitro_torneo.html` | Para poner en mayúsculas nombres o posiciones. |
+| `lower`                  | `lista_torneos.html`, `lista_sponsors.html` | Para mostrar el país en minúsculas. |
+| `default_if_none:"0"`    | `lista_jugadores.html`, `detalle_jugador.html` | Mostrar valor 0 si el campo es None. |
+| `default:"Desconocida"`  | `detalle_jugador.html`                  | Valor por defecto si no hay posición. |
+| `truncatechars:10`       | `lista_jugadores.html`                  | Trunca nombres largos a 10 caracteres. |
+| `yesno:"Sí,No"`          | `lista_equipos.html`                     | Mostrar "Sí" o "No" para booleanos. |
+| `floatformat:2`          | `lista_sponsors.html`                    | Mostrar monto con 2 decimales. |
+| `length`                 | `lista_equipos.html`, `lista_torneos.html`, `lista_sponsors.html` | Mostrar número de elementos en ManyToMany o listas. |
+| `safe` (opcional)        | No usado actualmente, se puede usar para contenido HTML | Permitir renderizar HTML en templates. |
+
+> Total de **10 filters usados** efectivamente en diferentes páginas.
+
+---
+
+## Resumen
+
+- **Template tags:** Se usan todos los principales (`for`, `if`, `else`, `empty`, `block`, `extends`, `load static`), cumpliendo el requisito mínimo.  
+- **Operadores en if:** Se usan `==, !=, >, <, >=, <=, and, or` — más de 5.  
+- **Template filters:** Se usan 10 filters diferentes para fechas, textos, valores por defecto y longitud de listas.  
