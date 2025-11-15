@@ -2,14 +2,14 @@
 {% block title %}Detalle Árbitro{% endblock %}
 
 {% block contenido %}
-<h1>Árbitro: {{ arbitro.nombre }} {{ arbitro.apellido }}</h1>
+<h1>{{ arbitro.nombre|upper }} {{ arbitro.apellido|upper }}</h1>
 
-<h2>Partidos en el torneo</h2>
+<h2>Partidos dirigidos en el torneo</h2>
 <ul>
     {% for partido in partidos %}
-        <li>{{ partido.equipo_local.nombre }} vs {{ partido.equipo_visitante.nombre }} — {{ partido.resultado }} ({{ partido.fecha|date:"d/m/Y H:i" }})</li>
+    <li>{{ partido.equipo_local.nombre }} vs {{ partido.equipo_visitante.nombre }} — {{ partido.fecha|date:"d/m/Y H:i" }}</li>
     {% empty %}
-        <p>No ha dirigido partidos en este torneo.</p>
+    <li>Sin partidos asignados</li>
     {% endfor %}
 </ul>
 {% endblock %}

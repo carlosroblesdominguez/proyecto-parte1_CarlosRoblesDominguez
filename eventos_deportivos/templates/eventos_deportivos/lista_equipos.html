@@ -2,27 +2,32 @@
 {% block title %}Lista de Equipos{% endblock %}
 
 {% block contenido %}
-<h1>Lista de Equipos</h1>
+<h1>Listado de Equipos</h1>
 
-<div class="grid-container">
-    {% for equipo in equipos %}
-    <div class="card">
-        <h2>{{ equipo.nombre }}</h2>
-        <p><strong>Ciudad:</strong> {{ equipo.ciudad }}</p>
-        <p><strong>Fundación:</strong> {{ equipo.fundacion|date:"Y" }}</p>
-        <p><strong>Activo:</strong> {% if equipo.activo %}Sí{% else %}No{% endif %}</p>
-        <p><strong>Jugadores:</strong></p>
-        <ul>
-            {% for jugador in equipo.jugadores.all %}
-            <li>{{ jugador.nombre }} {{ jugador.apellido }}</li>
-            {% empty %}
-            <li>Sin jugadores</li>
-            {% endfor %}
-        </ul>
-        <a href="{% url 'detalle_equipo' equipo.id %}" class="btn">Ver detalles</a>
-    </div>
-    {% empty %}
-    <p>No hay equipos disponibles.</p>
-    {% endfor %}
-</div>
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Ciudad</th>
+            <th>Fundación</th>
+            <th>Activo</th>
+            <th>Jugadores</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for equipo in equipos %}
+        <tr>
+            <td>{{ equipo.nombre }}</td>
+            <td>{{ equipo.ciudad }}</td>
+            <td>{{ equipo.fundacion|date:"d/m/Y" }}</td>
+            <td>{{ equipo.activo|yesno:"Sí,No" }}</td>
+            <td>{{ equipo.jugadores.all|length }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No hay equipos registrados</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

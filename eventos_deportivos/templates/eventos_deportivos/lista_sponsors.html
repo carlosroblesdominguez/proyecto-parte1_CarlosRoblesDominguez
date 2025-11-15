@@ -2,19 +2,30 @@
 {% block title %}Lista de Sponsors{% endblock %}
 
 {% block contenido %}
-<h1>Sponsors</h1>
+<h1>Lista de Sponsors</h1>
 
-<ul>
-    {% for sponsor in sponsors %}
-        <li>{{ sponsor.nombre }} — {{ sponsor.pais }} — Monto: {{ sponsor.monto }}
-            {% if sponsor.equipos.all %}
-                | Equipos: {% for equipo in sponsor.equipos.all %}{{ equipo.nombre }}{% if not forloop.last %}, {% endif %}{% endfor %}
-            {% else %}
-                | Sin equipos asociados
-            {% endif %}
-        </li>
-    {% empty %}
-        <p>No hay sponsors disponibles.</p>
-    {% endfor %}
-</ul>
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Monto</th>
+            <th>País</th>
+            <th>Equipos</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sponsor in sponsors %}
+        <tr>
+            <td>{{ sponsor.nombre }}</td>
+            <td>{{ sponsor.monto|floatformat:2 }}</td>
+            <td>{{ sponsor.pais|lower }}</td>
+            <td>{{ sponsor.equipos.all|length }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No hay sponsors registrados</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

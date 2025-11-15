@@ -4,23 +4,36 @@
 {% block contenido %}
 <h1>Lista de Jugadores</h1>
 
-<div class="grid-container">
-    {% for jugador in jugadores %}
-    <div class="card">
-        <h2>{{ jugador.nombre }} {{ jugador.apellido }}</h2>
-        <p><strong>Fecha de nacimiento:</strong> {{ jugador.fecha_nacimiento|date:"d/m/Y" }}</p>
-        <p><strong>Posición:</strong> {{ jugador.get_posicion_display }}</p>
-        <p><strong>Estadísticas:</strong></p>
-        <ul>
-            <li>Partidos jugados: {{ jugador.estadisticas.partidos_jugados }}</li>
-            <li>Goles: {{ jugador.estadisticas.goles }}</li>
-            <li>Asistencias: {{ jugador.estadisticas.asistencias }}</li>
-            <li>Tarjetas: {{ jugador.estadisticas.tarjetas }}</li>
-        </ul>
-        <a href="{% url 'detalle_jugador' jugador.id %}" class="btn">Ver detalles</a>
-    </div>
-    {% empty %}
-    <p>No hay jugadores disponibles.</p>
-    {% endfor %}
-</div>
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Fecha Nacimiento</th>
+            <th>Posición</th>
+            <th>Partidos</th>
+            <th>Goles</th>
+            <th>Asistencias</th>
+            <th>Tarjetas</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for jugador in jugadores %}
+        <tr>
+            <td>{{ jugador.nombre|truncatechars:10 }}</td>
+            <td>{{ jugador.apellido }}</td>
+            <td>{{ jugador.fecha_nacimiento|date:"d/m/Y" }}</td>
+            <td>{{ jugador.get_posicion_display|upper }}</td>
+            <td>{{ jugador.estadisticas.partidos_jugados|default_if_none:"0" }}</td>
+            <td>{{ jugador.estadisticas.goles|default_if_none:"0" }}</td>
+            <td>{{ jugador.estadisticas.asistencias|default_if_none:"0" }}</td>
+            <td>{{ jugador.estadisticas.tarjetas|default_if_none:"0" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="8">No hay jugadores registrados</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

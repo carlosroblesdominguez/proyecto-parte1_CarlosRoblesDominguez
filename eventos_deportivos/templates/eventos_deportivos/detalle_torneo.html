@@ -2,18 +2,17 @@
 {% block title %}Detalle Torneo{% endblock %}
 
 {% block contenido %}
-<h1>{{ torneos.0.nombre }}</h1>
-
-<p>País: {{ torneos.0.pais }}</p>
-<p>Fecha inicio: {{ torneos.0.fecha_inicio|date:"d/m/Y" }}</p>
-<p>Fecha fin: {{ torneos.0.fecha_fin|date:"d/m/Y" }}</p>
+<h1>{{ torneos.0.nombre|upper }}</h1>
+<p>País: {{ torneos.0.pais|lower }}</p>
+<p>Fecha Inicio: {{ torneos.0.fecha_inicio|date:"d/m/Y" }}</p>
+<p>Fecha Fin: {{ torneos.0.fecha_fin|date:"d/m/Y" }}</p>
 
 <h2>Partidos</h2>
 <ul>
     {% for partido in torneos.0.partido_set.all %}
-        <li>{{ partido.equipo_local.nombre }} vs {{ partido.equipo_visitante.nombre }} — {{ partido.resultado }} ({{ partido.fecha|date:"d/m/Y H:i" }})</li>
+    <li>{{ partido.equipo_local.nombre }} vs {{ partido.equipo_visitante.nombre }} — {{ partido.resultado }}</li>
     {% empty %}
-        <p>No hay partidos registrados en este torneo.</p>
+    <li>Sin partidos</li>
     {% endfor %}
 </ul>
 {% endblock %}

@@ -7,18 +7,17 @@
 {% block contenido %}
 <h1>{{ partido.equipo_local.nombre }} vs {{ partido.equipo_visitante.nombre }}</h1>
 
-<div class="card">
-    <p><strong>Fecha:</strong> {{ partido.fecha|date:"d/m/Y H:i" }}</p>
-    <p><strong>Resultado:</strong> {{ partido.resultado }}</p>
-    <p><strong>Torneo:</strong> {{ partido.torneo.nombre }}</p>
+<p>Fecha: {{ partido.fecha|date:"d/m/Y" }}</p>
+<p>Hora: {{ partido.fecha|time:"H:i" }}</p>
+<p>Resultado: {{ partido.resultado }}</p>
+<p>Torneo: {{ partido.torneo.nombre|upper }}</p>
 
-    <p><strong>Árbitros:</strong></p>
-    <ul>
-        {% for arbitro in arbitros %}
-        <li>{{ arbitro.nombre }} {{ arbitro.apellido }}</li>
-        {% empty %}
-        <li>Sin árbitros asignados</li>
-        {% endfor %}
-    </ul>
-</div>
+<h2>Árbitros</h2>
+<ul>
+    {% for arbitro in arbitros %}
+    <li>{{ arbitro.nombre|upper }} {{ arbitro.apellido|upper }}</li>
+    {% empty %}
+    <li>Sin árbitros asignados</li>
+    {% endfor %}
+</ul>
 {% endblock %}
