@@ -1,0 +1,118 @@
+from django import forms
+from .models import *
+
+# Create your forms here.
+
+# Jugador    
+class JugadorForm(forms.ModelForm):
+    class Meta:
+        model = Jugador
+        fields = ['nombre', 'apellido', 'fecha_nacimiento', 'posicion', 'estadisticas']
+        labels = {
+            'nombre': 'Nombre',
+            'apellido': 'Apellido',
+            'fecha_naciemiento': 'Fecha de Nacimiento',
+            'posicion': 'Posición',
+            'estadisticas': 'Estadísticas',
+        }
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'apellido': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: Messi'}),
+            'fecha_nacimiento': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'posicion': forms.Select(attrs={'class': 'form-select'}),
+            'estadisticas': forms.Select(attrs={'class': 'form-select'}),
+        }
+            
+# Equipo
+class EquipoForm(forms.Form):
+    nombre = forms.CharField(max_length=100)
+    ciudad = forms.CharField(max_length=100)
+    fundacion = forms.DateField()
+    activo = forms.BooleanField(default=True)
+    jugadores = forms.ManyToManyField(
+        Jugador, 
+        through='EquipoJugador',
+    )
+    estadio_principal = forms.OneToOneField(
+        'Estadio',
+        on_delete=forms.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='torneo_dirigido'
+    )
+    
+# Torneo
+class Torneo(forms.Form):
+    nombre = forms.CharField(max_length=100)
+    pais = forms.CharField(max_length=50)
+    fecha_inicio = forms.DateField()
+    fecha_fin = forms.DateField()
+    arbitro_principal = forms.OneToOneField(
+        'Arbitro',
+        on_delete=forms.SET_NULL,
+        null=True,
+        related_name='torneo_dirigido'
+    )
+    
+# Partido
+class Partido(forms.Form):
+    equipo_local = forms.ForeignKey(
+        Equipo,
+        on_delete=forms.CASCADE,
+        related_name='partidos_local'
+    )
+    equipo_visitante = forms.ForeignKey(
+        Equipo,
+        on_delete=forms.CASCADE,
+        related_name='partidos_visitante'
+    )
+    fecha = forms.DateTimeField()
+    resultado = forms.CharField(max_length=20)
+    torneo = forms.ForeignKey(
+        Torneo,
+        on_delete=forms.CASCADE
+    )
+
+# Arbitro    
+class Arbitro(forms.Form):
+    nombre = forms.CharField(max_length=100)
+    apellido = forms.CharField(max_length=100)
+    licencia = forms.CharField(
+        max_length=50,
+        unique=True
+    )
+    partidos = forms.ManyToManyField(Partido)
+    
+# Estadio
+class Estadio(forms.Form):
+    nombre = forms.CharField(max_length=100)
+    ciudad = forms.CharField(max_length=100)
+    capacidad = forms.IntegerField()
+    cubierto = forms.BooleanField(required=False)
+    
+# Sponsor
+class Sponsor(forms.Form):
+    nombre = forms.CharField(max_length=100)
+    monto = forms.DecimalField(
+        max_digits=10,
+        decimal_places=2
+    )
+    pais = forms.CharField(max_length=50)
+    equipos = forms.ManyToManyField(Equipo)
+    
+class Premio(forms.Form):
+    nombre = forms.CharField(max_length=100)
+    monto = forms.DecimalField(
+        max_digits=10,
+        decimal_places=2
+    )
+    torneo = forms.ForeignKey(
+        Torneo,
+        on_delete=forms.CASCADE
+    )
+    ganador = forms.ForeignKey(
+        Equipo,
+        on_delete=forms.SET_NULL,
+        null=True,
+        blank=True
+    )
