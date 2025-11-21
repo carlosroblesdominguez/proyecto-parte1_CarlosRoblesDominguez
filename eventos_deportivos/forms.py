@@ -22,7 +22,7 @@ class JugadorForm(forms.ModelForm):
             'posicion': forms.Select(attrs={'class': 'form-select'}),
             'estadisticas': forms.Select(attrs={'class': 'form-select'}),
         }
-            
+'''            
 # Equipo
 class EquipoForm(forms.Form):
     nombre = forms.CharField(max_length=100)
@@ -116,3 +116,4 @@ class Premio(forms.Form):
         null=True,
         blank=True
     )
+'''

@@ -1,1 +1,5 @@
 Django~=5.1.1
+django-debug-toolbar
+faker
+django-bootstrap5~=24.3
+django-bootstrap-icons~=0.8.6

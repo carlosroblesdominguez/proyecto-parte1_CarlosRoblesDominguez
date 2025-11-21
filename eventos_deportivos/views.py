@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Prefetch, Count, Max
 from .models import *
+from .forms import *
 
 # Create your views here.
 def index(request):
@@ -304,3 +305,13 @@ def lista_sponsors(request, pais, monto_min):
         "sponsors": sponsors
     }
     return render(request, "eventos_deportivos/lista_sponsors.html", contexto)
+
+# ----------------------------
+# FORMULARIOS
+# ----------------------------
+# Formulario Crear Jugador
+# ----------------------------
+
+def jugador_create(request):
+    formulario = JugadorForm()
+    return render(request, 'eventos_deportivos/create.html',{"formulario":formulario})

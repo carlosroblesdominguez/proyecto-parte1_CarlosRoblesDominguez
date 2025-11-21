@@ -22,9 +22,12 @@ urlpatterns = [
     path('torneos/<str:nombre_torneo>/', views.detalle_torneo, name='detalle_torneo'), # URL7: Detalle de un torneo por nombre
 
     # Árbitros
-    path('arbitros/<int:arbitro_id>/torneo/<int:torneo_id>/', views.detalle_arbitro_torneo, 
-         name='detalle_arbitro_torneo'),                                              # URL9: Detalle de un árbitro en un torneo específico
+    path('arbitros/<int:arbitro_id>/torneo/<int:torneo_id>/', views.detalle_arbitro_torneo, name='detalle_arbitro_torneo'),                                              # URL9: Detalle de un árbitro en un torneo específico
 
     # Sponsors
     path('sponsors/<str:pais>/<int:monto_min>/', views.lista_sponsors, name='lista_sponsors'), # URL10: Lista de Sponsors filtrando por país y monto
+
+    # Formularios
+    # Crear Jugador
+    path('jugadores/create', views.jugador_create, name='create')
 ]
