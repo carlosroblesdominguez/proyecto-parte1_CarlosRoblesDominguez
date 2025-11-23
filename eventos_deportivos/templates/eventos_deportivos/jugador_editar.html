@@ -1,0 +1,19 @@
+{% extends "./base.html" %}
+{% block title %}Actualizar Jugador{% endblock %}
+
+{% block contenido %}
+<form action="{% url 'jugador_editar' jugador.id %}" method="post"
+    value="{% spaceless %}
+        {% if formulario.is_bound %}
+            {{ formulario.nombre.value }}
+        {% elif libro %}
+            {{ formulario.nombre.value }}
+        {% endif %}
+    {% endspaceless %}">
+
+    {% csrf_token %}
+    <h3>Datos del Jugador</h3>
+    {{ formulario }}
+    <button type="submit">Actualizar</button>
+</form>
+{% endblock %}
