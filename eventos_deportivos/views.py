@@ -1,5 +1,6 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Prefetch, Count, Max
+from django.contrib import messages
 from .models import *
 from .forms import *
 
@@ -33,9 +34,8 @@ def lista_jugadores(request):
     Incluye filtro OR para mostrar Porteros o Defensas.
     """
     # QuerySet optimizado con OR (sin usar Q)
-    jugadores_porteros = Jugador.objects.filter(posicion="POR").select_related('estadisticas')
-    jugadores_defensas = Jugador.objects.filter(posicion="DEF").select_related('estadisticas')
-    jugadores = (jugadores_porteros | jugadores_defensas).all().order_by('nombre')
+    jugadores = Jugador.objects.filter().select_related('estadisticas')
+    jugadores = (jugadores ).all().order_by('nombre')
 
     # Obtener equipos de cada jugador usando prefetch_related en tabla intermedia
     jugadores = jugadores.prefetch_related(
@@ -312,6 +312,46 @@ def lista_sponsors(request, pais, monto_min):
 # Formulario Crear Jugador
 # ----------------------------
 
+def jugador_create_valid(formulario):
+    # Valida y guarda el formulario de jugador junto con sus estadísticas.
+    # Devuelve True si se guardó correctamente, False si hubo error.
+
+    jugador_creado = False
+    # Comprueba si el formulario es valido
+    if formulario.is_valid():
+        try:
+            # Crear la estadística
+            estadisticas = EstadisticasJugador.objects.create(
+                partidos_jugados=formulario.cleaned_data['partidos_jugados'],
+                goles=formulario.cleaned_data['goles'],
+                asistencias=formulario.cleaned_data['asistencias'],
+                tarjetas=formulario.cleaned_data['tarjetas']
+            )
+            # Guarda el jugador en la base de datos
+            # Crear el jugador asignando la estadística
+            formulario = formulario.save(commit=False)
+            formulario.estadisticas = estadisticas
+            formulario.save()
+            
+            jugador_creado = True
+        except Exception as e:
+            print("Error al guardar usuario: ", e)
+    else:
+        print("Formulario no valido: ", formulario.errors)
+    return jugador_creado
+
 def jugador_create(request):
-    formulario = JugadorForm()
-    return render(request, 'eventos_deportivos/create.html',{"formulario":formulario})
+    # si la peticion es GET se crea el formulario vacio
+    # en el caso de set POST se crea el formulario con datos
+    datosFormulario = None
+    if request.method == "POST":
+        datosFormulario = request.POST
+        
+    formulario = JugadorModelForm(datosFormulario)
+    
+    if (request.method == "POST"):
+        jugador_creado = jugador_create_valid(formulario)
+        if(jugador_creado):
+            messages.success(request, 'Se a creado el jugador'+formulario.cleaned_data.get('nombre')+" correctamente")
+            return redirect("lista_jugadores")
+    return render(request, 'eventos_deportivos/jugador_create.html',{"formulario":formulario})

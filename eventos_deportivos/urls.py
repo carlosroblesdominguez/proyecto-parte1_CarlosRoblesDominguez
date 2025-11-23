@@ -29,5 +29,5 @@ urlpatterns = [
 
     # Formularios
     # Crear Jugador
-    path('jugadores/create', views.jugador_create, name='create')
+    path('jugadores/create', views.jugador_create, name='jugador_create')
 ]

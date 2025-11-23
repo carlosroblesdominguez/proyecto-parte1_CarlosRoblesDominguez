@@ -4,6 +4,7 @@
 {% block contenido %}
 <form action="" method="post">
     {% csrf_token %}
+    <h3>Datos del Jugador</h3>
     {{ formulario }}
     <button type="submit">Enviar</button>
 </form>

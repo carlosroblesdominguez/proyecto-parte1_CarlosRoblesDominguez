@@ -3,25 +3,52 @@ from .models import *
 
 # Create your forms here.
 
-# Jugador    
-class JugadorForm(forms.ModelForm):
+# Jugador Create   
+class JugadorModelForm(forms.ModelForm):
+    # Campos de estadísticas que NO están en Jugador
+    partidos_jugados = forms.IntegerField(
+        label="Partidos Jugados",
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+    )
+    goles = forms.IntegerField(
+        label="Goles",
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+    )
+    asistencias = forms.IntegerField(
+        label="Asistencias",
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+    )
+    tarjetas = forms.IntegerField(
+        label="Tarjetas",
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+    )
+    
     class Meta:
         model = Jugador
-        fields = ['nombre', 'apellido', 'fecha_nacimiento', 'posicion', 'estadisticas']
+        fields = ['nombre', 'apellido', 'fecha_nacimiento', 'posicion']
         labels = {
             'nombre': 'Nombre',
             'apellido': 'Apellido',
             'fecha_naciemiento': 'Fecha de Nacimiento',
             'posicion': 'Posición',
-            'estadisticas': 'Estadísticas',
         }
         widgets = {
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
             'apellido': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: Messi'}),
             'fecha_nacimiento': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'posicion': forms.Select(attrs={'class': 'form-select'}),
-            'estadisticas': forms.Select(attrs={'class': 'form-select'}),
         }
+    def clean(self):
+        cleaned_data = super().clean()
+        nombre = cleaned_data.get('nombre')
+        apellido = cleaned_data.get('apellido')
+
+        if nombre and apellido:
+            # Comprueba si ya existe un jugador con los mismos datos
+            if Jugador.objects.filter(nombre=nombre, apellido=apellido).exists():
+                raise forms.ValidationError("Ya existe un jugador con ese nombre y apellido.")
+        
+        return cleaned_data
 '''            
 # Equipo
 class EquipoForm(forms.Form):
