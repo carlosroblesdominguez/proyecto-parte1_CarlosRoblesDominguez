@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.db.models import Prefetch, Count, Max
+from django.db.models import Prefetch, Count, Max, Q
 from django.contrib import messages
 from .models import *
 from .forms import *
@@ -309,9 +309,10 @@ def lista_sponsors(request, pais, monto_min):
 # ----------------------------
 # FORMULARIOS
 # ----------------------------
-# Formulario Crear Jugador
+# CRUD Jugador
 # ----------------------------
 
+# CREAR
 def jugador_create_valid(formulario):
     # Valida y guarda el formulario de jugador junto con sus estadísticas.
     # Devuelve True si se guardó correctamente, False si hubo error.
@@ -355,3 +356,18 @@ def jugador_create(request):
             messages.success(request, 'Se a creado el jugador'+formulario.cleaned_data.get('nombre')+" correctamente")
             return redirect("lista_jugadores")
     return render(request, 'eventos_deportivos/jugador_create.html',{"formulario":formulario})
+
+# LEER
+def jugador_buscar(request):
+    formulario=BusquedaJugadorForm(request.GET)
+    
+    if formulario.is_valid():
+        texto=formulario.cleaned_data.get("nombreBusqueda")
+        jugadores=Jugador.objects.select_related("estadisticas")
+        jugadores=jugadores.filter(Q(nombre__icontains=texto)|Q(apellido__icontains=texto)).all()
+        return render(request, 'eventos_deportivos/jugador_buscar.html', {"jugadores":jugadores,"nombre_busqueda":texto})
+    
+    if("HTTP_REFERER" in request.META):
+        return redirect(request.META["HTTP_REFERER"])
+    else:
+        return redirect("index")

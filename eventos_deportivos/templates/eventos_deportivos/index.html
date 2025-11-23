@@ -18,5 +18,9 @@
 <h2>CRUD Jugadores</h2>
 <ul>
     <li><a href="{% url 'jugador_create' %}">1. Crear Jugadores</a></li>
+    <form action="{% url 'jugador_buscar' %}" class="d-flex mt-3" role="search" method="GET">
+        <input name="nombreBusqueda" class="fomr-control me-2" type="search" placeholder="Search" aria-label="Search"></input>
+        <button class="btn btn-light btn-outline-dark" type="submit">Search Jugadores</button>
+    </form>
 </ul>
 {% endblock %}

@@ -1,0 +1,33 @@
+{% extends "./base.html" %}
+{% block title %}Buscar Jugadores{% endblock %}
+
+{% block contenido %}
+<h2>Resultados de búsqueda:</h2>
+
+{% if jugadores %}
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Posición</th>
+        <th>Partidos</th>
+        <th>Goles</th>
+        <th>Asistencias</th>
+        <th>Tarjetas</th>
+    </tr>
+    {% for jugador in jugadores %}
+    <tr>
+        <td>{{ jugador.nombre }}</td>
+        <td>{{ jugador.apellido }}</td>
+        <td>{{ jugador.posicion }}</td>
+        <td>{{ jugador.estadisticas.partidos_jugados }}</td>
+        <td>{{ jugador.estadisticas.goles }}</td>
+        <td>{{ jugador.estadisticas.asistencias }}</td>
+        <td>{{ jugador.estadisticas.tarjetas }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No se encontraron jugadores.</p>
+{% endif %}
+{% endblock %}

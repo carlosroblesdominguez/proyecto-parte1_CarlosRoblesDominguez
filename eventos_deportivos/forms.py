@@ -49,6 +49,9 @@ class JugadorModelForm(forms.ModelForm):
                 raise forms.ValidationError("Ya existe un jugador con ese nombre y apellido.")
         
         return cleaned_data
+# Jugador buscar
+class BusquedaJugadorForm(forms.Form):
+    nombreBusqueda=forms.CharField(required=True)
 '''            
 # Equipo
 class EquipoForm(forms.Form):
