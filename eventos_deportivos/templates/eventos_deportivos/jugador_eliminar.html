@@ -1,0 +1,16 @@
+{% extends "./base.html" %}
+{% block title %}Crear Jugador{% endblock %}
+
+{% block cabecera_extra %}
+    {% load static s%}
+    <script type="text/javascript" src="{% static 'js/principal.js' %}"></script>
+{% block contenido %}
+<div class="mb-2">
+    <form action="{% 'jugador_eliminar' jugador.id %}" method="post">
+        {% csrf_token %}
+        <button class="btn btn-danger" onclick="return eliminar();" type="submit">Eliminar Jugadores
+            <span>{% bs_icon 'trash' %}</span>
+        </button>
+    </form>
+</div>
+{% endblock %}

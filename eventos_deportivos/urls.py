@@ -34,4 +34,6 @@ urlpatterns = [
     path('jugadores/buscar/', views.jugador_buscar, name='jugador_buscar'),
     # Actualizar Jugadores
     path('jugadores/editar/<int:jugador_id>/', views.jugador_editar, name='jugador_editar'),
+    # Eliminar Jugadores
+    path('jugadores/eliminar/<int:jugador_id>', views.jugador_eliminar, name='jugador_eliminar'),
 ]

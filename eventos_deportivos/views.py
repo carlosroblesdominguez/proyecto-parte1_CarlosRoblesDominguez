@@ -6,13 +6,12 @@ from .forms import *
 
 # Create your views here.
 def index(request):
-    jugadores = Jugador.objects.all()
     """
     Página principal del proyecto.
     Muestra enlaces a todas las URLs implementadas.
     Permite búsqueda rápida para URLs que requieren parámetros.
     """
-    return render(request, "eventos_deportivos/index.html", {"jugadores": jugadores})
+    return render(request, "eventos_deportivos/index.html")
 
 def error_404(request, exception):
     return render(request, 'eventos_deportivos/error_404.html', status=404)
@@ -393,3 +392,12 @@ def jugador_editar(request,jugador_id):
             except Exception as e:
                 pass
     return render(request, 'eventos_deportivos/jugador_editar.html',{"formulario":formulario,"jugador":jugador})
+
+# ELIMINAR
+def jugador_eliminar(request,jugador_id):
+    jugador=Jugador.objects.get(id=jugador_id)
+    try:
+        jugador.delete()
+    except:
+        pass
+    return redirect('lista_jugadores')
