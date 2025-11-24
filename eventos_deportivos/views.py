@@ -124,7 +124,7 @@ def detalle_equipo(request, equipo_id):
         "equipo": equipo,
         "jugadores_equipo": jugadores_equipo
     }
-    return render(request, "eventos_deportivos/detalle_equipo.html", contexto)
+    return render(request, "eventos_deportivos/equipos/detalle_equipo.html", contexto)
 
 # ----------------------------
 # URL4: Lista de partidos
@@ -217,7 +217,7 @@ def lista_equipos(request):
     contexto = {
         "equipos": equipos
     }
-    return render(request, "eventos_deportivos/lista_equipos.html", contexto)
+    return render(request, "eventos_deportivos/equipos/lista_equipos.html", contexto)
 
 # ----------------------------
 # URL7: Detalle de torneos por nombre (r_path)
