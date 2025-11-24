@@ -359,6 +359,24 @@ def jugador_create(request):
 
 # LEER
 def jugador_buscar(request):
+    if(len(request.GET)>0):
+        formulario = BusquedaJugadorForm(request.GET)
+        if formulario.is_valid():
+            mensaje_busqueda="Se ha buscado por los siguientes valores:\n"
+            nombreBusqueda=formulario.cleaned_data.get('nombreBusqueda')
+            apellidoBusqueda=formulario.cleaned_data.get('apellidoBusqueda')
+            posicionBusqueda=formulario.cleaned_data.get('posicionBusqueda')
+            
+            QSjugadores=Jugador.objects.select_related("eventos_deportivos").prefetch_related("jugadores")
+            
+            if(nombreBusqueda != "" or apellidoBusqueda != "")
+            
+    else:
+        formulario = BusquedaJugadorForm(None)
+        
+    return render(request, 'eventos_deportivos/jugadores/jugador_buscar.html', {"formulario":formulario})
+
+    '''
     formulario=BusquedaJugadorForm(request.GET)
     
     if formulario.is_valid():
@@ -371,6 +389,7 @@ def jugador_buscar(request):
         return redirect(request.META["HTTP_REFERER"])
     else:
         return redirect("index")
+    '''
 
 # EDITAR/ACTUALIZAR
 def jugador_editar(request,jugador_id):

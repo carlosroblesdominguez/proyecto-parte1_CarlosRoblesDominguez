@@ -52,6 +52,24 @@ class JugadorModelForm(forms.ModelForm):
 # Jugador buscar
 class BusquedaJugadorForm(forms.Form):
     nombreBusqueda=forms.CharField(required=True)
+    apellidoBusqueda=forms.CharField()
+    posicionBusqueda=forms.ChoiceField(choices=Jugador.POSICIONES,)
+    
+    def clean(self):
+        super().clean()
+        
+        nombreBusqueda=self.cleaned_data.get('nombreBusqueda')
+        apellidoBusqueda=self.cleaned_data.get('apellidosBusqueda')
+        posicionBusqueda=self.cleaned_data.get('posicionBusqueda')
+        
+        if((nombreBusqueda == '' or apellidoBusqueda == '')and len(posicionBusqueda) == 0):
+            self.add_error('Debes introducir al menos el nombre o el apellido')
+            self.add_error('Debes escoger una posicion')
+        else:
+            if((nombreBusqueda != "" and len(nombreBusqueda) < 3)or(apellidoBusqueda != "" and len(apellidoBusqueda) < 3)):
+                self.add_error('Debe introducir al menos 3 caracteres en almenos uno de los 2, nombre o apellido')
+                
+        return self.cleaned_data
 '''            
 # Equipo
 class EquipoForm(forms.Form):
