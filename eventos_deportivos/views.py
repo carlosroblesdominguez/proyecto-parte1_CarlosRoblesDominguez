@@ -58,7 +58,7 @@ def lista_jugadores(request):
     contexto = {
         "jugadores": jugadores
     }
-    return render(request, "eventos_deportivos/lista_jugadores.html", contexto)
+    return render(request, "eventos_deportivos/jugadores/lista_jugadores.html", contexto)
 
 # ----------------------------
 # URL2: Detalle de un jugador
@@ -92,7 +92,7 @@ def detalle_jugador(request, jugador_id):
         "jugador": jugador,
         "equipos_jugador": equipos_jugador
     }
-    return render(request, "eventos_deportivos/detalle_jugador.html", contexto)
+    return render(request, "eventos_deportivos/jugadores/detalle_jugador.html", contexto)
 
 # ----------------------------
 # URL3: Detalle de un equipo
@@ -355,7 +355,7 @@ def jugador_create(request):
         if(jugador_creado):
             messages.success(request, 'Se a creado el jugador'+formulario.cleaned_data.get('nombre')+" correctamente")
             return redirect("lista_jugadores")
-    return render(request, 'eventos_deportivos/jugador_create.html',{"formulario":formulario})
+    return render(request, 'eventos_deportivos/jugadores/jugador_create.html',{"formulario":formulario})
 
 # LEER
 def jugador_buscar(request):
@@ -365,7 +365,7 @@ def jugador_buscar(request):
         texto=formulario.cleaned_data.get("nombreBusqueda")
         jugadores=Jugador.objects.select_related("estadisticas")
         jugadores=jugadores.filter(Q(nombre__icontains=texto)|Q(apellido__icontains=texto)).all()
-        return render(request, 'eventos_deportivos/jugador_buscar.html', {"jugadores":jugadores,"nombre_busqueda":texto})
+        return render(request, 'eventos_deportivos/jugadores/jugador_buscar.html', {"jugadores":jugadores,"nombre_busqueda":texto})
     
     if("HTTP_REFERER" in request.META):
         return redirect(request.META["HTTP_REFERER"])
@@ -391,7 +391,7 @@ def jugador_editar(request,jugador_id):
                 return redirect('lista_jugadores')
             except Exception as e:
                 pass
-    return render(request, 'eventos_deportivos/jugador_editar.html',{"formulario":formulario,"jugador":jugador})
+    return render(request, 'eventos_deportivos/jugadores/jugador_editar.html',{"formulario":formulario,"jugador":jugador})
 
 # ELIMINAR
 def jugador_eliminar(request,jugador_id):
