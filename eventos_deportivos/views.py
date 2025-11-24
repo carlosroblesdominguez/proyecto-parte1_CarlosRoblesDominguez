@@ -369,12 +369,24 @@ def jugador_buscar(request):
             
             QSjugadores=Jugador.objects.select_related("eventos_deportivos").prefetch_related("jugadores")
             
-            if(nombreBusqueda != "" or apellidoBusqueda != "")
+            if(nombreBusqueda != "" or apellidoBusqueda != ""):
+                QSjugadores = QSjugadores.filter(Q(nombre__icontains=nombreBusqueda)|Q(apellido_icontains=apellidoBusqueda))
+                mensaje_busqueda += "Nombre o Apellido que contenga "+nombreBusqueda+" y "+apellidoBusqueda+"\n"
             
+            if(len(posicionBusqueda)==1):
+                mensaje_busqueda +=" la posicion sea "+posicionBusqueda[0]
+                queryOR = Q(posicionBusqueda=posicionBusqueda[0])
+                
+                for posicionBusqueda in posicionBusqueda[1:]:
+                    mensaje_busqueda += " o " +posicionBusqueda[1]
+                    queryOR |= Q(posicionBusqueda=posicionBusqueda)
+                mensaje_busqueda+="\n"
+                QSjugadores=QSjugadores.filter(queryOR)
     else:
         formulario = BusquedaJugadorForm(None)
         
-    return render(request, 'eventos_deportivos/jugadores/jugador_buscar.html', {"formulario":formulario})
+    jugadores = QSjugadores.all()
+    return render(request, 'eventos_deportivos/jugadores/jugador_buscar.html', {"formulario":formulario,"texto_busqueda":mensaje_busqueda})
 
     '''
     formulario=BusquedaJugadorForm(request.GET)
