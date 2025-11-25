@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <title>{% block title %}Mi Proyecto{% endblock %}</title>
     {% load static %}
+    {% load django_bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% load bootstrap_icons %}
 
     <!-- CSS -->
     <link rel="stylesheet" href="{% static 'eventos_deportivos/css/styles.css' %}">

@@ -419,9 +419,10 @@ def jugador_editar(request,jugador_id):
             formulario.save()
             try:
                 formulario.save()
+                messages.success(request, 'Se ha editado el jugador'+formulario.cleaned_data.get('nombre')+" correctamente")
                 return redirect('lista_jugadores')
             except Exception as e:
-                pass
+                print(e)
     return render(request, 'eventos_deportivos/jugadores/jugador_editar.html',{"formulario":formulario,"jugador":jugador})
 
 # ELIMINAR

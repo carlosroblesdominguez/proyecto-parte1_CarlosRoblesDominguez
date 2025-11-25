@@ -44,8 +44,9 @@ class JugadorModelForm(forms.ModelForm):
         apellido = cleaned_data.get('apellido')
 
         if nombre and apellido:
-            # Comprueba si ya existe un jugador con los mismos datos
-            if Jugador.objects.filter(nombre=nombre, apellido=apellido).exists():
+            # Comprueba si ya existe un jugador con los mismos datos ignorandose a si mismo
+            jugador_id = self.instance.id if self.instance else None
+            if Jugador.objects.filter(nombre=nombre, apellido=apellido).exclude(id=jugador_id).exists():
                 raise forms.ValidationError("Ya existe un jugador con ese nombre y apellido.")
         
         return cleaned_data
