@@ -17,11 +17,10 @@
 </ul>
 <h2>CRUD Jugadores</h2>
 <ul>
+    {% load django_bootstrap5 %}
     <li><a href="{% url 'jugador_create' %}">1. Crear Jugadores</a></li>
     <form action="{% url 'jugador_buscar' %}" class="d-flex mt-3" role="search" method="GET">
-        <input name="nombreBusqueda" class="fomr-control me-2" type="search" placeholder="Nombre" aria-label="Search"></input>
-        <input name="apellidoBusqueda" class="fomr-control me-2" type="search" placeholder="Apellido" aria-label="Search"></input>
-        <input name="posicionBusqueda" class="fomr-control me-2" type="search" placeholder="Posicion" aria-label="Search"></input>
+        {% bootstrap_form formulario %}
         <button class="btn btn-light btn-outline-dark" type="submit">2. Search Jugadores</button>
     </form>
 </ul>

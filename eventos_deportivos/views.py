@@ -11,7 +11,8 @@ def index(request):
     Muestra enlaces a todas las URLs implementadas.
     Permite búsqueda rápida para URLs que requieren parámetros.
     """
-    return render(request, "eventos_deportivos/index.html")
+    formulario = BusquedaJugadorForm(request.GET or None)
+    return render(request, "eventos_deportivos/index.html",{"formulario":formulario})
 
 def error_404(request, exception):
     return render(request, 'eventos_deportivos/error_404.html', status=404)
@@ -266,7 +267,7 @@ def lista_torneos(request):
     return render(request, "eventos_deportivos/lista_torneos.html", contexto)
 
 # ----------------------------
-# URL9: Detalle de árbitro en un torneo
+# URL9: Detalle de árbitro en un torneo <input name="nombreBusqueda" class="fomr-control me-2" type="search" placeholder="Nombre" aria-label="Search"></input>
 # ----------------------------
 def detalle_arbitro_torneo(request, arbitro_id, torneo_id):
     """
@@ -359,49 +360,38 @@ def jugador_create(request):
 
 # LEER
 def jugador_buscar(request):
+    mensaje_busqueda = ""
+    jugadores = Jugador.objects.none() # Por defecto vacio
+    formulario = BusquedaJugadorForm(request.GET or None)
+    
     if(len(request.GET)>0):
-        formulario = BusquedaJugadorForm(request.GET)
+        
         if formulario.is_valid():
-            mensaje_busqueda="Se ha buscado por los siguientes valores:\n"
             nombreBusqueda=formulario.cleaned_data.get('nombreBusqueda')
             apellidoBusqueda=formulario.cleaned_data.get('apellidoBusqueda')
             posicionBusqueda=formulario.cleaned_data.get('posicionBusqueda')
             
-            QSjugadores=Jugador.objects.select_related("eventos_deportivos").prefetch_related("jugadores")
+            # --- mensaje de filtros  ---
+            filtros_aplicados = []
+            if nombreBusqueda:
+                filtros_aplicados.append(f"Nombre contiene '{nombreBusqueda}'")
+            if apellidoBusqueda:
+                filtros_aplicados.append(f"Apellido contiene '{apellidoBusqueda}'")
+            filtros_aplicados.append(f"Posicion = '{posicionBusqueda}'")
+            mensaje_busqueda = " | ".join(filtros_aplicados)
             
-            if(nombreBusqueda != "" or apellidoBusqueda != ""):
-                QSjugadores = QSjugadores.filter(Q(nombre__icontains=nombreBusqueda)|Q(apellido_icontains=apellidoBusqueda))
-                mensaje_busqueda += "Nombre o Apellido que contenga "+nombreBusqueda+" y "+apellidoBusqueda+"\n"
+            # --- Construccion del filtro ---
+            filtros = Q(posicion=posicionBusqueda) # Posicion obligatoria
+            if nombreBusqueda:
+                filtros &= Q(nombre__icontains=nombreBusqueda)
+            if apellidoBusqueda:
+                filtros &= Q(apellido__icontains=apellidoBusqueda)
             
-            if(len(posicionBusqueda)==1):
-                mensaje_busqueda +=" la posicion sea "+posicionBusqueda[0]
-                queryOR = Q(posicionBusqueda=posicionBusqueda[0])
-                
-                for posicionBusqueda in posicionBusqueda[1:]:
-                    mensaje_busqueda += " o " +posicionBusqueda[1]
-                    queryOR |= Q(posicionBusqueda=posicionBusqueda)
-                mensaje_busqueda+="\n"
-                QSjugadores=QSjugadores.filter(queryOR)
-    else:
-        formulario = BusquedaJugadorForm(None)
-        
-    jugadores = QSjugadores.all()
-    return render(request, 'eventos_deportivos/jugadores/jugador_buscar.html', {"formulario":formulario,"texto_busqueda":mensaje_busqueda})
-
-    '''
-    formulario=BusquedaJugadorForm(request.GET)
+            jugadores = Jugador.objects.filter(filtros).select_related("estadisticas")
     
-    if formulario.is_valid():
-        texto=formulario.cleaned_data.get("nombreBusqueda")
-        jugadores=Jugador.objects.select_related("estadisticas")
-        jugadores=jugadores.filter(Q(nombre__icontains=texto)|Q(apellido__icontains=texto)).all()
-        return render(request, 'eventos_deportivos/jugadores/jugador_buscar.html', {"jugadores":jugadores,"nombre_busqueda":texto})
+            return render(request, 'eventos_deportivos/jugadores/jugador_buscar.html', {"formulario":formulario,"texto_busqueda":mensaje_busqueda,"jugadores":jugadores})
     
-    if("HTTP_REFERER" in request.META):
-        return redirect(request.META["HTTP_REFERER"])
-    else:
-        return redirect("index")
-    '''
+    return render(request, 'eventos_deportivos/index.html',{"formulario":formulario})
 
 # EDITAR/ACTUALIZAR
 def jugador_editar(request,jugador_id):

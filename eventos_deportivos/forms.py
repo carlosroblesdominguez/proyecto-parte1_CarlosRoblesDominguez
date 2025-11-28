@@ -52,23 +52,28 @@ class JugadorModelForm(forms.ModelForm):
         return cleaned_data
 # Jugador buscar
 class BusquedaJugadorForm(forms.Form):
-    nombreBusqueda=forms.CharField()
-    apellidoBusqueda=forms.CharField()
+    nombreBusqueda=forms.CharField(required=True)
+    apellidoBusqueda=forms.CharField(required=False)
     posicionBusqueda=forms.ChoiceField(choices=Jugador.POSICIONES,required=True)
     
     def clean(self):
         cleaned_data = super().clean()
         
-        nombreBusqueda=self.cleaned_data.get('nombreBusqueda') or ''
-        apellidoBusqueda=self.cleaned_data.get('apellidosBusqueda') or ''
-        posicionBusqueda=self.cleaned_data.get('posicionBusqueda') or ''
+        nombre=self.cleaned_data.get('nombreBusqueda')
+        apellido=self.cleaned_data.get('apellidosBusqueda')
+        posicion=self.cleaned_data.get('posicionBusqueda')
         
-        if(nombreBusqueda == '' and apellidoBusqueda == ''):
-            self.add_error('Debes introducir al menos el nombre o el apellido')
-        else:
-            if((nombreBusqueda != "" and len(nombreBusqueda) < 3)or(apellidoBusqueda != "" and len(apellidoBusqueda) < 3)and(posicionBusqueda != "" and len(posicionBusqueda)<3)):
-                self.add_error('Debe introducir al menos 3 caracteres en almenos uno de los 2, nombre o apellido y en posicion obligatorio')
-        return self.cleaned_data
+        # Validación: al menos nombre o apellido debe estar rellenado
+        if(not nombre):
+            self.add_error('nombreBusqueda',"Debes introducir el nombre")
+        
+        # Validación de longitud mínima
+        if (nombre and len(nombre)<3):
+            self.add_error('nombreBusqueda',"Debe introducir al menos 3 caracteres")
+        if (apellido and len(apellido)<3):
+            self.add_error('apellidoBusqueda',"Debe introducir al menos 3 caracteres")
+                        
+        return cleaned_data
 '''            
 # Equipo
 class EquipoForm(forms.Form):
