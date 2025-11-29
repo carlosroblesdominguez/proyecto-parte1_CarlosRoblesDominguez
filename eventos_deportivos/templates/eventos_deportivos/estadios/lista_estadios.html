@@ -4,28 +4,24 @@
 {% block contenido %}
 <h1>Listado de Estadios</h1>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Ciudad</th>
-            <th>Capacidad</th>
-            <th>Cubierto</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for estadio in estadios %}
-        <tr>
-            <td>{{ estadio.nombre }}</td>
-            <td>{{ estadio.ciudad }}</td>
-            <td>{{ estadio.capacidad }}</td>
-            <td>{{ estadio.cubierto|yesno:"Sí,No" }}</td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="4">No hay estadios registrados</td>
-        </tr>
-        {% endfor %}
-    </tbody>
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>Ciudad</th>
+        <th>Capacidad</th>
+        <th>Cubierto</th>
+    </tr>
+    {% for estadio in estadios %}
+    <tr>
+        <td>{{ estadio.nombre }}</td>
+        <td>{{ estadio.ciudad }}</td>
+        <td>{{ estadio.capacidad }}</td>
+        <td>{{ estadio.cubierto|yesno:"Sí,No" }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="4">No hay estadios registrados</td>
+    </tr>
+    {% endfor %}
 </table>
 {% endblock %}
