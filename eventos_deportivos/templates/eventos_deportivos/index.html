@@ -16,12 +16,16 @@
     <li><a href="{% url 'lista_sponsors' pais='España' monto_min=1000 %}">7. Lista de Sponsors (pais, monto >= xxxx)</a></li>
 </ul>
 <h2>CRUD Jugadores</h2>
+{% load django_bootstrap5 %}
 <ul>
-    {% load django_bootstrap5 %}
     <li><a href="{% url 'jugador_create' %}">1. Crear Jugadores</a></li>
     <form action="{% url 'jugador_buscar' %}" class="d-flex mt-3" role="search" method="GET">
         {% bootstrap_form formulario %}
         <button class="btn btn-light btn-outline-dark" type="submit">2. Search Jugadores</button>
     </form>
+</ul>
+<h2>CRUD Equipos</h2>
+<ul>
+    <li><a href="{% url 'equipo_create' %}">1. Crear Equipos</a></li>
 </ul>
 {% endblock %}

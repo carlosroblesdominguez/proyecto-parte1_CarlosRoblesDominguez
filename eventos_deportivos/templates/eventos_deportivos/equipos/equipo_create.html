@@ -1,0 +1,11 @@
+{% extends "../base.html" %}
+{% block title %}Crear Equipo{% endblock %}
+
+{% block contenido %}
+<form action="" method="post">
+    {% csrf_token %}
+    <h3>Datos del Equipo</h3>
+    {{ formulario }}
+    <button type="submit">Enviar</button>
+</form>
+{% endblock %}

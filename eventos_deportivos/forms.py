@@ -47,7 +47,7 @@ class JugadorModelForm(forms.ModelForm):
             # Comprueba si ya existe un jugador con los mismos datos ignorandose a si mismo
             jugador_id = self.instance.id if self.instance else None
             if Jugador.objects.filter(nombre=nombre, apellido=apellido).exclude(id=jugador_id).exists():
-                raise forms.ValidationError("Ya existe un jugador con ese nombre y apellido.")
+                self.add_error("Ya existe un jugador con ese nombre y apellido.")
         
         return cleaned_data
 # Jugador buscar
@@ -74,6 +74,47 @@ class BusquedaJugadorForm(forms.Form):
             self.add_error('apellidoBusqueda',"Debe introducir al menos 3 caracteres")
                         
         return cleaned_data
+    
+# Equipo create
+class EquipoModelForm(forms.ModelForm):
+    jugadores = forms.ModelMultipleChoiceField(
+        queryset=Jugador.objects.all(),
+        widget=forms.SelectMultiple(attrs={'class': 'form-select'}),
+        required=False
+    )
+
+    class Meta:
+        model = Equipo
+        fields = ['nombre', 'ciudad', 'fundacion', 'activo', 'estadio_principal']
+        labels = {
+            'nombre': 'Nombre',
+            'ciudad': 'ciudad',
+            'fundacion': 'fundacion',
+            'activo': 'activo',
+            'estadio_principal': 'estadio_principal',
+        }
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'ciudad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: Sevilla'}),
+            'fundacion': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'activo': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'estadio_principal': forms.Select(attrs={'class': 'form-select'}),
+        }
+    def clean(self):
+        cleaned_data = super().clean()
+        nombre = cleaned_data.get('nombre')
+        ciudad = cleaned_data.get('ciudad')
+        
+
+        if nombre and ciudad:
+            # Comprueba si ya existe un jugador con los mismos datos ignorandose a si mismo
+            equipo_id = self.instance.id if self.instance else None
+            if Equipo.objects.filter(nombre=nombre, ciudad=ciudad).exclude(id=equipo_id).exists():
+                self.add_error('nombre',"Ya existe un equipo con ese nombre")
+                self.add_error('ciudad',"Ya existe un equipo con esta ciudad.")
+        
+        return cleaned_data
+
 '''            
 # Equipo
 class EquipoForm(forms.Form):

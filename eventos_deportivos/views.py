@@ -3,6 +3,7 @@ from django.db.models import Prefetch, Count, Max, Q
 from django.contrib import messages
 from .models import *
 from .forms import *
+from datetime import date
 
 # Create your views here.
 def index(request):
@@ -199,6 +200,7 @@ def detalle_partido(request, partido_id):
 # URL6: Lista de equipos
 # ----------------------------
 def lista_equipos(request):
+    equipos = Equipo.objects.all()
     """
     Muestra todos los equipos, incluyendo equipos sin estadio (None).
     """
@@ -215,10 +217,7 @@ def lista_equipos(request):
     """
     #equipos_sql = Equipo.objects.raw(sql)
     
-    contexto = {
-        "equipos": equipos
-    }
-    return render(request, "eventos_deportivos/equipos/lista_equipos.html", contexto)
+    return render(request, "eventos_deportivos/equipos/lista_equipos.html", {'equipos':equipos})
 
 # ----------------------------
 # URL7: Detalle de torneos por nombre (r_path)
@@ -337,7 +336,7 @@ def jugador_create_valid(formulario):
             
             jugador_creado = True
         except Exception as e:
-            print("Error al guardar usuario: ", e)
+            print("Error al guardar jugador: ", e)
     else:
         print("Formulario no valido: ", formulario.errors)
     return jugador_creado
@@ -423,3 +422,48 @@ def jugador_eliminar(request,jugador_id):
     except:
         pass
     return redirect('lista_jugadores')
+
+# ----------------------------
+# CRUD Equipo
+# ----------------------------
+
+# CREAR
+def equipo_create_valid(formulario):
+    # Valida y guarda el formulario de jugador junto con sus estadísticas.
+    # Devuelve True si se guardó correctamente, False si hubo error.
+
+    equipo_creado = False
+    # Comprueba si el formulario es valido
+    if formulario.is_valid():
+        try:
+            equipo = formulario.save()
+            jugadores_seleccionados = formulario.cleaned_data.get('jugadores',[])
+            for jugador in jugadores_seleccionados:
+                EquipoJugador.objects.create(
+                equipo=equipo,
+                jugador=jugador,
+                fecha_ingreso=date.today(),
+            )
+            
+            equipo_creado = True
+        except Exception as e:
+            print("Error al guardar equipo: ", e)
+    else:
+        print("Formulario no valido: ", formulario.errors)
+    return equipo_creado
+
+def equipo_create(request):
+    # si la peticion es GET se crea el formulario vacio
+    # en el caso de set POST se crea el formulario con datos
+    datosFormulario = None
+    if request.method == "POST":
+        datosFormulario = request.POST
+        
+    formulario = EquipoModelForm(datosFormulario)
+    
+    if (request.method == "POST"):
+        equipo_creado = equipo_create_valid(formulario)
+        if(equipo_creado):
+            messages.success(request, 'Se a creado el equipo'+formulario.cleaned_data.get('nombre')+" correctamente")
+            return redirect("lista_equipos")
+    return render(request, 'eventos_deportivos/equipos/equipo_create.html',{"formulario":formulario})

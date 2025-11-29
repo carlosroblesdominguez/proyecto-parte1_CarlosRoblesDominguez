@@ -12,6 +12,7 @@
             <th>Fundación</th>
             <th>Activo</th>
             <th>Jugadores</th>
+            <th>Estadio Principal</th>
         </tr>
     </thead>
     <tbody>
@@ -22,6 +23,7 @@
             <td>{{ equipo.fundacion|date:"d/m/Y" }}</td>
             <td>{{ equipo.activo|yesno:"Sí,No" }}</td>
             <td>{{ equipo.jugadores.all|length }}</td>
+            <td>{{ equipo.estadio_principal }}</td>
         </tr>
         {% empty %}
         <tr>
