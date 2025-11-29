@@ -612,3 +612,60 @@ Este proyecto utiliza múltiples **template tags**, **operadores en condicionale
 - **Template tags:** Se usan todos los principales (`for`, `if`, `else`, `empty`, `block`, `extends`, `load static`), cumpliendo el requisito mínimo.  
 - **Operadores en if:** Se usan `==, !=, >, <, >=, <=, and, or` — más de 5.  
 - **Template filters:** Se usan 10 filters diferentes para fechas, textos, valores por defecto y longitud de listas.  
+
+---
+
+# FORMULARIOS
+
+### Validaciones y Widgets en Formularios de Jugadores
+
+- **Formularios implicados:**  
+  - `JugadorModelForm` (Crear / Editar)  
+  - `BusquedaJugadorForm` (Búsqueda avanzada)
+
+### Validaciones aplicadas
+
+#### ✔ Validación de unicidad (nombre + apellido) — JugadorModelForm
+- **Descripción:** Evita crear jugadores duplicados.
+- **Regla:** No pueden existir dos jugadores con el mismo **nombre + apellido** en la base de datos.
+- **Comportamiento en edición:** Se excluye el propio jugador usando `exclude(pk=self.instance.pk)` para permitir modificar otros campos.
+
+#### ✔ Validación de campos adicionales (estadísticas) — JugadorModelForm
+- **Campos validados:**
+  - `partidos_jugados`
+  - `goles`
+  - `asistencias`
+  - `tarjetas`
+- **Descripción:** Son campos no pertenecientes al modelo y se validan manualmente dentro del formulario.
+
+#### ✔ Validación del nombre — BusquedaJugadorForm
+- **Regla:** `nombreBusqueda` es obligatorio.
+- **Longitud mínima:** Debe tener **al menos 3 caracteres**.
+- **Error si no se cumple:** `"Debes introducir al menos un nombre válido"`
+
+#### ✔ Validación del apellido — BusquedaJugadorForm
+- **Descripción:** Campo opcional.  
+- **Condición:** Si se introduce, debe tener **mínimo 3 caracteres**.
+
+#### ✔ Validación de posición obligatoria — BusquedaJugadorForm
+- **Regla:** `posicionBusqueda` es obligatorio y no puede quedar vacío.
+- **Motivo:** La búsqueda avanzada requiere que siempre se indique la posición.
+
+---
+
+### Widgets utilizados
+
+#### ✔ Widgets en JugadorModelForm
+- `nombre`: `TextInput` con `class="form-control"`
+- `apellido`: `TextInput` con placeholder y `class="form-control"`
+- `fecha_nacimiento`: `DateInput` (`type="date"`) con `class="form-control"`
+- `posicion`: `Select` con `class="form-select"`
+- `partidos_jugados`: `NumberInput` con `class="form-control"`
+- `goles`: `NumberInput` con `class="form-control"`
+- `asistencias`: `NumberInput` con `class="form-control"`
+- `tarjetas`: `NumberInput` con `class="form-control"`
+
+#### ✔ Widgets en BusquedaJugadorForm
+- `nombreBusqueda`: `TextInput`
+- `apellidoBusqueda`: `TextInput`
+- `posicionBusqueda`: `Select` basado en `Jugador.POSICIONES` (obligatorio)
