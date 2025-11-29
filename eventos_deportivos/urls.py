@@ -40,7 +40,7 @@ urlpatterns = [
     # Crear Equipos
     path('equipos/create', views.equipo_create, name='equipo_create'),
     # Buscar Equipos
-    #path('equipos/buscar/', views.equipo_buscar, name='equipo_buscar'),
+    path('equipos/buscar/', views.equipo_buscar, name='equipo_buscar'),
     # Actualizar Equipos
     #path('equipos/editar/<int:equipo_id>/', views.equipo_editar, name='equipo_editar'),
     # Eliminar Equipos

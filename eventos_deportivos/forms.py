@@ -114,6 +114,29 @@ class EquipoModelForm(forms.ModelForm):
                 self.add_error('ciudad',"Ya existe un equipo con esta ciudad.")
         
         return cleaned_data
+    
+# Equipo buscar
+class BusquedaEquipoForm(forms.Form):
+    nombreBusqueda=forms.CharField(required=False)
+    ciudadBusqueda=forms.CharField(required=True)
+    activoBusqueda=forms.BooleanField(required=False)
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        
+        nombre=self.cleaned_data.get('nombreBusqueda')
+        ciudad=self.cleaned_data.get('ciudadBusqueda')
+        activo=self.cleaned_data.get('activoBusqueda')
+        
+        # Validación: al menos nombre o apellido debe estar rellenado
+        if(not ciudad):
+            self.add_error('ciudadBusqueda',"Debes introducir la ciudad")
+        
+        # Validación de longitud mínima
+        if (ciudad and len(ciudad)<3):
+            self.add_error('ciudadBusqueda',"Debe introducir al menos 3 caracteres")
+ 
+        return cleaned_data
 
 '''            
 # Equipo

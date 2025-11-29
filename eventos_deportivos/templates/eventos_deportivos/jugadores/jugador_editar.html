@@ -4,16 +4,16 @@
 {% block contenido %}
 <form action="{% url 'jugador_editar' jugador.id %}" method="post"
     value="{% spaceless %}
-        {% if formulario.is_bound %}
-            {{ formulario.nombre.value }}
+        {% if formularioJ.is_bound %}
+            {{ formularioJ.nombre.value }}
         {% elif libro %}
-            {{ formulario.nombre.value }}
+            {{ formularioJ.nombre.value }}
         {% endif %}
     {% endspaceless %}">
 
     {% csrf_token %}
     <h3>Datos del Jugador</h3>
-    {{ formulario }}
+    {{ formularioJ }}
     <button type="submit">Actualizar</button>
 </form>
 {% endblock %}

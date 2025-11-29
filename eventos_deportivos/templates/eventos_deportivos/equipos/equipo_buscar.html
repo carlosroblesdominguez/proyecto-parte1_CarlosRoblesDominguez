@@ -1,0 +1,31 @@
+{% extends "../base.html" %}
+{% block title %}Buscar Equipos{% endblock %}
+
+{% block contenido %}
+<h2>Resultados de búsqueda:</h2>
+
+{% if equipos %}
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>Ciudad</th>
+        <th>Fundación</th>
+        <th>Activo</th>
+        <th>Jugadores</th>
+        <th>Estadio Principal</th>
+    </tr>
+    {% for equipo in equipos %}
+    <tr>
+        <td>{{ equipo.nombre }}</td>
+        <td>{{ equipo.ciudad }}</td>
+        <td>{{ equipo.fundacion|date:"d/m/Y" }}</td>
+        <td>{{ equipo.activo|yesno:"Sí,No" }}</td>
+        <td>{{ equipo.jugadores.all|length }}</td>
+        <td>{{ equipo.estadio_principal }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No se encontraron equipos.</p>
+{% endif %}
+{% endblock %}

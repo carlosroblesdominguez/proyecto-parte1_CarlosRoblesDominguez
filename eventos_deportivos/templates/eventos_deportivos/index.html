@@ -20,12 +20,16 @@
 <ul>
     <li><a href="{% url 'jugador_create' %}">1. Crear Jugadores</a></li>
     <form action="{% url 'jugador_buscar' %}" class="d-flex mt-3" role="search" method="GET">
-        {% bootstrap_form formulario %}
+        {% bootstrap_form formularioJ %}
         <button class="btn btn-light btn-outline-dark" type="submit">2. Search Jugadores</button>
     </form>
 </ul>
 <h2>CRUD Equipos</h2>
 <ul>
     <li><a href="{% url 'equipo_create' %}">1. Crear Equipos</a></li>
+        <form action="{% url 'equipo_buscar' %}" class="d-flex mt-3" role="search" method="GET">
+        {% bootstrap_form formularioE %}
+        <button class="btn btn-light btn-outline-dark" type="submit">2. Search Equipos</button>
+    </form>
 </ul>
 {% endblock %}

@@ -12,8 +12,9 @@ def index(request):
     Muestra enlaces a todas las URLs implementadas.
     Permite búsqueda rápida para URLs que requieren parámetros.
     """
-    formulario = BusquedaJugadorForm(request.GET or None)
-    return render(request, "eventos_deportivos/index.html",{"formulario":formulario})
+    formularioJ = BusquedaJugadorForm(request.GET or None)
+    formularioE = BusquedaEquipoForm(request.GET or None)
+    return render(request, "eventos_deportivos/index.html",{"formularioJ":formularioJ, "formularioE":formularioE})
 
 def error_404(request, exception):
     return render(request, 'eventos_deportivos/error_404.html', status=404)
@@ -313,32 +314,32 @@ def lista_sponsors(request, pais, monto_min):
 # ----------------------------
 
 # CREAR
-def jugador_create_valid(formulario):
+def jugador_create_valid(formularioJ):
     # Valida y guarda el formulario de jugador junto con sus estadísticas.
     # Devuelve True si se guardó correctamente, False si hubo error.
 
     jugador_creado = False
     # Comprueba si el formulario es valido
-    if formulario.is_valid():
+    if formularioJ.is_valid():
         try:
             # Crear la estadística
             estadisticas = EstadisticasJugador.objects.create(
-                partidos_jugados=formulario.cleaned_data['partidos_jugados'],
-                goles=formulario.cleaned_data['goles'],
-                asistencias=formulario.cleaned_data['asistencias'],
-                tarjetas=formulario.cleaned_data['tarjetas']
+                partidos_jugados=formularioJ.cleaned_data['partidos_jugados'],
+                goles=formularioJ.cleaned_data['goles'],
+                asistencias=formularioJ.cleaned_data['asistencias'],
+                tarjetas=formularioJ.cleaned_data['tarjetas']
             )
             # Guarda el jugador en la base de datos
             # Crear el jugador asignando la estadística
-            formulario = formulario.save(commit=False)
-            formulario.estadisticas = estadisticas
-            formulario.save()
+            formularioJ = formularioJ.save(commit=False)
+            formularioJ.estadisticas = estadisticas
+            formularioJ.save()
             
             jugador_creado = True
         except Exception as e:
             print("Error al guardar jugador: ", e)
     else:
-        print("Formulario no valido: ", formulario.errors)
+        print("Formulario no valido: ", formularioJ.errors)
     return jugador_creado
 
 def jugador_create(request):
@@ -348,27 +349,27 @@ def jugador_create(request):
     if request.method == "POST":
         datosFormulario = request.POST
         
-    formulario = JugadorModelForm(datosFormulario)
+    formularioJ = JugadorModelForm(datosFormulario)
     
     if (request.method == "POST"):
-        jugador_creado = jugador_create_valid(formulario)
+        jugador_creado = jugador_create_valid(formularioJ)
         if(jugador_creado):
-            messages.success(request, 'Se a creado el jugador'+formulario.cleaned_data.get('nombre')+" correctamente")
+            messages.success(request, 'Se a creado el jugador'+formularioJ.cleaned_data.get('nombre')+" correctamente")
             return redirect("lista_jugadores")
-    return render(request, 'eventos_deportivos/jugadores/jugador_create.html',{"formulario":formulario})
+    return render(request, 'eventos_deportivos/jugadores/jugador_create.html',{"formularioJ":formularioJ})
 
 # LEER
 def jugador_buscar(request):
     mensaje_busqueda = ""
     jugadores = Jugador.objects.none() # Por defecto vacio
-    formulario = BusquedaJugadorForm(request.GET or None)
+    formularioJ = BusquedaJugadorForm(request.GET or None)
     
     if(len(request.GET)>0):
         
-        if formulario.is_valid():
-            nombreBusqueda=formulario.cleaned_data.get('nombreBusqueda')
-            apellidoBusqueda=formulario.cleaned_data.get('apellidoBusqueda')
-            posicionBusqueda=formulario.cleaned_data.get('posicionBusqueda')
+        if formularioJ.is_valid():
+            nombreBusqueda=formularioJ.cleaned_data.get('nombreBusqueda')
+            apellidoBusqueda=formularioJ.cleaned_data.get('apellidoBusqueda')
+            posicionBusqueda=formularioJ.cleaned_data.get('posicionBusqueda')
             
             # --- mensaje de filtros  ---
             filtros_aplicados = []
@@ -388,9 +389,9 @@ def jugador_buscar(request):
             
             jugadores = Jugador.objects.filter(filtros).select_related("estadisticas")
     
-            return render(request, 'eventos_deportivos/jugadores/jugador_buscar.html', {"formulario":formulario,"texto_busqueda":mensaje_busqueda,"jugadores":jugadores})
+            return render(request, 'eventos_deportivos/jugadores/jugador_buscar.html', {"formularioJ":formularioJ,"texto_busqueda":mensaje_busqueda,"jugadores":jugadores})
     
-    return render(request, 'eventos_deportivos/index.html',{"formulario":formulario})
+    return render(request, 'eventos_deportivos/index.html',{"formularioJ":formularioJ})
 
 # EDITAR/ACTUALIZAR
 def jugador_editar(request,jugador_id):
@@ -401,18 +402,18 @@ def jugador_editar(request,jugador_id):
     if request.method=="POST":
         datosFormulario=request.POST
         
-    formulario=JugadorModelForm(datosFormulario,instance=jugador)
+    formularioJ=JugadorModelForm(datosFormulario,instance=jugador)
     
     if (request.method=="POST"):
-        if formulario.is_valid():
-            formulario.save()
+        if formularioJ.is_valid():
+            formularioJ.save()
             try:
-                formulario.save()
-                messages.success(request, 'Se ha editado el jugador'+formulario.cleaned_data.get('nombre')+" correctamente")
+                formularioJ.save()
+                messages.success(request, 'Se ha editado el jugador'+formularioJ.cleaned_data.get('nombre')+" correctamente")
                 return redirect('lista_jugadores')
             except Exception as e:
                 print(e)
-    return render(request, 'eventos_deportivos/jugadores/jugador_editar.html',{"formulario":formulario,"jugador":jugador})
+    return render(request, 'eventos_deportivos/jugadores/jugador_editar.html',{"formularioJ":formularioJ,"jugador":jugador})
 
 # ELIMINAR
 def jugador_eliminar(request,jugador_id):
@@ -428,16 +429,16 @@ def jugador_eliminar(request,jugador_id):
 # ----------------------------
 
 # CREAR
-def equipo_create_valid(formulario):
+def equipo_create_valid(formularioE):
     # Valida y guarda el formulario de jugador junto con sus estadísticas.
     # Devuelve True si se guardó correctamente, False si hubo error.
 
     equipo_creado = False
     # Comprueba si el formulario es valido
-    if formulario.is_valid():
+    if formularioE.is_valid():
         try:
-            equipo = formulario.save()
-            jugadores_seleccionados = formulario.cleaned_data.get('jugadores',[])
+            equipo = formularioE.save()
+            jugadores_seleccionados = formularioE.cleaned_data.get('jugadores',[])
             for jugador in jugadores_seleccionados:
                 EquipoJugador.objects.create(
                 equipo=equipo,
@@ -449,7 +450,7 @@ def equipo_create_valid(formulario):
         except Exception as e:
             print("Error al guardar equipo: ", e)
     else:
-        print("Formulario no valido: ", formulario.errors)
+        print("Formulario no valido: ", formularioE.errors)
     return equipo_creado
 
 def equipo_create(request):
@@ -459,11 +460,48 @@ def equipo_create(request):
     if request.method == "POST":
         datosFormulario = request.POST
         
-    formulario = EquipoModelForm(datosFormulario)
+    formularioE = EquipoModelForm(datosFormulario)
     
     if (request.method == "POST"):
-        equipo_creado = equipo_create_valid(formulario)
+        equipo_creado = equipo_create_valid(formularioE)
         if(equipo_creado):
-            messages.success(request, 'Se a creado el equipo'+formulario.cleaned_data.get('nombre')+" correctamente")
+            messages.success(request, 'Se a creado el equipo'+formularioE.cleaned_data.get('nombre')+" correctamente")
             return redirect("lista_equipos")
-    return render(request, 'eventos_deportivos/equipos/equipo_create.html',{"formulario":formulario})
+    return render(request, 'eventos_deportivos/equipos/equipo_create.html',{"formularioE":formularioE})
+
+# LEER
+def equipo_buscar(request):
+    mensaje_busqueda = ""
+    equipos = Equipo.objects.none() # Por defecto vacio
+    formularioE = BusquedaEquipoForm(request.GET or None)
+    
+    if(len(request.GET)>0):
+        
+        if formularioE.is_valid():
+            nombreBusqueda=formularioE.cleaned_data.get('nombreBusqueda')
+            ciudadBusqueda=formularioE.cleaned_data.get('ciudadBusqueda')
+            activoBusqueda=formularioE.cleaned_data.get('activoBusqueda')
+            
+            # --- mensaje de filtros  ---
+            filtros_aplicados = []
+            if nombreBusqueda:
+                filtros_aplicados.append(f"Nombre contiene '{nombreBusqueda}'")
+            if ciudadBusqueda:
+                filtros_aplicados.append(f"Ciudad contiene '{ciudadBusqueda}'")
+            filtros_aplicados.append(f"Activo= '{activoBusqueda}'")
+            mensaje_busqueda = " | ".join(filtros_aplicados)
+            
+            # --- Construccion del filtro ---
+            filtros = Q(activo=activoBusqueda) # Posicion obligatoria
+            if nombreBusqueda:
+                filtros &= Q(nombre__icontains=nombreBusqueda)
+            if ciudadBusqueda:
+                filtros &= Q(ciudad__icontains=ciudadBusqueda)
+            if activoBusqueda is not None:
+                filtros &= Q(activo=activoBusqueda)
+                
+            equipos = Equipo.objects.filter(filtros).select_related("estadio_principal")
+    
+            return render(request, 'eventos_deportivos/equipos/equipo_buscar.html', {"formularioE":formularioE,"texto_busqueda":mensaje_busqueda,"equipos":equipos})
+    
+    return render(request, 'eventos_deportivos/index.html',{"formularioE":formularioE})
