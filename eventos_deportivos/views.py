@@ -205,7 +205,7 @@ def lista_equipos(request):
     """
     Muestra todos los equipos, incluyendo equipos sin estadio (None).
     """
-    equipos = Equipo.objects.select_related('estadio_principal').prefetch_related('jugadores').filter(estadio_principal__isnull=True).order_by('nombre')
+    equipos = Equipo.objects.select_related('estadio_principal').prefetch_related('jugadores').order_by('nombre')
     
     # Equivalente SQL usando raw()
     sql = """
@@ -306,6 +306,16 @@ def lista_sponsors(request, pais, monto_min):
         "sponsors": sponsors
     }
     return render(request, "eventos_deportivos/lista_sponsors.html", contexto)
+
+# ----------------------------
+# URL: Lista de estadios
+# ----------------------------
+def lista_estadios(request):
+    """
+    Muestra todos los estadios en la página.
+    """
+    estadios = Estadio.objects.all().order_by('nombre')  # orden por nombre
+    return render(request, "eventos_deportivos/estadios/lista_estadios.html", {'estadios': estadios})
 
 # ----------------------------
 # FORMULARIOS
@@ -505,3 +515,35 @@ def equipo_buscar(request):
             return render(request, 'eventos_deportivos/equipos/equipo_buscar.html', {"formularioE":formularioE,"texto_busqueda":mensaje_busqueda,"equipos":equipos})
     
     return render(request, 'eventos_deportivos/index.html',{"formularioE":formularioE})
+
+# EDITAR/ACTUALIZAR
+def equipo_editar(request,equipo_id):
+    equipo = Equipo.objects.get(id=equipo_id)
+    
+    datosFormulario=None
+    
+    if request.method=="POST":
+        datosFormulario=request.POST
+        
+    formularioE=EquipoModelForm(datosFormulario,instance=equipo)
+    
+    if (request.method=="POST"):
+        if formularioE.is_valid():
+            formularioE.save()
+            try:
+                formularioE.save()
+                messages.success(request, 'Se ha editado el equipo'+formularioE.cleaned_data.get('nombre')+" correctamente")
+                return redirect('lista_equipos')
+            except Exception as e:
+                print(e)
+    return render(request, 'eventos_deportivos/equipos/equipo_editar.html',{"formularioE":formularioE,"equipo":equipo})
+
+# ELIMINAR
+def equipo_eliminar(request,equipo_id):
+    equipo=Equipo.objects.get(id=equipo_id)
+    try:
+        equipo.delete()
+    except:
+        pass
+    return redirect('lista_equipos')
+

@@ -1,35 +1,60 @@
 {% extends "../base.html" %}
+{% load django_bootstrap5 %}
+{% load bootstrap_icons %}
 {% block title %}Lista de Equipos{% endblock %}
 
 {% block contenido %}
 <h1>Listado de Equipos</h1>
 
+{% if equipos %}
 <table>
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Ciudad</th>
-            <th>Fundación</th>
-            <th>Activo</th>
-            <th>Jugadores</th>
-            <th>Estadio Principal</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for equipo in equipos %}
-        <tr>
-            <td>{{ equipo.nombre }}</td>
-            <td>{{ equipo.ciudad }}</td>
-            <td>{{ equipo.fundacion|date:"d/m/Y" }}</td>
-            <td>{{ equipo.activo|yesno:"Sí,No" }}</td>
-            <td>{{ equipo.jugadores.all|length }}</td>
-            <td>{{ equipo.estadio_principal }}</td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="5">No hay equipos registrados</td>
-        </tr>
-        {% endfor %}
-    </tbody>
+    <tr>
+        <th>Nombre</th>
+        <th>Ciudad</th>
+        <th>Fundación</th>
+        <th>Activo</th>
+        <th>Jugadores</th>
+        <th>Estadio Principal</th>
+    </tr>
+    {% for equipo in equipos %}
+    <tr>
+        <td>{{ equipo.nombre }}</td>
+        <td>{{ equipo.ciudad }}</td>
+        <td>{{ equipo.fundacion|date:"d/m/Y" }}</td>
+        <td>{{ equipo.activo|yesno:"Sí,No" }}</td>
+        <td>{{ equipo.jugadores.all|length }}</td>
+        <td>{{ equipo.estadio_principal|default:"Sin Estadio" }}</td>
+        <td>
+            <div class="row btn-group">
+                <div class="mb-2">
+                    <button type="button" 
+                            class="btn btn-outline-primary"> 
+                            <a href="{% url 'equipo_editar' equipo.id %}"><span>{% bs_icon 'pencil' %}</span></a>
+                    </button>
+                </div>
+                <div class="mb-2">
+                    <form action = "{% url 'equipo_eliminar' equipo.id %}" method = "post"> 
+                        {% csrf_token %}
+                        <button class="btn btn-danger" onclick="return eliminar();" type="submit">
+                            <span>{% bs_icon 'trash' %}</span>
+                        </button> 
+                    </form>
+                </div>
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
 </table>
+{% else %}
+<p>No se encontraron equipos.</p>
+{% endif %}
+<script>
+    function eliminar(){
+        var x = confirm("¿Realmente quieres eliminar este jugador?")
+        if (x)
+            return true
+        else
+            return false
+    }
+</script>
 {% endblock %}

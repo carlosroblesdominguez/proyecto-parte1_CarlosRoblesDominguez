@@ -14,6 +14,7 @@
     <li><a href="{% url 'lista_torneos' %}">5. Lista de Torneos</a></li>
     <li><a href="{% url 'detalle_arbitro_torneo' arbitro_id=1 torneo_id=1 %}">6. Detalle de Árbitro en un Torneo (id de arbitro e id de torneo)</a></li>
     <li><a href="{% url 'lista_sponsors' pais='España' monto_min=1000 %}">7. Lista de Sponsors (pais, monto >= xxxx)</a></li>
+    <li><a href="{% url 'lista_estadios' %}">8. Lista de Estadios</a></li>
 </ul>
 <h2>CRUD Jugadores</h2>
 {% load django_bootstrap5 %}

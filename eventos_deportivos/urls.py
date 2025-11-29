@@ -27,6 +27,9 @@ urlpatterns = [
     # Sponsors
     path('sponsors/<str:pais>/<int:monto_min>/', views.lista_sponsors, name='lista_sponsors'), # URL10: Lista de Sponsors filtrando por país y monto
 
+    # Estadios
+    path('estadios/', views.lista_estadios, name='lista_estadios'),
+
     # Formularios
     # Crear Jugador
     path('jugadores/create', views.jugador_create, name='jugador_create'),
@@ -42,7 +45,7 @@ urlpatterns = [
     # Buscar Equipos
     path('equipos/buscar/', views.equipo_buscar, name='equipo_buscar'),
     # Actualizar Equipos
-    #path('equipos/editar/<int:equipo_id>/', views.equipo_editar, name='equipo_editar'),
+    path('equipos/editar/<int:equipo_id>/', views.equipo_editar, name='equipo_editar'),
     # Eliminar Equipos
-    #path('equipos/eliminar/<int:equipo_id>', views.equipo_eliminar, name='equipo_eliminar'),
+    path('equipos/eliminar/<int:equipo_id>', views.equipo_eliminar, name='equipo_eliminar'),
 ]
