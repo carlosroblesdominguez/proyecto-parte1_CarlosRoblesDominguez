@@ -128,7 +128,7 @@ class BusquedaEquipoForm(forms.Form):
         ciudad=self.cleaned_data.get('ciudadBusqueda')
         activo=self.cleaned_data.get('activoBusqueda')
         
-        # Validación: al menos nombre o apellido debe estar rellenado
+        # Validación: al menos ciudad debe estar rellenado
         if(not ciudad):
             self.add_error('ciudadBusqueda',"Debes introducir la ciudad")
         
@@ -169,100 +169,25 @@ class EstadioModelForm(forms.ModelForm):
         
         return cleaned_data
     
-
-
-'''            
-# Equipo
-class EquipoForm(forms.Form):
-    nombre = forms.CharField(max_length=100)
-    ciudad = forms.CharField(max_length=100)
-    fundacion = forms.DateField()
-    activo = forms.BooleanField(default=True)
-    jugadores = forms.ManyToManyField(
-        Jugador, 
-        through='EquipoJugador',
-    )
-    estadio_principal = forms.OneToOneField(
-        'Estadio',
-        on_delete=forms.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='torneo_dirigido'
-    )
+# Estadio buscar
+class BusquedaEstadioForm(forms.Form):
+    nombreBusqueda=forms.CharField(required=False)
+    capacidadBusqueda=forms.IntegerField(required=True)
+    cubiertoBusqueda=forms.BooleanField()
     
-# Torneo
-class Torneo(forms.Form):
-    nombre = forms.CharField(max_length=100)
-    pais = forms.CharField(max_length=50)
-    fecha_inicio = forms.DateField()
-    fecha_fin = forms.DateField()
-    arbitro_principal = forms.OneToOneField(
-        'Arbitro',
-        on_delete=forms.SET_NULL,
-        null=True,
-        related_name='torneo_dirigido'
-    )
-    
-# Partido
-class Partido(forms.Form):
-    equipo_local = forms.ForeignKey(
-        Equipo,
-        on_delete=forms.CASCADE,
-        related_name='partidos_local'
-    )
-    equipo_visitante = forms.ForeignKey(
-        Equipo,
-        on_delete=forms.CASCADE,
-        related_name='partidos_visitante'
-    )
-    fecha = forms.DateTimeField()
-    resultado = forms.CharField(max_length=20)
-    torneo = forms.ForeignKey(
-        Torneo,
-        on_delete=forms.CASCADE
-    )
-
-# Arbitro    
-class Arbitro(forms.Form):
-    nombre = forms.CharField(max_length=100)
-    apellido = forms.CharField(max_length=100)
-    licencia = forms.CharField(
-        max_length=50,
-        unique=True
-    )
-    partidos = forms.ManyToManyField(Partido)
-    
-# Estadio
-class Estadio(forms.Form):
-    nombre = forms.CharField(max_length=100)
-    ciudad = forms.CharField(max_length=100)
-    capacidad = forms.IntegerField()
-    cubierto = forms.BooleanField(required=False)
-    
-# Sponsor
-class Sponsor(forms.Form):
-    nombre = forms.CharField(max_length=100)
-    monto = forms.DecimalField(
-        max_digits=10,
-        decimal_places=2
-    )
-    pais = forms.CharField(max_length=50)
-    equipos = forms.ManyToManyField(Equipo)
-    
-class Premio(forms.Form):
-    nombre = forms.CharField(max_length=100)
-    monto = forms.DecimalField(
-        max_digits=10,
-        decimal_places=2
-    )
-    torneo = forms.ForeignKey(
-        Torneo,
-        on_delete=forms.CASCADE
-    )
-    ganador = forms.ForeignKey(
-        Equipo,
-        on_delete=forms.SET_NULL,
-        null=True,
-        blank=True
-    )
-'''
+    def clean(self):
+        cleaned_data = super().clean()
+        
+        nombre=self.cleaned_data.get('nombreBusqueda')
+        capacidad=self.cleaned_data.get('capacidadBusqueda')
+        cubierto=self.cleaned_data.get('cubiertoBusqueda')
+        
+        # Validación: capacidad debe estar rellenado
+        if(not capacidad):
+            self.add_error('capacidadBusqueda',"Debes introducir al menos un valor de 1")
+        
+        # Validación de longitud mínima
+        if (capacidad and len(capacidad)<1):
+            self.add_error('capacidadBusqueda',"La capacidad no puede ser menor a 1")
+ 
+        return cleaned_data

@@ -28,7 +28,7 @@
 <h2>CRUD Equipos</h2>
 <ul>
     <li><a href="{% url 'equipo_create' %}">1. Crear Equipos</a></li>
-        <form action="{% url 'equipo_buscar' %}" class="d-flex mt-3" role="search" method="GET">
+    <form action="{% url 'equipo_buscar' %}" class="d-flex mt-3" role="search" method="GET">
         {% bootstrap_form formularioE %}
         <button class="btn btn-light btn-outline-dark" type="submit">2. Search Equipos</button>
     </form>
@@ -36,6 +36,9 @@
 <h2>CRUD Estadios</h2>
 <ul>
     <li><a href="{% url 'estadio_create' %}">1. Crear Estadios</a></li>
-
+    <form action="{% url 'estadio_buscar' %}" class="d-flex mt-3" role="search" method="GET">
+        {% bootstrap_form formularioES %}
+        <button class="btn btn-light btn-outline-dark" type="submit">2. Search Estadios</button>
+    </form>
 </ul>
 {% endblock %}

@@ -1,0 +1,28 @@
+{% extends "../base.html" %}
+{% block title %}Lista de Estadios{% endblock %}
+{% load django_bootstrap5 %}
+{% load bootstrap_icons %}
+{% block contenido %}
+<h1>Resultado de busqueda</h1>
+
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>Ciudad</th>
+        <th>Capacidad</th>
+        <th>Cubierto</th>
+    </tr>
+    {% for estadio in estadios %}
+    <tr>
+        <td>{{ estadio.nombre }}</td>
+        <td>{{ estadio.ciudad }}</td>
+        <td>{{ estadio.capacidad }}</td>
+        <td>{{ estadio.cubierto|yesno:"Sí,No" }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="4">No se encuentran los resultados</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

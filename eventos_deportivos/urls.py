@@ -52,7 +52,7 @@ urlpatterns = [
     # Crear Estadios
     path('estadios/create', views.estadio_create, name='estadio_create'),
     # Buscar estadios
-    #path('estadio/buscar/', views.estadio_buscar, name='estadio_buscar'),
+    path('estadio/buscar/', views.estadio_buscar, name='estadio_buscar'),
     # Actualizar Estadios
     path('estadio/editar/<int:estadio_id>/', views.estadio_editar, name='estadio_editar'),
     # Eliminar Estadios

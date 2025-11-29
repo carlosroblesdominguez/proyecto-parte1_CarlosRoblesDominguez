@@ -583,8 +583,42 @@ def estadio_create(request):
             return redirect("lista_estadios")
     return render(request, 'eventos_deportivos/estadios/estadio_create.html',{"formularioES":formularioES})
 
-
-
+# LEER
+def estadio_buscar(request):
+    mensaje_busqueda = ""
+    estadios = Estadio.objects.none() # Por defecto vacio
+    formularioES = BusquedaEquipoForm(request.GET or None)
+    
+    if(len(request.GET)>0):
+        
+        if formularioES.is_valid():
+            nombreBusqueda=formularioES.cleaned_data.get('nombreBusqueda')
+            capacidadBusqueda=formularioES.cleaned_data.get('capacidadBusqueda')
+            cubiertoBusqueda=formularioES.cleaned_data.get('cubiertoBusqueda')
+            
+            # --- mensaje de filtros  ---
+            filtros_aplicados = []
+            if nombreBusqueda:
+                filtros_aplicados.append(f"Nombre contiene '{nombreBusqueda}'")
+            if capacidadBusqueda:
+                filtros_aplicados.append(f"Capacidad contiene '{capacidadBusqueda}'")
+            filtros_aplicados.append(f"Cubierto= '{cubiertoBusqueda}'")
+            mensaje_busqueda = " | ".join(filtros_aplicados)
+            
+            # --- Construccion del filtro ---
+            filtros = Q(activo=cubiertoBusqueda) # Posicion obligatoria
+            if nombreBusqueda:
+                filtros &= Q(nombre__icontains=nombreBusqueda)
+            if capacidadBusqueda:
+                filtros &= Q(capacidad__icontains=capacidadBusqueda)
+            if cubiertoBusqueda is not None:
+                filtros &= Q(cubierto=cubiertoBusqueda)
+                
+            estadios = Estadio.objects.all()
+    
+            return render(request, 'eventos_deportivos/estadios/estadio_buscar.html', {"formularioES":formularioES,"texto_busqueda":mensaje_busqueda,"estadios":estadios})
+    
+    return render(request, 'eventos_deportivos/index.html',{"formularioES":formularioES})
 
 # EDITAR/ACTUALIZAR
 def estadio_editar(request,estadio_id):
