@@ -5,6 +5,7 @@
 {% block contenido %}
 <h1>Resultado de busqueda</h1>
 
+{% if estadios %}
 <table>
     <tr>
         <th>Nombre</th>
@@ -19,10 +20,9 @@
         <td>{{ estadio.capacidad }}</td>
         <td>{{ estadio.cubierto|yesno:"Sí,No" }}</td>
     </tr>
-    {% empty %}
-    <tr>
-        <td colspan="4">No se encuentran los resultados</td>
-    </tr>
     {% endfor %}
 </table>
+{% else %}
+<p>No se encontraron equipos.</p>
+{% endif %}
 {% endblock %}

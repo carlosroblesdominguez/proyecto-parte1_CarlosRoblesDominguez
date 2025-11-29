@@ -172,7 +172,9 @@ class EstadioModelForm(forms.ModelForm):
 # Estadio buscar
 class BusquedaEstadioForm(forms.Form):
     nombreBusqueda=forms.CharField(required=False)
-    capacidadBusqueda=forms.IntegerField(required=True)
+    capacidadBusqueda=forms.IntegerField(required=True,
+        widget=forms.NumberInput(attrs={'placeholder': 'Capacidad Maxima'})
+    )
     cubiertoBusqueda=forms.BooleanField(required=False)
     
     def clean(self):
@@ -186,8 +188,8 @@ class BusquedaEstadioForm(forms.Form):
         if(not capacidad):
             self.add_error('capacidadBusqueda',"Debes introducir al menos un valor de 1")
         
-        # Validación de longitud mínima
-        if (capacidad and len(capacidad)<1):
+        # Validación de cantidad mínima
+        if (capacidad and capacidad<1):
             self.add_error('capacidadBusqueda',"La capacidad no puede ser menor a 1")
  
         return cleaned_data

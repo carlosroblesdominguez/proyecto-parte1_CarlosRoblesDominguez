@@ -588,7 +588,7 @@ def estadio_create(request):
 def estadio_buscar(request):
     mensaje_busqueda = ""
     estadios = Estadio.objects.none() # Por defecto vacio
-    formularioES = BusquedaEquipoForm(request.GET or None)
+    formularioES = BusquedaEstadioForm(request.GET or None)
     
     if(len(request.GET)>0):
         
@@ -607,15 +607,15 @@ def estadio_buscar(request):
             mensaje_busqueda = " | ".join(filtros_aplicados)
             
             # --- Construccion del filtro ---
-            filtros = Q(activo=cubiertoBusqueda) # Posicion obligatoria
+            filtros = Q() # Posicion obligatoria
             if nombreBusqueda:
                 filtros &= Q(nombre__icontains=nombreBusqueda)
             if capacidadBusqueda:
-                filtros &= Q(capacidad__icontains=capacidadBusqueda)
+                filtros &= Q(capacidad__lte=capacidadBusqueda)
             if cubiertoBusqueda is not None:
                 filtros &= Q(cubierto=cubiertoBusqueda)
                 
-            estadios = Estadio.objects.all()
+            estadios = Estadio.objects.filter(filtros)
     
             return render(request, 'eventos_deportivos/estadios/estadio_buscar.html', {"formularioES":formularioES,"texto_busqueda":mensaje_busqueda,"estadios":estadios})
     
