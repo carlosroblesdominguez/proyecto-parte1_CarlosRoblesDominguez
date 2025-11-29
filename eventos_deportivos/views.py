@@ -440,7 +440,7 @@ def jugador_eliminar(request,jugador_id):
 
 # CREAR
 def equipo_create_valid(formularioE):
-    # Valida y guarda el formulario de jugador junto con sus estadísticas.
+    # Valida y guarda el formulario y los jugadores y sus datos por la tabla intermedia.
     # Devuelve True si se guardó correctamente, False si hubo error.
 
     equipo_creado = False
@@ -546,4 +546,74 @@ def equipo_eliminar(request,equipo_id):
     except:
         pass
     return redirect('lista_equipos')
+
+# ----------------------------
+# CRUD Estadio
+# ----------------------------
+
+def estadio_create_valid(formularioES):
+    # Valida y guarda el formulario
+    # Devuelve True si se guardó correctamente, False si hubo error.
+
+    estadio_creado = False
+    # Comprueba si el formulario es valido
+    if formularioES.is_valid():
+        try:
+            formularioES.save()
+            estadio_creado = True
+        except Exception as e:
+            print("Error al guardar equipo: ", e)
+    else:
+        print("Formulario no valido: ", formularioES.errors)
+    return estadio_creado
+
+def estadio_create(request):
+    # si la peticion es GET se crea el formulario vacio
+    # en el caso de set POST se crea el formulario con datos
+    datosFormulario = None
+    if request.method == "POST":
+        datosFormulario = request.POST
+        
+    formularioES = EstadioModelForm(datosFormulario)
+    
+    if (request.method == "POST"):
+        estadio_creado = equipo_create_valid(formularioES)
+        if(estadio_creado):
+            messages.success(request, 'Se a creado el equipo'+formularioES.cleaned_data.get('nombre')+" correctamente")
+            return redirect("lista_estadios")
+    return render(request, 'eventos_deportivos/estadios/estadio_create.html',{"formularioES":formularioES})
+
+
+
+
+# EDITAR/ACTUALIZAR
+def estadio_editar(request,estadio_id):
+    estadio = Estadio.objects.get(id=estadio_id)
+    
+    datosFormulario=None
+    
+    if request.method=="POST":
+        datosFormulario=request.POST
+        
+    formularioES=EstadioModelForm(datosFormulario,instance=estadio)
+    
+    if (request.method=="POST"):
+        if formularioES.is_valid():
+            formularioES.save()
+            try:
+                formularioES.save()
+                messages.success(request, 'Se ha editado el estadio'+formularioES.cleaned_data.get('nombre')+" correctamente")
+                return redirect('lista_estadios')
+            except Exception as e:
+                print(e)
+    return render(request, 'eventos_deportivos/estadios/estadio_editar.html',{"formularioES":formularioES,"estadio":estadio})
+
+# ELIMINAR
+def estadio_eliminar(request,estadio_id):
+    estadio=Estadio.objects.get(id=estadio_id)
+    try:
+        estadio.delete()
+    except:
+        pass
+    return redirect('lista_estadios')
 

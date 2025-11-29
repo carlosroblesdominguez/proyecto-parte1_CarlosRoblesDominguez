@@ -48,4 +48,14 @@ urlpatterns = [
     path('equipos/editar/<int:equipo_id>/', views.equipo_editar, name='equipo_editar'),
     # Eliminar Equipos
     path('equipos/eliminar/<int:equipo_id>', views.equipo_eliminar, name='equipo_eliminar'),
+
+    # Crear Estadios
+    path('estadios/create', views.estadio_create, name='estadio_create'),
+    # Buscar estadios
+    #path('estadio/buscar/', views.estadio_buscar, name='estadio_buscar'),
+    # Actualizar Estadios
+    path('estadio/editar/<int:estadio_id>/', views.estadio_editar, name='estadio_editar'),
+    # Eliminar Estadios
+    path('estadio/eliminar/<int:estadio_id>', views.estadio_eliminar, name='estadio_eliminar'),
+
 ]

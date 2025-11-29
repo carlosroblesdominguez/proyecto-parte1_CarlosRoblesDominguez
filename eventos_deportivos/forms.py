@@ -107,7 +107,7 @@ class EquipoModelForm(forms.ModelForm):
         
 
         if nombre and ciudad:
-            # Comprueba si ya existe un jugador con los mismos datos ignorandose a si mismo
+            # Comprueba si ya existe un equipo con los mismos datos ignorandose a si mismo
             equipo_id = self.instance.id if self.instance else None
             if Equipo.objects.filter(nombre=nombre, ciudad=ciudad).exclude(id=equipo_id).exists():
                 self.add_error('nombre',"Ya existe un equipo con ese nombre")
@@ -137,6 +137,39 @@ class BusquedaEquipoForm(forms.Form):
             self.add_error('ciudadBusqueda',"Debe introducir al menos 3 caracteres")
  
         return cleaned_data
+    
+# Estadio create
+class EstadioModelForm(forms.ModelForm):
+    class Meta:
+        model = Estadio
+        fields = ['nombre', 'ciudad', 'capacidad', 'cubierto']
+        labels = {
+            'nombre': 'Nombre',
+            'ciudad': 'ciudad',
+            'capacidad': 'capacidad',
+            'cubierto': 'cubierto',
+        }
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'ciudad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: Sevilla'}),
+            'capacidad': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Introduce capacidad'}),
+            'cubierto': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+    def clean(self):
+        cleaned_data = super().clean()
+        nombre = cleaned_data.get('nombre')
+        ciudad = cleaned_data.get('ciudad')
+        
+
+        if nombre and ciudad:
+            # Comprueba si ya existe un estadio con los mismos datos ignorandose a si mismo
+            estadio_id = self.instance.id if self.instance else None
+            if Estadio.objects.filter(nombre=nombre, ciudad=ciudad).exclude(id=estadio_id).exists():
+                self.add_error('nombre',"Ya existe un estadio con ese nombre en esa ciudad")
+        
+        return cleaned_data
+    
+
 
 '''            
 # Equipo
