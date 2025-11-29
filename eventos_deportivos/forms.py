@@ -173,7 +173,7 @@ class EstadioModelForm(forms.ModelForm):
 class BusquedaEstadioForm(forms.Form):
     nombreBusqueda=forms.CharField(required=False)
     capacidadBusqueda=forms.IntegerField(required=True)
-    cubiertoBusqueda=forms.BooleanField()
+    cubiertoBusqueda=forms.BooleanField(required=False)
     
     def clean(self):
         cleaned_data = super().clean()

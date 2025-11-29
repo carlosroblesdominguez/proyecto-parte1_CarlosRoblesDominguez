@@ -1,6 +1,6 @@
 {% extends "./base.html" %}
 {% block title %}Página Principal{% endblock %}
-
+{% load django_bootstrap5 %}
 {% block contenido %}
 <h1>Bienvenido al proyecto de eventos deportivos</h1>
 
@@ -17,7 +17,6 @@
     <li><a href="{% url 'lista_estadios' %}">8. Lista de Estadios</a></li>
 </ul>
 <h2>CRUD Jugadores</h2>
-{% load django_bootstrap5 %}
 <ul>
     <li><a href="{% url 'jugador_create' %}">1. Crear Jugadores</a></li>
     <form action="{% url 'jugador_buscar' %}" class="d-flex mt-3" role="search" method="GET">

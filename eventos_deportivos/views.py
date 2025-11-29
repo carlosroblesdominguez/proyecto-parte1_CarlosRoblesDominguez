@@ -14,7 +14,8 @@ def index(request):
     """
     formularioJ = BusquedaJugadorForm(request.GET or None)
     formularioE = BusquedaEquipoForm(request.GET or None)
-    return render(request, "eventos_deportivos/index.html",{"formularioJ":formularioJ, "formularioE":formularioE})
+    formularioES = BusquedaEstadioForm(request.GET or None)
+    return render(request, "eventos_deportivos/index.html",{"formularioJ":formularioJ, "formularioE":formularioE, "formularioES":formularioES})
 
 def error_404(request, exception):
     return render(request, 'eventos_deportivos/error_404.html', status=404)
