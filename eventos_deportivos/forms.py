@@ -209,7 +209,7 @@ class SponsorModelForm(forms.ModelForm):
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
             'pais': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: España'}),
             'monto': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Introduce monto'}),
-            'equipos': forms.CheckboxSelectMultiple(attrs={'class': 'form-select'}),
+            'equipos': forms.Select(attrs={'class': 'form-select'}),
         }
     def clean(self):
         cleaned_data = super().clean()
@@ -249,4 +249,73 @@ class BusquedaSponsorForm(forms.Form):
         if(not pais):
             self.add_error('paisBusqueda',"Debes rellenar el pais")
  
+        return cleaned_data
+    
+# Partido create
+class PartidoModelForm(forms.ModelForm):
+    class Meta:
+        model = Partido
+        fields = ['fecha', 'equipo_local', 'equipo_visitante', 'torneo', 'resultado']
+        labels = {
+            'fecha': 'fecha',
+            'equipo local': 'equipo local',
+            'equipo visitante': 'equipo visitante',
+            'torneo': 'torneo',
+            'resultado': 'resultado',
+        }
+        widgets = {
+            'fecha': forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-control'},format='%Y-%m-%dT%H:%M'),
+            'equipo_local': forms.Select(attrs={'class': 'form-control'}),
+            'equipo_visitante': forms.Select(attrs={'class': 'form-control'}),
+            'torneo': forms.Select(attrs={'class': 'form-control'}),
+            'resultado': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'x-x'}),
+        }
+        
+    def clean(self):
+        cleaned_data = super().clean()
+        fecha = cleaned_data.get('fecha')
+        resultado = cleaned_data.get('resultado')
+        
+        # Validacion de fecha: no puede repetirse
+        if fecha:
+            partido_id = self.instance.id if self.instance else None
+            if Partido.objects.filter(fecha=fecha).exclude(id=partido_id).exists():
+                self.add_error('fecha', "Ya existe un partido en esa fecha")
+        
+        # Validacion del resultado: debe tener formato x-x (ej: 2-1)
+        if resultado:
+            import re
+            if not re.match(r'^\d+-\d+$', resultado):
+                self.add_error('resultado', "El resultado debe tener el formato x-x (EJ: 2-1)")
+
+        return cleaned_data
+
+# Partido buscar
+class BusquedaPartidoForm(forms.Form):
+    desdeFechaBusqueda=forms.DateField(
+        required=True,
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'})
+    )
+    hastaFechaBusqueda=forms.DateField(
+        required=True,
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'})    
+    )
+    torneoBusqueda=forms.ModelChoiceField(
+        Torneo.objects.all(),
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control'}),
+    )
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        
+        desde=self.cleaned_data.get('desdeFechaBusqueda')
+        hasta=self.cleaned_data.get('hastaFechaBusqueda')
+        torneo=self.cleaned_data.get('torneoBusqueda')
+        
+        # Validacion: fecha hasta no puede ser superior a fecha desde
+        if(desde and hasta):
+            if desde > hasta:
+                self.add_error('hastaFechaBusqueda', "La fecha hasta no puede ser anterior a la fecha desde")
+        
         return cleaned_data

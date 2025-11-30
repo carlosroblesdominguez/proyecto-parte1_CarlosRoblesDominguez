@@ -1,0 +1,36 @@
+{% extends "../base.html" %}
+{% block title %}Lista de Partidos{% endblock %}
+{% load django_bootstrap5 %}
+{% load bootstrap_icons %}
+{% block contenido %}
+<h1>Lista de Partidos</h1>
+
+{% if partidos %}
+<table>
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Equipo Local</th>
+            <th>Equipo Visitante</th>
+            <th>Resultado</th>
+            <th>Torneo</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for partido in partidos %}
+        <tr>
+            <td>{{ partido.fecha|date:"d/m/Y" }}</td>
+            <td>{{ partido.fecha|time:"H:i" }}</td>
+            <td>{{ partido.equipo_local.nombre }}</td>
+            <td>{{ partido.equipo_visitante.nombre }}</td>
+            <td>{{ partido.resultado }}</td>
+            <td>{{ partido.torneo.nombre|upper }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No se encontraron partidos.</p>
+{% endif %}
+{% endblock %}

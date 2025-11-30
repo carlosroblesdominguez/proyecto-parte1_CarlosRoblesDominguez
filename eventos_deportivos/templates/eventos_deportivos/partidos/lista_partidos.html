@@ -1,6 +1,7 @@
 {% extends "../base.html" %}
 {% block title %}Lista de Partidos{% endblock %}
-
+{% load django_bootstrap5 %}
+{% load bootstrap_icons %}
 {% block contenido %}
 <h1>Lista de Partidos</h1>
 
@@ -24,6 +25,24 @@
             <td>{{ partido.equipo_visitante.nombre }}</td>
             <td>{{ partido.resultado }}</td>
             <td>{{ partido.torneo.nombre|upper }}</td>
+            <td>
+                <div class="row btn-group">
+                    <div class="mb-2">
+                        <button type="button" 
+                                class="btn btn-outline-primary"> 
+                                <a href="{% url 'partido_editar' partido.id %}"><span>{% bs_icon 'pencil' %}</span></a>
+                        </button>
+                    </div>
+                    <div class="mb-2">
+                        <form action = "{% url 'partido_eliminar' partido.id %}" method = "post"> 
+                            {% csrf_token %}
+                            <button class="btn btn-danger" onclick="return eliminar();" type="submit">
+                                <span>{% bs_icon 'trash' %}</span>
+                            </button> 
+                        </form>
+                    </div>
+                </div>
+            </td>
         </tr>
         {% empty %}
         <tr>

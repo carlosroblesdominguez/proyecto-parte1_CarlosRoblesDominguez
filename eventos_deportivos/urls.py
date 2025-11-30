@@ -66,5 +66,13 @@ urlpatterns = [
     path('sponsors/editar/<int:sponsor_id>/', views.sponsor_editar, name='sponsor_editar'),
     # Eliminar Estadios
     path('sponsors/eliminar/<int:sponsor_id>', views.sponsor_eliminar, name='sponsor_eliminar'),
-
+    
+    # Crear Partidos
+    path('partidos/create', views.partido_create, name='partido_create'),
+    # Buscar Partidos
+    path('partidos/buscar/', views.partido_buscar, name='partido_buscar'),
+    # Actualizar Partidos
+    path('partidos/editar/<int:partido_id>/', views.partido_editar, name='partido_editar'),
+    # Eliminar Partidos
+    path('partidos/eliminar/<int:partido_id>', views.partido_eliminar, name='partido_eliminar'),
 ]

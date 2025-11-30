@@ -16,7 +16,18 @@ def index(request):
     formularioE = BusquedaEquipoForm(request.GET or None)
     formularioES = BusquedaEstadioForm(request.GET or None)
     formularioSP = BusquedaSponsorForm(request.GET or None)
-    return render(request, "eventos_deportivos/index.html",{"formularioJ":formularioJ, "formularioE":formularioE, "formularioES":formularioES, "formularioSP":formularioSP})
+    formularioP = BusquedaPartidoForm(request.GET or None)
+    return render(
+        request, 
+        "eventos_deportivos/index.html",
+        {
+            "formularioJ":formularioJ,
+            "formularioE":formularioE,
+            "formularioES":formularioES,
+            "formularioSP":formularioSP,
+            "formularioP":formularioP
+        }
+    )
 
 def error_404(request, exception):
     return render(request, 'eventos_deportivos/error_404.html', status=404)
@@ -563,7 +574,7 @@ def estadio_create_valid(formularioES):
             formularioES.save()
             estadio_creado = True
         except Exception as e:
-            print("Error al guardar equipo: ", e)
+            print("Error al guardar estadio: ", e)
     else:
         print("Formulario no valido: ", formularioES.errors)
     return estadio_creado
@@ -578,9 +589,9 @@ def estadio_create(request):
     formularioES = EstadioModelForm(datosFormulario)
     
     if (request.method == "POST"):
-        estadio_creado = equipo_create_valid(formularioES)
+        estadio_creado = estadio_create_valid(formularioES)
         if(estadio_creado):
-            messages.success(request, 'Se a creado el equipo'+formularioES.cleaned_data.get('nombre')+" correctamente")
+            messages.success(request, 'Se a creado el estadio'+formularioES.cleaned_data.get('nombre')+" correctamente")
             return redirect("lista_estadios")
     return render(request, 'eventos_deportivos/estadios/estadio_create.html',{"formularioES":formularioES})
 
@@ -667,7 +678,7 @@ def sponsor_create_valid(formularioSP):
             formularioSP.save()
             sponsor_creado = True
         except Exception as e:
-            print("Error al guardar equipo: ", e)
+            print("Error al guardar sponsor: ", e)
     else:
         print("Formulario no valido: ", formularioSP.errors)
     return sponsor_creado
@@ -682,9 +693,9 @@ def sponsor_create(request):
     formularioSP = SponsorModelForm(datosFormulario)
     
     if (request.method == "POST"):
-        sponsor_creado = equipo_create_valid(formularioSP)
+        sponsor_creado = sponsor_create_valid(formularioSP)
         if(sponsor_creado):
-            messages.success(request, 'Se a creado el torneo'+formularioSP.cleaned_data.get('nombre')+" correctamente")
+            messages.success(request, 'Se a creado el sponsor '+formularioSP.cleaned_data.get('nombre')+" correctamente")
             return redirect("lista_sponsors")
     return render(request, 'eventos_deportivos/sponsors/sponsor_create.html',{"formularioSP":formularioSP})
 
@@ -757,3 +768,116 @@ def sponsor_eliminar(request,sponsor_id):
     except:
         pass
     return redirect('lista_sponsors')
+
+# ----------------------------
+# CRUD Partidos
+# ----------------------------
+
+def partido_create_valid(formularioP):
+    # Valida y guarda el formulario
+    # Devuelve True si se guardó correctamente, False si hubo error.
+
+    partido_creado = False
+    # Comprueba si el formulario es valido
+    if formularioP.is_valid():
+        try:
+            formularioP.save()
+            partido_creado = True
+        except Exception as e:
+            print("Error al guardar partido: ", e)
+    else:
+        print("Formulario no valido: ", formularioP.errors)
+    return partido_creado
+
+def partido_create(request):
+    # si la peticion es GET se crea el formulario vacio
+    # en el caso de set POST se crea el formulario con datos
+    datosFormulario = None
+    if request.method == "POST":
+        datosFormulario = request.POST
+        
+    formularioP = PartidoModelForm(datosFormulario)
+    
+    if (request.method == "POST"):
+        partido_creado = partido_create_valid(formularioP)
+        if(partido_creado):
+            # Obtener los objetos Equipo
+            equipo_local = formularioP.cleaned_data.get('equipo_local')
+            equipo_visitante = formularioP.cleaned_data.get('equipo_visitante')
+            
+            messages.success(request, f"Se a creado el partido {equipo_local} VS {equipo_visitante} correctamente")
+            return redirect("lista_partidos")
+    return render(request, 'eventos_deportivos/partidos/partido_create.html',{"formularioP":formularioP})
+
+# LEER
+def partido_buscar(request):
+    mensaje_busqueda = ""
+    partidos = Partido.objects.none() # Por defecto vacio
+    formularioP = BusquedaPartidoForm(request.GET or None)
+    
+    if(len(request.GET)>0):
+        
+        if formularioP.is_valid():
+            hastaFechaBusqueda=formularioP.cleaned_data.get('hastaFechaBusqueda')
+            desdeFechaBusqueda=formularioP.cleaned_data.get('desdeFechaBusqueda')
+            torneoBusqueda=formularioP.cleaned_data.get('torneoBusqueda')
+            
+            # --- mensaje de filtros  ---
+            filtros_aplicados = []
+            if hastaFechaBusqueda:
+                filtros_aplicados.append(f"fecha hasta: '{hastaFechaBusqueda}'")
+            if desdeFechaBusqueda:
+                filtros_aplicados.append(f"fecha desde: '{desdeFechaBusqueda}'")
+            if torneoBusqueda:
+                filtros_aplicados.append(f"torneo: '{torneoBusqueda}'")
+            mensaje_busqueda = " | ".join(filtros_aplicados)
+            
+            # --- Construccion del filtro ---
+            filtros = Q() # Posicion obligatoria
+            if desdeFechaBusqueda:
+                filtros &= Q(fecha__gte=desdeFechaBusqueda)
+            if hastaFechaBusqueda:
+                filtros &= Q(fecha__lte=hastaFechaBusqueda)
+            if torneoBusqueda:
+                filtros &= Q(torneo=torneoBusqueda)
+                
+            partidos = Partido.objects.filter(filtros).select_related('equipo_local','equipo_visitante','torneo')
+    
+            return render(request, 'eventos_deportivos/partidos/partido_buscar.html', {"formularioP":formularioP,"texto_busqueda":mensaje_busqueda,"partidos":partidos})
+    
+    return render(request, 'eventos_deportivos/index.html',{"formularioP":formularioP})
+
+# EDITAR/ACTUALIZAR
+def  partido_editar(request,partido_id):
+    partido = Partido.objects.get(id=partido_id)
+    
+    datosFormulario=None
+    
+    if request.method=="POST":
+        datosFormulario=request.POST
+        
+    formularioP=PartidoModelForm(datosFormulario,instance=partido)
+    
+    if (request.method=="POST"):
+        if formularioP.is_valid():
+            formularioP.save()
+            try:
+                formularioP.save()
+                # Obtener los objetos Equipo
+                equipo_local = formularioP.cleaned_data.get('equipo_local')
+                equipo_visitante = formularioP.cleaned_data.get('equipo_visitante')
+            
+                messages.success(request, f"Se a modificado el partido {equipo_local} VS {equipo_visitante} correctamente")
+                return redirect('lista_partidos')
+            except Exception as e:
+                print(e)
+    return render(request, 'eventos_deportivos/partidos/partido_editar.html',{"formularioP":formularioP,"partido":partido})
+
+# ELIMINAR
+def partido_eliminar(request,partido_id):
+    partido=Partido.objects.get(id=partido_id)
+    try:
+        partido.delete()
+    except:
+        pass
+    return redirect('lista_partidos')

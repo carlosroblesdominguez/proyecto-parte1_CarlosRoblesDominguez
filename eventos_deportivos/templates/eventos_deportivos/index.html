@@ -60,10 +60,23 @@
     <li><a href="{% url 'sponsor_create' %}">1. Crear Sponsors</a></li>
     <form action="{% url 'sponsor_buscar' %}" class="d-flex mt-3" role="search" method="GET">
         {% bootstrap_form formularioSP %}
-        <button class="btn btn-light btn-outline-dark" type="submit">2. Search Estadios</button>
+        <button class="btn btn-light btn-outline-dark" type="submit">2. Search Sponsors</button>
         {% if formularioSP.errors %}
         <div class="alert alert-danger mt-2">
             {{ formularioSP.errors }}
+        </div>
+    {% endif %}
+    </form>
+</ul>
+<h2>CRUD Partidos</h2>
+<ul>
+    <li><a href="{% url 'partido_create' %}">1. Crear Partidos</a></li>
+    <form action="{% url 'partido_buscar' %}" class="d-flex mt-3" role="search" method="GET">
+        {% bootstrap_form formularioP %}
+        <button class="btn btn-light btn-outline-dark" type="submit">2. Search Partidos</button>
+        {% if formularioP.errors %}
+        <div class="alert alert-danger mt-2">
+            {{ formularioP.errors }}
         </div>
     {% endif %}
     </form>

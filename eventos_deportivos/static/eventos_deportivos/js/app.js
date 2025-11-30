@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 
 function eliminar(){
-  var x = confirm("¿Eliminar jugador?")
+  var x = confirm("¿Realmente quiere eliminar este registro?")
   if (x)
     return true
   else
