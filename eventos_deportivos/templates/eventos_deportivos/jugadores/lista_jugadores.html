@@ -5,6 +5,7 @@
 {% block contenido %}
 <h1>Lista de Jugadores</h1>
 
+{% if jugadores %}
 <table>
     <thead>
         <tr>
@@ -48,13 +49,12 @@
                 </div>
             </td>
         </tr>
-        {% empty %}
-        <tr>
-            <td colspan="8">No hay jugadores registrados</td>
-        </tr>
         {% endfor %}
     </tbody>
 </table>
+{% else %}
+<p>No se encontraron jugadores.</p>
+{% endif %}
 <script>
     function eliminar(){
         var x = confirm("¿Realmente quieres eliminar este jugador?")

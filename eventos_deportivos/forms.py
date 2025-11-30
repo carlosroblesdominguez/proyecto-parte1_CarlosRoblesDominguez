@@ -193,3 +193,60 @@ class BusquedaEstadioForm(forms.Form):
             self.add_error('capacidadBusqueda',"La capacidad no puede ser menor a 1")
  
         return cleaned_data
+
+# Sponsor create
+class SponsorModelForm(forms.ModelForm):
+    class Meta:
+        model = Sponsor
+        fields = ['nombre', 'pais', 'monto', 'equipos']
+        labels = {
+            'nombre': 'Nombre',
+            'pais': 'pais',
+            'monto': 'monto',
+            'equipos': 'equipos',
+        }
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'pais': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: España'}),
+            'monto': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Introduce monto'}),
+            'equipos': forms.CheckboxSelectMultiple(attrs={'class': 'form-select'}),
+        }
+    def clean(self):
+        cleaned_data = super().clean()
+        nombre = cleaned_data.get('nombre')
+        
+        if nombre:
+            # Comprueba si ya existe un sponsor con los mismos datos ignorandose a si mismo
+            sponsor_id = self.instance.id if self.instance else None
+            if Estadio.objects.filter(nombre=nombre).exclude(id=sponsor_id).exists():
+                self.add_error('nombre',"Ya existe un sponsor con ese nombre")
+        
+        return cleaned_data
+    
+# Sponsor buscar
+class BusquedaSponsorForm(forms.Form):
+    nombreBusqueda=forms.CharField(required=False)
+    paisBusqueda=forms.CharField(required=True)
+    montoBusqueda=forms.IntegerField(required=True,min_value=1,
+        widget=forms.NumberInput(attrs={'placeholder': 'Monto sponsor'})
+    )
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        
+        nombre=self.cleaned_data.get('nombreBusqueda')
+        pais=self.cleaned_data.get('paisBusqueda')
+        monto=self.cleaned_data.get('montoBusqueda')
+        
+        # Validación: monto debe estar rellenado
+        if(not monto):
+            self.add_error('montoBusqueda',"Debes introducir al menos un valor de 1")
+        # Validación de cantidad mínima
+        elif (monto<1):
+            self.add_error('montoBusqueda',"el monto no puede ser menor a 1")
+            
+        # Validación: pais debe estar rellenado
+        if(not pais):
+            self.add_error('paisBusqueda',"Debes rellenar el pais")
+ 
+        return cleaned_data

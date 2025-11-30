@@ -6,8 +6,6 @@
     value="{% spaceless %}
         {% if formularioJ.is_bound %}
             {{ formularioJ.nombre.value }}
-        {% elif libro %}
-            {{ formularioJ.nombre.value }}
         {% endif %}
     {% endspaceless %}">
 

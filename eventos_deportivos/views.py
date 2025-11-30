@@ -15,7 +15,8 @@ def index(request):
     formularioJ = BusquedaJugadorForm(request.GET or None)
     formularioE = BusquedaEquipoForm(request.GET or None)
     formularioES = BusquedaEstadioForm(request.GET or None)
-    return render(request, "eventos_deportivos/index.html",{"formularioJ":formularioJ, "formularioE":formularioE, "formularioES":formularioES})
+    formularioSP = BusquedaSponsorForm(request.GET or None)
+    return render(request, "eventos_deportivos/index.html",{"formularioJ":formularioJ, "formularioE":formularioE, "formularioES":formularioES, "formularioSP":formularioSP})
 
 def error_404(request, exception):
     return render(request, 'eventos_deportivos/error_404.html', status=404)
@@ -286,11 +287,11 @@ def detalle_arbitro_torneo(request, arbitro_id, torneo_id):
 # ----------------------------
 # URL10: Lista de Sponsors
 # ----------------------------
-def lista_sponsors(request, pais, monto_min):
+def lista_sponsors(request):
     """
-    Lista todos los sponsors filtrando por país y monto, y usando ManyToMany para equipos.
+    Lista todos los sponsors, y usando ManyToMany para equipos.
     """
-    sponsors = Sponsor.objects.filter(pais=pais).filter(monto__gte=monto_min).all().prefetch_related('equipos').order_by('nombre')
+    sponsors = Sponsor.objects.prefetch_related('equipos').order_by('nombre')
 
     # Equivalente SQL usando raw()
     sql = f"""
@@ -298,7 +299,6 @@ def lista_sponsors(request, pais, monto_min):
     FROM eventos_deportivos_sponsor s
     LEFT JOIN eventos_deportivos_sponsor_equipos se ON s.id = se.sponsor_id
     LEFT JOIN eventos_deportivos_equipo e ON se.equipo_id = e.id
-    WHERE s.pais = '{pais}' AND s.monto >= {monto_min}
     ORDER BY s.nombre;
     """
     #sponsors_sql = Sponsor.objects.raw(sql)
@@ -306,7 +306,7 @@ def lista_sponsors(request, pais, monto_min):
     contexto = {
         "sponsors": sponsors
     }
-    return render(request, "eventos_deportivos/lista_sponsors.html", contexto)
+    return render(request, "eventos_deportivos/sponsors/lista_sponsors.html", contexto)
 
 # ----------------------------
 # URL: Lista de estadios
@@ -652,3 +652,108 @@ def estadio_eliminar(request,estadio_id):
         pass
     return redirect('lista_estadios')
 
+# ----------------------------
+# CRUD Sponsors
+# ----------------------------
+
+def sponsor_create_valid(formularioSP):
+    # Valida y guarda el formulario
+    # Devuelve True si se guardó correctamente, False si hubo error.
+
+    sponsor_creado = False
+    # Comprueba si el formulario es valido
+    if formularioSP.is_valid():
+        try:
+            formularioSP.save()
+            sponsor_creado = True
+        except Exception as e:
+            print("Error al guardar equipo: ", e)
+    else:
+        print("Formulario no valido: ", formularioSP.errors)
+    return sponsor_creado
+
+def sponsor_create(request):
+    # si la peticion es GET se crea el formulario vacio
+    # en el caso de set POST se crea el formulario con datos
+    datosFormulario = None
+    if request.method == "POST":
+        datosFormulario = request.POST
+        
+    formularioSP = SponsorModelForm(datosFormulario)
+    
+    if (request.method == "POST"):
+        sponsor_creado = equipo_create_valid(formularioSP)
+        if(sponsor_creado):
+            messages.success(request, 'Se a creado el torneo'+formularioSP.cleaned_data.get('nombre')+" correctamente")
+            return redirect("lista_sponsors")
+    return render(request, 'eventos_deportivos/sponsors/sponsor_create.html',{"formularioSP":formularioSP})
+
+# LEER
+def sponsor_buscar(request):
+    mensaje_busqueda = ""
+    sponsors = Sponsor.objects.none() # Por defecto vacio
+    formularioSP = BusquedaSponsorForm(request.GET or None)
+    
+    if(len(request.GET)>0):
+        
+        if formularioSP.is_valid():
+            nombreBusqueda=formularioSP.cleaned_data.get('nombreBusqueda')
+            paisBusqueda=formularioSP.cleaned_data.get('paisBusqueda')
+            montoBusqueda=formularioSP.cleaned_data.get('montoBusqueda')
+            
+            
+            # --- mensaje de filtros  ---
+            filtros_aplicados = []
+            if nombreBusqueda:
+                filtros_aplicados.append(f"Nombre contiene '{nombreBusqueda}'")
+            if montoBusqueda is not None:
+                filtros_aplicados.append(f"Monto <= '{montoBusqueda}'")
+            if paisBusqueda:
+                filtros_aplicados.append(f"Pais contiene '{paisBusqueda}'")
+            mensaje_busqueda = " | ".join(filtros_aplicados)
+            
+            # --- Construccion del filtro ---
+            filtros = Q() # Posicion obligatoria
+            if nombreBusqueda:
+                filtros &= Q(nombre__icontains=nombreBusqueda)
+            if montoBusqueda is not None:
+                filtros &= Q(monto__lte=montoBusqueda)
+            if paisBusqueda:
+                filtros &= Q(pais__icontains=paisBusqueda)
+                
+            sponsors = Sponsor.objects.filter(filtros)
+    
+            return render(request, 'eventos_deportivos/sponsors/sponsor_buscar.html', {"formularioSP":formularioSP,"texto_busqueda":mensaje_busqueda,"sponsors":sponsors})
+    
+    return render(request, 'eventos_deportivos/index.html',{"formularioSP":formularioSP})
+
+# EDITAR/ACTUALIZAR
+def  sponsor_editar(request,sponsor_id):
+    sponsor = Sponsor.objects.get(id=sponsor_id)
+    
+    datosFormulario=None
+    
+    if request.method=="POST":
+        datosFormulario=request.POST
+        
+    formularioSP=SponsorModelForm(datosFormulario,instance=sponsor)
+    
+    if (request.method=="POST"):
+        if formularioSP.is_valid():
+            formularioSP.save()
+            try:
+                formularioSP.save()
+                messages.success(request, 'Se ha editado el sponsor'+formularioSP.cleaned_data.get('nombre')+" correctamente")
+                return redirect('lista_sponsors')
+            except Exception as e:
+                print(e)
+    return render(request, 'eventos_deportivos/sponsors/sponsor_editar.html',{"formularioSP":formularioSP,"sponsor":sponsor})
+
+# ELIMINAR
+def sponsor_eliminar(request,sponsor_id):
+    sponsor=Sponsor.objects.get(id=sponsor_id)
+    try:
+        sponsor.delete()
+    except:
+        pass
+    return redirect('lista_sponsors')

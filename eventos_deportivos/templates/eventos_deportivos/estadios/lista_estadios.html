@@ -5,6 +5,7 @@
 {% block contenido %}
 <h1>Listado de Estadios</h1>
 
+{% if estadios %}
 <table>
     <tr>
         <th>Nombre</th>
@@ -37,10 +38,18 @@
             </div>
         </td>
     </tr>
-    {% empty %}
-    <tr>
-        <td colspan="4">No hay estadios registrados</td>
-    </tr>
     {% endfor %}
 </table>
+{% else %}
+<p>No se encontraron estadios.</p>
+{% endif %}
+<script>
+    function eliminar(){
+        var x = confirm("¿Realmente quieres eliminar este estadio?")
+        if (x)
+            return true
+        else
+            return false
+    }
+</script>
 {% endblock %}

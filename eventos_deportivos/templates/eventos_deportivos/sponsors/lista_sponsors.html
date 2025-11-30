@@ -1,0 +1,59 @@
+{% extends "../base.html" %}
+{% block title %}Lista de Sponsors{% endblock %}
+{% load django_bootstrap5 %}
+{% load bootstrap_icons %}
+{% block contenido %}
+<h1>Lista de Sponsors</h1>
+
+{% if sponsors %}
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Monto</th>
+            <th>País</th>
+            <th>Equipos</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sponsor in sponsors %}
+        <tr>
+            <td>{{ sponsor.nombre }}</td>
+            <td>{{ sponsor.monto|floatformat:2 }}</td>
+            <td>{{ sponsor.pais|lower }}</td>
+            <td>{{ sponsor.equipos.all|length }}</td>
+            <td>
+                <div class="row btn-group">
+                    <div class="mb-2">
+                        <button type="button" 
+                                class="btn btn-outline-primary"> 
+                                <a href="{% url 'sponsor_editar' sponsor.id %}"><span>{% bs_icon 'pencil' %}</span></a>
+                        </button>
+                    </div>
+                    <div class="mb-2">
+                        <form action = "{% url 'sponsor_eliminar' sponsor.id %}" method = "post"> 
+                            {% csrf_token %}
+                            <button class="btn btn-danger" onclick="return eliminar();" type="submit">
+                                <span>{% bs_icon 'trash' %}</span>
+                            </button> 
+                        </form>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No se encontraron sponsors.</p>
+{% endif %}
+<script>
+    function eliminar(){
+        var x = confirm("¿Realmente quieres eliminar este sponsor?")
+        if (x)
+            return true
+        else
+            return false
+    }
+</script>
+{% endblock %}

@@ -13,7 +13,7 @@
     <li><a href="{% url 'detalle_torneo' nombre_torneo='Leader Cup' %}">4. Detalle de un Torneo (torneo)</a></li>
     <li><a href="{% url 'lista_torneos' %}">5. Lista de Torneos</a></li>
     <li><a href="{% url 'detalle_arbitro_torneo' arbitro_id=1 torneo_id=1 %}">6. Detalle de Árbitro en un Torneo (id de arbitro e id de torneo)</a></li>
-    <li><a href="{% url 'lista_sponsors' pais='España' monto_min=1000 %}">7. Lista de Sponsors (pais, monto >= xxxx)</a></li>
+    <li><a href="{% url 'lista_sponsors' %}">7. Lista de Sponsors</a></li>
     <li><a href="{% url 'lista_estadios' %}">8. Lista de Estadios</a></li>
 </ul>
 <h2>CRUD Jugadores</h2>
@@ -22,6 +22,11 @@
     <form action="{% url 'jugador_buscar' %}" class="d-flex mt-3" role="search" method="GET">
         {% bootstrap_form formularioJ %}
         <button class="btn btn-light btn-outline-dark" type="submit">2. Search Jugadores</button>
+        {% if formularioJ.errors %}
+        <div class="alert alert-danger mt-2">
+            {{ formularioJ.errors }}
+        </div>
+    {% endif %}
     </form>
 </ul>
 <h2>CRUD Equipos</h2>
@@ -30,6 +35,11 @@
     <form action="{% url 'equipo_buscar' %}" class="d-flex mt-3" role="search" method="GET">
         {% bootstrap_form formularioE %}
         <button class="btn btn-light btn-outline-dark" type="submit">2. Search Equipos</button>
+        {% if formularioE.errors %}
+            <div class="alert alert-danger mt-2">
+                {{ formularioE.errors }}
+            </div>
+        {% endif %}
     </form>
 </ul>
 <h2>CRUD Estadios</h2>
@@ -38,6 +48,24 @@
     <form action="{% url 'estadio_buscar' %}" class="d-flex mt-3" role="search" method="GET">
         {% bootstrap_form formularioES %}
         <button class="btn btn-light btn-outline-dark" type="submit">2. Search Estadios</button>
+        {% if formularioES.errors %}
+        <div class="alert alert-danger mt-2">
+            {{ formularioES.errors }}
+        </div>
+    {% endif %}
+    </form>
+</ul>
+<h2>CRUD Sponsors</h2>
+<ul>
+    <li><a href="{% url 'sponsor_create' %}">1. Crear Sponsors</a></li>
+    <form action="{% url 'sponsor_buscar' %}" class="d-flex mt-3" role="search" method="GET">
+        {% bootstrap_form formularioSP %}
+        <button class="btn btn-light btn-outline-dark" type="submit">2. Search Estadios</button>
+        {% if formularioSP.errors %}
+        <div class="alert alert-danger mt-2">
+            {{ formularioSP.errors }}
+        </div>
+    {% endif %}
     </form>
 </ul>
 {% endblock %}
