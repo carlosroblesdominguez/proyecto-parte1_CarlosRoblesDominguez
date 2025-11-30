@@ -162,7 +162,7 @@ def lista_partidos(request):
         "partidos": partidos,
         "stats": stats
     }
-    return render(request, "eventos_deportivos/lista_partidos.html", contexto)
+    return render(request, "eventos_deportivos/partidos/lista_partidos.html", contexto)
 
 # ----------------------------
 # URL5: Detalle de un partido
@@ -197,7 +197,7 @@ def detalle_partido(request, partido_id):
         "partido": partido,
         "arbitros": arbitros
     }
-    return render(request, "eventos_deportivos/detalle_partido.html", contexto)
+    return render(request, "eventos_deportivos/partidos/detalle_partido.html", contexto)
 
 # ----------------------------
 # URL6: Lista de equipos
