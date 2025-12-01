@@ -22,11 +22,6 @@
     <form action="{% url 'jugador_buscar' %}" class="d-flex mt-3" role="search" method="GET">
         {% bootstrap_form formularioJ %}
         <button class="btn btn-light btn-outline-dark" type="submit">2. Search Jugadores</button>
-        {% if formularioJ.errors %}
-        <div class="alert alert-danger mt-2">
-            {{ formularioJ.errors }}
-        </div>
-    {% endif %}
     </form>
 </ul>
 <h2>CRUD Equipos</h2>
@@ -35,11 +30,6 @@
     <form action="{% url 'equipo_buscar' %}" class="d-flex mt-3" role="search" method="GET">
         {% bootstrap_form formularioE %}
         <button class="btn btn-light btn-outline-dark" type="submit">2. Search Equipos</button>
-        {% if formularioE.errors %}
-            <div class="alert alert-danger mt-2">
-                {{ formularioE.errors }}
-            </div>
-        {% endif %}
     </form>
 </ul>
 <h2>CRUD Estadios</h2>
@@ -48,11 +38,6 @@
     <form action="{% url 'estadio_buscar' %}" class="d-flex mt-3" role="search" method="GET">
         {% bootstrap_form formularioES %}
         <button class="btn btn-light btn-outline-dark" type="submit">2. Search Estadios</button>
-        {% if formularioES.errors %}
-        <div class="alert alert-danger mt-2">
-            {{ formularioES.errors }}
-        </div>
-    {% endif %}
     </form>
 </ul>
 <h2>CRUD Sponsors</h2>
@@ -61,11 +46,6 @@
     <form action="{% url 'sponsor_buscar' %}" class="d-flex mt-3" role="search" method="GET">
         {% bootstrap_form formularioSP %}
         <button class="btn btn-light btn-outline-dark" type="submit">2. Search Sponsors</button>
-        {% if formularioSP.errors %}
-        <div class="alert alert-danger mt-2">
-            {{ formularioSP.errors }}
-        </div>
-    {% endif %}
     </form>
 </ul>
 <h2>CRUD Partidos</h2>
@@ -74,11 +54,6 @@
     <form action="{% url 'partido_buscar' %}" class="d-flex mt-3" role="search" method="GET">
         {% bootstrap_form formularioP %}
         <button class="btn btn-light btn-outline-dark" type="submit">2. Search Partidos</button>
-        {% if formularioP.errors %}
-        <div class="alert alert-danger mt-2">
-            {{ formularioP.errors }}
-        </div>
-    {% endif %}
     </form>
 </ul>
 {% endblock %}

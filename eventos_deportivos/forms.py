@@ -52,27 +52,29 @@ class JugadorModelForm(forms.ModelForm):
         return cleaned_data
 # Jugador buscar
 class BusquedaJugadorForm(forms.Form):
-    nombreBusqueda=forms.CharField(required=True)
+    nombreBusqueda=forms.CharField(required=False)
     apellidoBusqueda=forms.CharField(required=False)
-    posicionBusqueda=forms.ChoiceField(choices=Jugador.POSICIONES,required=True)
+    posicionBusqueda=forms.ChoiceField(choices=Jugador.POSICIONES,required=False)
     
     def clean(self):
         cleaned_data = super().clean()
-        
+    
         nombre=self.cleaned_data.get('nombreBusqueda')
-        apellido=self.cleaned_data.get('apellidosBusqueda')
+        apellido=self.cleaned_data.get('apellidoBusqueda')
         posicion=self.cleaned_data.get('posicionBusqueda')
         
-        # Validación: al menos nombre o apellido debe estar rellenado
-        if(not nombre):
-            self.add_error('nombreBusqueda',"Debes introducir el nombre")
-        
-        # Validación de longitud mínima
-        if (nombre and len(nombre)<3):
-            self.add_error('nombreBusqueda',"Debe introducir al menos 3 caracteres")
-        if (apellido and len(apellido)<3):
-            self.add_error('apellidoBusqueda',"Debe introducir al menos 3 caracteres")
-                        
+        # Validación: al menos 1 de los 3 campos debe estar rellenado
+        if(not nombre and not apellido and posicion == "" ):
+            self.add_error('nombreBusqueda',"Al menos 1 campo debe estar relleno")
+            self.add_error('apellidoBusqueda',"Al menos 1 campo debe estar relleno")
+            self.add_error('posicionBusqueda',"Al menos 1 campo debe estar relleno")
+        else:
+            # Validación de longitud mínima
+            if (nombre and len(nombre)<3):
+                self.add_error('nombreBusqueda',"Debe introducir al menos 3 caracteres")
+            if (apellido and len(apellido)<3):
+                self.add_error('apellidoBusqueda',"Debe introducir al menos 3 caracteres")
+                            
         return cleaned_data
     
 # Equipo create
@@ -118,8 +120,14 @@ class EquipoModelForm(forms.ModelForm):
 # Equipo buscar
 class BusquedaEquipoForm(forms.Form):
     nombreBusqueda=forms.CharField(required=False)
-    ciudadBusqueda=forms.CharField(required=True)
-    activoBusqueda=forms.BooleanField(required=False)
+    ciudadBusqueda=forms.CharField(required=False)
+    opcionesBoolean = [
+        ('---------', '---------'),
+        (True, 'SI'),
+        (False, 'NO')
+    ]
+    activoBusqueda=forms.ChoiceField(choices=opcionesBoolean,required=False)
+   
     
     def clean(self):
         cleaned_data = super().clean()
@@ -128,14 +136,19 @@ class BusquedaEquipoForm(forms.Form):
         ciudad=self.cleaned_data.get('ciudadBusqueda')
         activo=self.cleaned_data.get('activoBusqueda')
         
-        # Validación: al menos ciudad debe estar rellenado
-        if(not ciudad):
-            self.add_error('ciudadBusqueda',"Debes introducir la ciudad")
-        
-        # Validación de longitud mínima
-        if (ciudad and len(ciudad)<3):
-            self.add_error('ciudadBusqueda',"Debe introducir al menos 3 caracteres")
- 
+        # Validación: al menos 1 de los 3 campos debe estar rellenado
+        if(not nombre and not ciudad and activo == "---------"):
+            self.add_error('nombreBusqueda',"Al menos 1 campo debe estar relleno")
+            self.add_error('ciudadBusqueda',"Al menos 1 campo debe estar relleno")
+            self.add_error('activoBusqueda',"Al menos 1 campo debe estar relleno")
+        else:
+            # Validación de longitud mínima
+            if (nombre and len(nombre)<3):
+                self.add_error('nombreBusqueda',"Debe introducir al menos 3 caracteres")
+
+            if (ciudad and len(ciudad)<3):
+                self.add_error('ciudadBusqueda',"Debe introducir al menos 3 caracteres")
+    
         return cleaned_data
     
 # Estadio create
@@ -172,10 +185,16 @@ class EstadioModelForm(forms.ModelForm):
 # Estadio buscar
 class BusquedaEstadioForm(forms.Form):
     nombreBusqueda=forms.CharField(required=False)
-    capacidadBusqueda=forms.IntegerField(required=True,
+    capacidadBusqueda=forms.IntegerField(required=False,
         widget=forms.NumberInput(attrs={'placeholder': 'Capacidad Maxima'})
     )
-    cubiertoBusqueda=forms.BooleanField(required=False)
+    opcionesBoolean = [
+        ('---------', '---------'),
+        (True, 'SI'),
+        (False, 'NO')
+    ]
+    cubiertoBusqueda=forms.ChoiceField(choices=opcionesBoolean,required=False)
+    
     
     def clean(self):
         cleaned_data = super().clean()
@@ -184,14 +203,16 @@ class BusquedaEstadioForm(forms.Form):
         capacidad=self.cleaned_data.get('capacidadBusqueda')
         cubierto=self.cleaned_data.get('cubiertoBusqueda')
         
-        # Validación: capacidad debe estar rellenado
-        if(not capacidad):
-            self.add_error('capacidadBusqueda',"Debes introducir al menos un valor de 1")
-        
-        # Validación de cantidad mínima
-        if (capacidad and capacidad<1):
-            self.add_error('capacidadBusqueda',"La capacidad no puede ser menor a 1")
- 
+        # Validación: al menos 1 de los 3 campos debe estar rellenado
+        if(not nombre and not capacidad and cubierto == "---------"):
+            self.add_error('nombreBusqueda',"Al menos 1 campo debe estar relleno")
+            self.add_error('capacidadBusqueda',"Al menos 1 campo debe estar relleno")
+            self.add_error('cubiertoBusqueda',"Al menos 1 campo debe estar relleno")
+        else:
+            # Validación de cantidad mínima
+            if (capacidad and capacidad<1):
+                self.add_error('capacidadBusqueda',"La capacidad no puede ser menor a 1")
+    
         return cleaned_data
 
 # Sponsor create
@@ -226,8 +247,8 @@ class SponsorModelForm(forms.ModelForm):
 # Sponsor buscar
 class BusquedaSponsorForm(forms.Form):
     nombreBusqueda=forms.CharField(required=False)
-    paisBusqueda=forms.CharField(required=True)
-    montoBusqueda=forms.IntegerField(required=True,min_value=1,
+    paisBusqueda=forms.CharField(required=False)
+    montoBusqueda=forms.IntegerField(required=False,
         widget=forms.NumberInput(attrs={'placeholder': 'Monto sponsor'})
     )
     
@@ -238,16 +259,15 @@ class BusquedaSponsorForm(forms.Form):
         pais=self.cleaned_data.get('paisBusqueda')
         monto=self.cleaned_data.get('montoBusqueda')
         
-        # Validación: monto debe estar rellenado
-        if(not monto):
-            self.add_error('montoBusqueda',"Debes introducir al menos un valor de 1")
-        # Validación de cantidad mínima
-        elif (monto<1):
-            self.add_error('montoBusqueda',"el monto no puede ser menor a 1")
-            
-        # Validación: pais debe estar rellenado
-        if(not pais):
-            self.add_error('paisBusqueda',"Debes rellenar el pais")
+        # Validación: al menos 1 de los 3 campos debe estar rellenado
+        if(not nombre and not pais and not monto):
+            self.add_error('nombreBusqueda',"Al menos 1 campo debe estar relleno")
+            self.add_error('paisBusqueda',"Al menos 1 campo debe estar relleno")
+            self.add_error('montoBusqueda',"Al menos 1 campo debe estar relleno")
+        else:
+            # Validación de cantidad mínima
+            if (monto is not None and monto < 1):
+                self.add_error('montoBusqueda',"el monto no puede ser menor a 1")
  
         return cleaned_data
     
@@ -293,11 +313,11 @@ class PartidoModelForm(forms.ModelForm):
 # Partido buscar
 class BusquedaPartidoForm(forms.Form):
     desdeFechaBusqueda=forms.DateField(
-        required=True,
+        required=False,
         widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'})
     )
     hastaFechaBusqueda=forms.DateField(
-        required=True,
+        required=False,
         widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'})    
     )
     torneoBusqueda=forms.ModelChoiceField(
@@ -313,9 +333,15 @@ class BusquedaPartidoForm(forms.Form):
         hasta=self.cleaned_data.get('hastaFechaBusqueda')
         torneo=self.cleaned_data.get('torneoBusqueda')
         
-        # Validacion: fecha hasta no puede ser superior a fecha desde
-        if(desde and hasta):
-            if desde > hasta:
-                self.add_error('hastaFechaBusqueda', "La fecha hasta no puede ser anterior a la fecha desde")
+        # Validación: al menos 1 de los 3 campos debe estar rellenado
+        if(not desde and not hasta and not torneo):
+            self.add_error('desdeFechaBusqueda',"Al menos 1 de los campos debe estar relleno")
+            self.add_error('hastaFechaBusqueda',"Al menos 1 de los campos debe estar relleno")
+            self.add_error('torneoBusqueda',"Al menos 1 de los campos debe estar relleno")
+        else:
+            # Validacion: fecha hasta no puede ser superior a fecha desde
+            if(desde and hasta):
+                if desde > hasta:
+                    self.add_error('hastaFechaBusqueda', "La fecha hasta no puede ser anterior a la fecha desde")
         
         return cleaned_data

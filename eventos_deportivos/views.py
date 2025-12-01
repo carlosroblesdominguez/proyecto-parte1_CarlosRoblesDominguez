@@ -25,7 +25,7 @@ def index(request):
             "formularioE":formularioE,
             "formularioES":formularioES,
             "formularioSP":formularioSP,
-            "formularioP":formularioP
+            "formularioP":formularioP,
         }
     )
 
@@ -385,6 +385,10 @@ def jugador_buscar(request):
     mensaje_busqueda = ""
     jugadores = Jugador.objects.none() # Por defecto vacio
     formularioJ = BusquedaJugadorForm(request.GET or None)
+    formularioE = BusquedaEquipoForm(request.GET or None)
+    formularioES = BusquedaEstadioForm(request.GET or None)
+    formularioSP = BusquedaSponsorForm(request.GET or None)
+    formularioP = BusquedaPartidoForm(request.GET or None)
     
     if(len(request.GET)>0):
         
@@ -413,7 +417,17 @@ def jugador_buscar(request):
     
             return render(request, 'eventos_deportivos/jugadores/jugador_buscar.html', {"formularioJ":formularioJ,"texto_busqueda":mensaje_busqueda,"jugadores":jugadores})
     
-    return render(request, 'eventos_deportivos/index.html',{"formularioJ":formularioJ})
+    return render(
+        request, 
+        "eventos_deportivos/index.html",
+        {
+            "formularioJ":formularioJ,
+            "formularioE":formularioE,
+            "formularioES":formularioES,
+            "formularioSP":formularioSP,
+            "formularioP":formularioP
+        }
+    )
 
 # EDITAR/ACTUALIZAR
 def jugador_editar(request,jugador_id):
@@ -495,7 +509,11 @@ def equipo_create(request):
 def equipo_buscar(request):
     mensaje_busqueda = ""
     equipos = Equipo.objects.none() # Por defecto vacio
+    formularioJ = BusquedaJugadorForm(request.GET or None)
     formularioE = BusquedaEquipoForm(request.GET or None)
+    formularioES = BusquedaEstadioForm(request.GET or None)
+    formularioSP = BusquedaSponsorForm(request.GET or None)
+    formularioP = BusquedaPartidoForm(request.GET or None)
     
     if(len(request.GET)>0):
         
@@ -526,7 +544,17 @@ def equipo_buscar(request):
     
             return render(request, 'eventos_deportivos/equipos/equipo_buscar.html', {"formularioE":formularioE,"texto_busqueda":mensaje_busqueda,"equipos":equipos})
     
-    return render(request, 'eventos_deportivos/index.html',{"formularioE":formularioE})
+    return render(
+        request, 
+        "eventos_deportivos/index.html",
+        {
+            "formularioJ":formularioJ,
+            "formularioE":formularioE,
+            "formularioES":formularioES,
+            "formularioSP":formularioSP,
+            "formularioP":formularioP
+        }
+    )
 
 # EDITAR/ACTUALIZAR
 def equipo_editar(request,equipo_id):
@@ -599,7 +627,11 @@ def estadio_create(request):
 def estadio_buscar(request):
     mensaje_busqueda = ""
     estadios = Estadio.objects.none() # Por defecto vacio
+    formularioJ = BusquedaJugadorForm(request.GET or None)
+    formularioE = BusquedaEquipoForm(request.GET or None)
     formularioES = BusquedaEstadioForm(request.GET or None)
+    formularioSP = BusquedaSponsorForm(request.GET or None)
+    formularioP = BusquedaPartidoForm(request.GET or None)
     
     if(len(request.GET)>0):
         
@@ -623,14 +655,24 @@ def estadio_buscar(request):
                 filtros &= Q(nombre__icontains=nombreBusqueda)
             if capacidadBusqueda:
                 filtros &= Q(capacidad__lte=capacidadBusqueda)
-            if cubiertoBusqueda is not None:
+            if cubiertoBusqueda is not "---------":
                 filtros &= Q(cubierto=cubiertoBusqueda)
                 
             estadios = Estadio.objects.filter(filtros)
     
             return render(request, 'eventos_deportivos/estadios/estadio_buscar.html', {"formularioES":formularioES,"texto_busqueda":mensaje_busqueda,"estadios":estadios})
-    
-    return render(request, 'eventos_deportivos/index.html',{"formularioES":formularioES})
+
+    return render(
+        request, 
+        "eventos_deportivos/index.html",
+        {
+            "formularioJ":formularioJ,
+            "formularioE":formularioE,
+            "formularioES":formularioES,
+            "formularioSP":formularioSP,
+            "formularioP":formularioP
+        }
+    )
 
 # EDITAR/ACTUALIZAR
 def estadio_editar(request,estadio_id):
@@ -703,7 +745,11 @@ def sponsor_create(request):
 def sponsor_buscar(request):
     mensaje_busqueda = ""
     sponsors = Sponsor.objects.none() # Por defecto vacio
+    formularioJ = BusquedaJugadorForm(request.GET or None)
+    formularioE = BusquedaEquipoForm(request.GET or None)
+    formularioES = BusquedaEstadioForm(request.GET or None)
     formularioSP = BusquedaSponsorForm(request.GET or None)
+    formularioP = BusquedaPartidoForm(request.GET or None)
     
     if(len(request.GET)>0):
         
@@ -711,7 +757,6 @@ def sponsor_buscar(request):
             nombreBusqueda=formularioSP.cleaned_data.get('nombreBusqueda')
             paisBusqueda=formularioSP.cleaned_data.get('paisBusqueda')
             montoBusqueda=formularioSP.cleaned_data.get('montoBusqueda')
-            
             
             # --- mensaje de filtros  ---
             filtros_aplicados = []
@@ -735,8 +780,18 @@ def sponsor_buscar(request):
             sponsors = Sponsor.objects.filter(filtros)
     
             return render(request, 'eventos_deportivos/sponsors/sponsor_buscar.html', {"formularioSP":formularioSP,"texto_busqueda":mensaje_busqueda,"sponsors":sponsors})
-    
-    return render(request, 'eventos_deportivos/index.html',{"formularioSP":formularioSP})
+
+    return render(
+        request, 
+        "eventos_deportivos/index.html",
+        {
+            "formularioJ":formularioJ,
+            "formularioE":formularioE,
+            "formularioES":formularioES,
+            "formularioSP":formularioSP,
+            "formularioP":formularioP
+        }
+    )
 
 # EDITAR/ACTUALIZAR
 def  sponsor_editar(request,sponsor_id):
@@ -813,6 +868,10 @@ def partido_create(request):
 def partido_buscar(request):
     mensaje_busqueda = ""
     partidos = Partido.objects.none() # Por defecto vacio
+    formularioJ = BusquedaJugadorForm(request.GET or None)
+    formularioE = BusquedaEquipoForm(request.GET or None)
+    formularioES = BusquedaEstadioForm(request.GET or None)
+    formularioSP = BusquedaSponsorForm(request.GET or None)
     formularioP = BusquedaPartidoForm(request.GET or None)
     
     if(len(request.GET)>0):
@@ -845,7 +904,17 @@ def partido_buscar(request):
     
             return render(request, 'eventos_deportivos/partidos/partido_buscar.html', {"formularioP":formularioP,"texto_busqueda":mensaje_busqueda,"partidos":partidos})
     
-    return render(request, 'eventos_deportivos/index.html',{"formularioP":formularioP})
+    return render(
+        request, 
+        "eventos_deportivos/index.html",
+        {
+            "formularioJ":formularioJ,
+            "formularioE":formularioE,
+            "formularioES":formularioES,
+            "formularioSP":formularioSP,
+            "formularioP":formularioP
+        }
+    )
 
 # EDITAR/ACTUALIZAR
 def  partido_editar(request,partido_id):
