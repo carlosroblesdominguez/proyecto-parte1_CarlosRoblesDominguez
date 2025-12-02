@@ -1,6 +1,38 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
+class Usuario(AbstractUser):
+    ADMIN=1
+    MANAGER=2
+    EDITOR=3
+    VISUALIZADOR=4
+    ARBITRO=5
+    ENTRENADOR=6
+    ROLES=(
+        (ADMIN,'admin'),
+        (MANAGER,'manager'),
+        (EDITOR,'editor'),
+        (VISUALIZADOR,'visualizador'),
+        (ARBITRO,'arbitro'),
+        (ENTRENADOR,'entrenador'),
+    )
+    
+    rol=models.PositiveSmallIntegerField(
+        choices=ROLES,default=1
+    )
+
+class Manager(models.Model):
+    usuario=models.OneToOneField(Usuario,on_delete=models.CASCADE)
+
+class Editor(models.Model):
+    usuario=models.OneToOneField(Usuario,on_delete=models.CASCADE)
+    
+class Visualizador(models.Model):
+    usuario=models.OneToOneField(Usuario,on_delete=models.CASCADE)
+    
+class Entrenador(models.Model):
+    usuario=models.OneToOneField(Usuario,on_delete=models.CASCADE)
 
 # Estadisticas Jugador
 class EstadisticasJugador(models.Model):
@@ -113,6 +145,7 @@ class Partido(models.Model):
 
 # Arbitro    
 class Arbitro(models.Model):
+    usuario=models.OneToOneField(Usuario,on_delete=models.CASCADE)
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
     licencia = models.CharField(

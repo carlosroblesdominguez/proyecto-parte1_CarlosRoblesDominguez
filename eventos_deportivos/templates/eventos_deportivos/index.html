@@ -4,6 +4,8 @@
 {% block contenido %}
 <h1>Bienvenido al proyecto de eventos deportivos</h1>
 
+
+
 <p>Enlaces a las diferentes secciones:</p>
 
 <ul>
@@ -18,7 +20,9 @@
 </ul>
 <h2>CRUD Jugadores</h2>
 <ul>
+    {% if perms.eventos_depoortivos.add_jugador %}
     <li><a href="{% url 'jugador_create' %}">1. Crear Jugadores</a></li>
+    {% endif %}
     <form action="{% url 'jugador_buscar' %}" class="d-flex mt-3" role="search" method="GET">
         {% bootstrap_form formularioJ %}
         <button class="btn btn-light btn-outline-dark" type="submit">2. Search Jugadores</button>

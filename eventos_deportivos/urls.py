@@ -4,6 +4,9 @@ from . import views
 urlpatterns = [
     # Página principal con enlaces a todas las vistas
     path('', views.index, name='index'),
+    
+    # Register
+    path('registrar',views.registrar_usuario,name='registrar_usuario'),
 
     # Jugadores
     path('jugadores/', views.lista_jugadores, name='lista_jugadores'),                # URL1: Lista todos los jugadores

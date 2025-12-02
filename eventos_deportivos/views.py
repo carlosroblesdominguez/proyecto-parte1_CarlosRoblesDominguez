@@ -1,12 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Prefetch, Count, Max, Q
 from django.contrib import messages
+from django.contrib.auth.decorators import permission_required
 from .models import *
 from .forms import *
-from datetime import date
+from datetime import date, datetime
 
 # Create your views here.
 def index(request):
+    
+    if(not "fecha_inicio" in request.session):
+        request.session["fecha_inicio"] = datetime.now().strftime('%d/%m/%Y %H:%M')
     """
     Página principal del proyecto.
     Muestra enlaces a todas las URLs implementadas.
@@ -40,6 +44,32 @@ def error_403(request, exception):
 
 def error_400(request, exception):
     return render(request, 'eventos_deportivos/error_400.html', status=400)
+
+def registrar_usuario(request):
+    if request.method=='POST':
+        formularioR=RegisterForm(request.POST)
+        if formularioR.is_valid():
+            user=formularioR.save()
+            rol=int(formularioR.cleaned_data.get('rol'))
+            if(rol==Usuario.MANAGER):
+                manager=Manager.objects.create(usuario=user)
+                manager.save()
+            elif(rol==Usuario.EDITOR):
+                editor=Editor.objects.create(usuario=user)
+                editor.save()
+            elif(rol==Usuario.VISUALIZADOR):
+                visualizador=Visualizador.objects.create(usuario=user)
+                visualizador.save()
+            elif(rol==Usuario.ARBITRO):
+                arbitro=Arbitro.objects.create(usuario=user)
+                arbitro.save()
+            elif(rol==Usuario.ENTRENADOR):
+                entrenador=Entrenador.objects.create(usuario=user)
+                entrenador.save()
+                
+    else:
+        formularioR=RegisterForm
+    return render(request,'registration/signup.html',{'formularioR':formularioR})
 
 # ----------------------------
 # URL1: Lista todos los jugadores
@@ -364,6 +394,7 @@ def jugador_create_valid(formularioJ):
         print("Formulario no valido: ", formularioJ.errors)
     return jugador_creado
 
+@permission_required('eventos_deportivos.add_jugador')
 def jugador_create(request):
     # si la peticion es GET se crea el formulario vacio
     # en el caso de set POST se crea el formulario con datos

@@ -1,0 +1,10 @@
+{% extends "eventos_deportivos/base.html" %}
+{% load django_bootstrap5 %}
+{% block contenido %}
+<form action = "{% url 'registrar_usuario' %}" method="post">
+    
+    {% csrf_token %}
+    {% bootstrap_form formularioR %}
+    {% bootstrap_button "Enviar" button_type="submit" button_class="btn-primary "%}
+</form>
+{% endblock%}

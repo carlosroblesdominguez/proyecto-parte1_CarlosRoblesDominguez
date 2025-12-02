@@ -1,7 +1,22 @@
+from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from .models import *
 
 # Create your forms here.
+
+# Formulario autenticaciones
+class RegisterForm(UserCreationForm):
+    roles=(
+        (Usuario.MANAGER,'manager'),
+        (Usuario.EDITOR,'editor'),
+        (Usuario.VISUALIZADOR,'visualizador'),
+        (Usuario.ARBITRO,'arbitro'),
+        (Usuario.ENTRENADOR,'entrenador'),
+    )
+    rol=forms.ChoiceField(choices=roles)
+    class Meta:
+        model = Usuario
+        fields=('username','email','password1','password2','rol')
 
 # Jugador Create   
 class JugadorModelForm(forms.ModelForm):

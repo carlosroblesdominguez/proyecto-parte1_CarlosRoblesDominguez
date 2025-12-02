@@ -20,6 +20,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('eventos_deportivos.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
 
 handler404 = "eventos_deportivos.views.error_404"
