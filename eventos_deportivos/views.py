@@ -620,7 +620,7 @@ def estadio_create(request):
     if request.method == "POST":
         datosFormulario = request.POST
         
-    formularioES = EstadioModelForm(datosFormulario)
+    formularioES = EstadioModelForm(datosFormulario,files=request.FILES) # <-- Aquí se recogen los archivos
     
     if (request.method == "POST"):
         estadio_creado = estadio_create_valid(formularioES)
@@ -691,7 +691,7 @@ def estadio_editar(request,estadio_id):
     if request.method=="POST":
         datosFormulario=request.POST
         
-    formularioES=EstadioModelForm(datosFormulario,instance=estadio)
+    formularioES=EstadioModelForm(datosFormulario,files=request.FILES,instance=estadio)
     
     if (request.method=="POST"):
         if formularioES.is_valid():

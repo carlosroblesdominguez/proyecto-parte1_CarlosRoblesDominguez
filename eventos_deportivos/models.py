@@ -130,6 +130,7 @@ class Estadio(models.Model):
     ciudad = models.CharField(max_length=100)
     capacidad = models.IntegerField()
     cubierto = models.BooleanField(default=False)
+    imagen = models.ImageField(upload_to='eventos_deportivos/estadios/', null=True, blank=True)
     
     def __str__(self):
         return f"{self.nombre}"

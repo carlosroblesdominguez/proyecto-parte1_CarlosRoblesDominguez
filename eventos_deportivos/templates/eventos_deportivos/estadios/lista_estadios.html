@@ -12,6 +12,7 @@
         <th>Ciudad</th>
         <th>Capacidad</th>
         <th>Cubierto</th>
+        <th>Imagen de estadio</th>
     </tr>
     {% for estadio in estadios %}
     <tr>
@@ -19,6 +20,11 @@
         <td>{{ estadio.ciudad }}</td>
         <td>{{ estadio.capacidad }}</td>
         <td>{{ estadio.cubierto|yesno:"Sí,No" }}</td>
+        <td>
+            {% if estadio.imagen %}
+                <img src="{{ estadio.imagen.url }}" alt="Imagen estadio" width="200">
+            {% endif %}
+        </td>
         <td>
             <div class="row btn-group">
                 <div class="mb-2">

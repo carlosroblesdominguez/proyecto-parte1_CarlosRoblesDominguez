@@ -155,18 +155,20 @@ class BusquedaEquipoForm(forms.Form):
 class EstadioModelForm(forms.ModelForm):
     class Meta:
         model = Estadio
-        fields = ['nombre', 'ciudad', 'capacidad', 'cubierto']
+        fields = ['nombre', 'ciudad', 'capacidad', 'cubierto', 'imagen']
         labels = {
             'nombre': 'Nombre',
             'ciudad': 'ciudad',
             'capacidad': 'capacidad',
             'cubierto': 'cubierto',
+            'imagen': 'imagen del estadio',
         }
         widgets = {
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
             'ciudad': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: Sevilla'}),
             'capacidad': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Introduce capacidad'}),
             'cubierto': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'imagen': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }
     def clean(self):
         cleaned_data = super().clean()

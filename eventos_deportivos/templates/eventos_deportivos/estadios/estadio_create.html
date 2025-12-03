@@ -2,7 +2,7 @@
 {% block title %}Crear Estadio{% endblock %}
 
 {% block contenido %}
-<form action="" method="post">
+<form action="" enctype="multipart/form-data" method="post">
     {% csrf_token %}
     <h3>Datos del Estadio</h3>
     {{ formularioES }}

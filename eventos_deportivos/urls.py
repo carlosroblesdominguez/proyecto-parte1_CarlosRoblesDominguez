@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     # Página principal con enlaces a todas las vistas
@@ -27,11 +29,11 @@ urlpatterns = [
     # Crear Estadios
     path('estadios/create', views.estadio_create, name='estadio_create'),
     # Buscar estadios
-    path('estadio/buscar/', views.estadio_buscar, name='estadio_buscar'),
+    path('estadios/buscar/', views.estadio_buscar, name='estadio_buscar'),
     # Actualizar Estadios
-    path('estadio/editar/<int:estadio_id>/', views.estadio_editar, name='estadio_editar'),
+    path('estadios/editar/<int:estadio_id>/', views.estadio_editar, name='estadio_editar'),
     # Eliminar Estadios
-    path('estadio/eliminar/<int:estadio_id>', views.estadio_eliminar, name='estadio_eliminar'),
+    path('estadios/eliminar/<int:estadio_id>', views.estadio_eliminar, name='estadio_eliminar'),
 
     # Crear Sponsors
     path('sponsors/create', views.sponsor_create, name='sponsor_create'),
@@ -86,4 +88,4 @@ urlpatterns = [
     # Estadios
     path('estadios/', views.lista_estadios, name='lista_estadios'),
     
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
