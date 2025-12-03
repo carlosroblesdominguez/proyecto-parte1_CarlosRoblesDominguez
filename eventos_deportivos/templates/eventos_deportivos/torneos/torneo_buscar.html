@@ -1,0 +1,29 @@
+{% extends "../base.html" %}
+{% block title %}Lista de Torneos{% endblock %}
+
+{% block contenido %}
+<h1>Resultados de busqueda</h1>
+
+{% if torneos %}
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>País</th>
+        <th>Fecha Inicio</th>
+        <th>Fecha Fin</th>
+        <th>Arbitro Principal</th>
+    </tr>
+    {% for torneo in torneos %}
+    <tr>
+        <td>{{ torneo.nombre|upper }}</td>
+        <td>{{ torneo.pais|lower }}</td>
+        <td>{{ torneo.fecha_inicio|date:"d/m/Y" }}</td>
+        <td>{{ torneo.fecha_fin|date:"d/m/Y" }}</td>
+        <td>{{ torneo.arbitro_principal }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+    <p>No hay torneos registrados</p>
+{% endif %}
+{% endblock %}

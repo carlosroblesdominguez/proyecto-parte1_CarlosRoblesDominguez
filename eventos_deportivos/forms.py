@@ -345,3 +345,75 @@ class BusquedaPartidoForm(forms.Form):
                     self.add_error('hastaFechaBusqueda', "La fecha hasta no puede ser anterior a la fecha desde")
         
         return cleaned_data
+    
+# Torneo create
+class TorneoModelForm(forms.ModelForm):
+    class Meta:
+        model = Torneo
+        fields = ['nombre', 'pais', 'fecha_inicio', 'fecha_fin', 'arbitro_principal']
+        labels = {
+            'nombre': 'nombre',
+            'pais': 'pais',
+            'fecha_inicio': 'fecha_inicio',
+            'fecha_fin': 'fecha_fin',
+            'arbitro_principal': 'arbitro_principal',
+        }
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'pais': forms.TextInput(attrs={'class': 'form-control'}),
+            'fecha_inicio': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'fecha_fin': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'arbitro_principal': forms.Select(attrs={'class': 'form-control'}),
+        }
+        
+    def clean(self):
+        cleaned_data = super().clean()
+        nombre = cleaned_data.get('nombre')
+        fecha_inicio = cleaned_data.get('fecha_inicio')
+        fecha_fin = cleaned_data.get('fecha_fin')
+        
+        # Validacion de fecha: no puede repetirse
+        if nombre:
+            torneo_id = self.instance.id if self.instance else None
+            if Torneo.objects.filter(nombre=nombre).exclude(id=torneo_id).exists():
+                self.add_error('nombre', "Ya existe un torneo con este nombre")
+            
+        # Validacion: fecha_fin >= fecha_inicio
+        if fecha_inicio and fecha_fin and fecha_fin < fecha_inicio:
+            self.add_error('fecha_fin', "La fecha fin no puede ser anterior a la fecha inicio")
+
+        return cleaned_data
+    
+# Torneo buscar
+
+class BusquedaTorneoForm(forms.Form):
+    nombreBusqueda = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del torneo'})
+    )
+    paisBusqueda = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'País'})
+    )
+    fechaDesdeBusqueda = forms.DateField(
+        required=False,
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'})
+    )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        nombre = cleaned_data.get('nombreBusqueda')
+        pais = cleaned_data.get('paisBusqueda')
+        fecha = cleaned_data.get('fechaDesdeBusqueda')
+
+        # Validacion: al menos un campo debe estar relleno
+        if not nombre and not pais and not fecha:
+            self.add_error('nombreBusqueda', "Debe rellenar al menos un campo")
+            self.add_error('paisBusqueda', "Debe rellenar al menos un campo")
+            self.add_error('fechaDesdeBusqueda', "Debe rellenar al menos un campo")
+
+        # Validacion: pais no puede contener numeros
+        if pais and any(char.isdigit() for char in pais):
+            self.add_error('paisBusqueda', "El país no puede contener números")
+
+        return cleaned_data

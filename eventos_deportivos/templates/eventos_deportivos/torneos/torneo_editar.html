@@ -1,0 +1,17 @@
+{% extends "../base.html" %}
+{% block title %}Editar Torneo{% endblock %}
+
+{% block contenido %}
+<form action="{% url 'torneo_editar' torneo.id %}" method="post"
+    value="{% spaceless %}
+        {% if formularioT.is_bound %}
+            {{ formularioT.nombre.value }}
+        {% endif %}
+    {% endspaceless %}">
+
+    {% csrf_token %}
+    <h3>Datos del Torneo</h3>
+    {{ formularioT }}
+    <button type="submit">Actualizar</button>
+</form>
+{% endblock %}

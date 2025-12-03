@@ -17,6 +17,7 @@ def index(request):
     formularioES = BusquedaEstadioForm(request.GET or None)
     formularioSP = BusquedaSponsorForm(request.GET or None)
     formularioP = BusquedaPartidoForm(request.GET or None)
+    formularioT = BusquedaTorneoForm(request.GET or None)
     return render(
         request, 
         "eventos_deportivos/index.html",
@@ -26,6 +27,7 @@ def index(request):
             "formularioES":formularioES,
             "formularioSP":formularioSP,
             "formularioP":formularioP,
+            "formularioT":formularioT,
         }
     )
 
@@ -261,7 +263,7 @@ def detalle_torneo(request, nombre_torneo):
     contexto = {
         "torneos": torneos
     }
-    return render(request, "eventos_deportivos/detalle_torneo.html", contexto)
+    return render(request, "eventos_deportivos/torneos/detalle_torneo.html", contexto)
 
 # ----------------------------
 # URL8: Lista de torneos
@@ -277,7 +279,7 @@ def lista_torneos(request):
     contexto = {
         "torneos": torneos
     }
-    return render(request, "eventos_deportivos/lista_torneos.html", contexto)
+    return render(request, "eventos_deportivos/torneos/lista_torneos.html", contexto)
 
 # ----------------------------
 # URL9: Detalle de árbitro en un torneo <input name="nombreBusqueda" class="fomr-control me-2" type="search" placeholder="Nombre" aria-label="Search"></input>
@@ -389,6 +391,7 @@ def jugador_buscar(request):
     formularioES = BusquedaEstadioForm(request.GET or None)
     formularioSP = BusquedaSponsorForm(request.GET or None)
     formularioP = BusquedaPartidoForm(request.GET or None)
+    formularioT = BusquedaTorneoForm(request.GET or None)
     
     if(len(request.GET)>0):
         
@@ -425,7 +428,8 @@ def jugador_buscar(request):
             "formularioE":formularioE,
             "formularioES":formularioES,
             "formularioSP":formularioSP,
-            "formularioP":formularioP
+            "formularioP":formularioP,
+            "formularioP":formularioT,
         }
     )
 
@@ -514,6 +518,7 @@ def equipo_buscar(request):
     formularioES = BusquedaEstadioForm(request.GET or None)
     formularioSP = BusquedaSponsorForm(request.GET or None)
     formularioP = BusquedaPartidoForm(request.GET or None)
+    formularioT = BusquedaTorneoForm(request.GET or None)
     
     if(len(request.GET)>0):
         
@@ -552,7 +557,8 @@ def equipo_buscar(request):
             "formularioE":formularioE,
             "formularioES":formularioES,
             "formularioSP":formularioSP,
-            "formularioP":formularioP
+            "formularioP":formularioP,
+            "formularioT":formularioT,
         }
     )
 
@@ -632,6 +638,7 @@ def estadio_buscar(request):
     formularioES = BusquedaEstadioForm(request.GET or None)
     formularioSP = BusquedaSponsorForm(request.GET or None)
     formularioP = BusquedaPartidoForm(request.GET or None)
+    formularioT = BusquedaTorneoForm(request.GET or None)
     
     if(len(request.GET)>0):
         
@@ -655,7 +662,7 @@ def estadio_buscar(request):
                 filtros &= Q(nombre__icontains=nombreBusqueda)
             if capacidadBusqueda:
                 filtros &= Q(capacidad__lte=capacidadBusqueda)
-            if cubiertoBusqueda is not "---------":
+            if cubiertoBusqueda:
                 filtros &= Q(cubierto=cubiertoBusqueda)
                 
             estadios = Estadio.objects.filter(filtros)
@@ -670,7 +677,8 @@ def estadio_buscar(request):
             "formularioE":formularioE,
             "formularioES":formularioES,
             "formularioSP":formularioSP,
-            "formularioP":formularioP
+            "formularioP":formularioP,
+            "formularioT":formularioT,
         }
     )
 
@@ -750,6 +758,7 @@ def sponsor_buscar(request):
     formularioES = BusquedaEstadioForm(request.GET or None)
     formularioSP = BusquedaSponsorForm(request.GET or None)
     formularioP = BusquedaPartidoForm(request.GET or None)
+    formularioT = BusquedaTorneoForm(request.GET or None)
     
     if(len(request.GET)>0):
         
@@ -789,7 +798,8 @@ def sponsor_buscar(request):
             "formularioE":formularioE,
             "formularioES":formularioES,
             "formularioSP":formularioSP,
-            "formularioP":formularioP
+            "formularioP":formularioP,
+            "formulario":formularioT,
         }
     )
 
@@ -873,6 +883,7 @@ def partido_buscar(request):
     formularioES = BusquedaEstadioForm(request.GET or None)
     formularioSP = BusquedaSponsorForm(request.GET or None)
     formularioP = BusquedaPartidoForm(request.GET or None)
+    formularioT = BusquedaTorneoForm(request.GET or None)
     
     if(len(request.GET)>0):
         
@@ -912,7 +923,8 @@ def partido_buscar(request):
             "formularioE":formularioE,
             "formularioES":formularioES,
             "formularioSP":formularioSP,
-            "formularioP":formularioP
+            "formularioP":formularioP,
+            "formularioT":formularioT,
         }
     )
 
@@ -950,3 +962,127 @@ def partido_eliminar(request,partido_id):
     except:
         pass
     return redirect('lista_partidos')
+
+# ----------------------------
+# CRUD Torneos
+# ----------------------------
+# CREAR
+def torneo_create_valid(formularioT):
+    # Valida y guarda el formulario
+    # Devuelve True si se guardó correctamente, False si hubo error.
+
+    torneo_creado = False
+    # Comprueba si el formulario es valido
+    if formularioT.is_valid():
+        try:
+            formularioT.save()
+            torneo_creado = True
+        except Exception as e:
+            print("Error al guardar el torneo: ", e)
+    else:
+        print("Formulario no valido: ", formularioT.errors)
+    return torneo_creado
+
+def torneo_create(request):
+    # si la peticion es GET se crea el formulario vacio
+    # en el caso de set POST se crea el formulario con datos
+    datosFormulario = None
+    if request.method == "POST":
+        datosFormulario = request.POST
+        
+    formularioT = TorneoModelForm(datosFormulario)
+    
+    if (request.method == "POST"):
+        torneo_creado = torneo_create_valid(formularioT)
+        if(torneo_creado):
+            
+            messages.success(request, 'Se a creado el torneo '+formularioT.cleaned_data.get('nombre')+" correctamente")
+            return redirect("lista_torneos")
+    return render(request, 'eventos_deportivos/torneos/torneo_create.html',{"formularioT":formularioT})
+
+# LEER
+def torneo_buscar(request):
+    mensaje_busqueda = ""
+    torneos = Torneo.objects.none()  # vacio por defecto
+
+    formularioJ = BusquedaJugadorForm(request.GET or None)
+    formularioE = BusquedaEquipoForm(request.GET or None)
+    formularioES = BusquedaEstadioForm(request.GET or None)
+    formularioSP = BusquedaSponsorForm(request.GET or None)
+    formularioP = BusquedaPartidoForm(request.GET or None)
+    formularioT = BusquedaTorneoForm(request.GET or None)
+
+    if len(request.GET) > 0:
+
+        if formularioT.is_valid():
+            paisBusqueda = formularioT.cleaned_data.get('paisBusqueda')
+            fechaBusqueda = formularioT.cleaned_data.get('fechaDesdeBusqueda')
+            nombreBusqueda = formularioT.cleaned_data.get('nombreBusqueda')
+
+            # --- mensaje de filtros ---
+            filtros_aplicados = []
+            if paisBusqueda:
+                filtros_aplicados.append(f"Pais = '{paisBusqueda}'")
+            if fechaBusqueda:
+                filtros_aplicados.append(f"Fecha desde = '{fechaBusqueda}'")
+            if nombreBusqueda:
+                filtros_aplicados.append(f"Nombre = '{nombreBusqueda}'")
+            mensaje_busqueda = " | ".join(filtros_aplicados)
+
+            # --- Construccion del filtro ---
+            filtros = Q()
+            if paisBusqueda:
+                filtros &= Q(pais__icontains=paisBusqueda)
+            if fechaBusqueda:
+                filtros &= Q(fecha_inicio__gte=fechaBusqueda)
+            if nombreBusqueda:
+                filtros &= Q(nombre__icontains=nombreBusqueda)
+
+            torneos = Torneo.objects.filter(filtros)
+
+            return render(request,'eventos_deportivos/torneos/torneo_buscar.html',{"formularioT": formularioT,"texto_busqueda": mensaje_busqueda,"torneos": torneos})
+
+    # Si no hay GET: volver al index con todos los formularios
+    return render(
+        request,
+        "eventos_deportivos/index.html",
+        {
+            "formularioJ": formularioJ,
+            "formularioE": formularioE,
+            "formularioES": formularioES,
+            "formularioSP": formularioSP,
+            "formularioP": formularioP,
+            "formularioT": formularioT
+        }
+    )
+    
+# EDITAR/ACTUALIZAR
+def  torneo_editar(request,torneo_id):
+    torneo = Torneo.objects.get(id=torneo_id)
+    
+    datosFormulario=None
+    
+    if request.method=="POST":
+        datosFormulario=request.POST
+        
+    formularioT=TorneoModelForm(datosFormulario,instance=torneo)
+    
+    if (request.method=="POST"):
+        if formularioT.is_valid():
+            formularioT.save()
+            try:
+                formularioT.save()
+                messages.success(request, 'Se ha editado el torneo'+formularioT.cleaned_data.get('nombre')+" correctamente")
+                return redirect('lista_torneos')
+            except Exception as e:
+                print(e)
+    return render(request, 'eventos_deportivos/torneos/torneo_editar.html',{"formularioT":formularioT,"torneo":torneo})
+
+# ELIMINAR
+def torneo_eliminar(request,torneo_id):
+    torneo=Torneo.objects.get(id=torneo_id)
+    try:
+        torneo.delete()
+    except:
+        pass
+    return redirect('lista_torneos')

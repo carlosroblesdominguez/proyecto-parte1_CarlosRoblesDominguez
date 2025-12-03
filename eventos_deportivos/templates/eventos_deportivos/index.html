@@ -56,4 +56,12 @@
         <button class="btn btn-light btn-outline-dark" type="submit">2. Search Partidos</button>
     </form>
 </ul>
+<h2>CRUD Torneos</h2>
+<ul>
+    <li><a href="{% url 'torneo_create' %}">1. Crear Torneos</a></li>
+    <form action="{% url 'torneo_buscar' %}" class="d-flex mt-3" role="search" method="GET">
+        {% bootstrap_form formularioT %}
+        <button class="btn btn-light btn-outline-dark" type="submit">2. Search Torneos</button>
+    </form>
+</ul>
 {% endblock %}
