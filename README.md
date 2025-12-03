@@ -617,55 +617,103 @@ Este proyecto utiliza múltiples **template tags**, **operadores en condicionale
 
 # FORMULARIOS
 
-### Validaciones y Widgets en Formularios de Jugadores
+# Validaciones y Widgets de la Aplicación
 
-- **Formularios implicados:**  
-  - `JugadorModelForm` (Crear / Editar)  
-  - `BusquedaJugadorForm` (Búsqueda avanzada)
+## 1. Jugador
+**Validaciones:**
+- Nombre y apellido únicos: no puede existir otro jugador con el mismo nombre y apellido.
+- En la búsqueda: al menos un campo debe estar rellenado; si se rellena nombre o apellido, mínimo 3 caracteres.
+- Estadísticas (partidos_jugados, goles, asistencias, tarjetas) como enteros positivos.
 
-### Validaciones aplicadas
-
-#### ✔ Validación de unicidad (nombre + apellido) — JugadorModelForm
-- **Descripción:** Evita crear jugadores duplicados.
-- **Regla:** No pueden existir dos jugadores con el mismo **nombre + apellido** en la base de datos.
-- **Comportamiento en edición:** Se excluye el propio jugador usando `exclude(pk=self.instance.pk)` para permitir modificar otros campos.
-
-#### ✔ Validación de campos adicionales (estadísticas) — JugadorModelForm
-- **Campos validados:**
-  - `partidos_jugados`
-  - `goles`
-  - `asistencias`
-  - `tarjetas`
-- **Descripción:** Son campos no pertenecientes al modelo y se validan manualmente dentro del formulario.
-
-#### ✔ Validación del nombre — BusquedaJugadorForm
-- **Regla:** `nombreBusqueda` es obligatorio.
-- **Longitud mínima:** Debe tener **al menos 3 caracteres**.
-- **Error si no se cumple:** `"Debes introducir al menos un nombre válido"`
-
-#### ✔ Validación del apellido — BusquedaJugadorForm
-- **Descripción:** Campo opcional.  
-- **Condición:** Si se introduce, debe tener **mínimo 3 caracteres**.
-
-#### ✔ Validación de posición obligatoria — BusquedaJugadorForm
-- **Regla:** `posicionBusqueda` es obligatorio y no puede quedar vacío.
-- **Motivo:** La búsqueda avanzada requiere que siempre se indique la posición.
+**Widgets:**
+- `TextInput` para nombre y apellido con clase `form-control`.
+- `DateInput` para fecha de nacimiento (`type="date"`, clase `form-control`).
+- `Select` para posición con clase `form-select`.
+- `NumberInput` para estadísticas con clase `form-control`.
 
 ---
 
-### Widgets utilizados
+## 2. Equipo
+**Validaciones:**
+- Nombre y ciudad únicos: no puede existir otro equipo con el mismo nombre y ciudad.
+- En la búsqueda: al menos un campo debe estar rellenado; nombre y ciudad mínimo 3 caracteres.
 
-#### ✔ Widgets en JugadorModelForm
-- `nombre`: `TextInput` con `class="form-control"`
-- `apellido`: `TextInput` con placeholder y `class="form-control"`
-- `fecha_nacimiento`: `DateInput` (`type="date"`) con `class="form-control"`
-- `posicion`: `Select` con `class="form-select"`
-- `partidos_jugados`: `NumberInput` con `class="form-control"`
-- `goles`: `NumberInput` con `class="form-control"`
-- `asistencias`: `NumberInput` con `class="form-control"`
-- `tarjetas`: `NumberInput` con `class="form-control"`
+**Widgets:**
+- `TextInput` para nombre y ciudad con clase `form-control`.
+- `DateInput` para fundación (`type="date"`, clase `form-control`).
+- `CheckboxInput` para activo (`class="form-check-input"`).
+- `Select` para estadio principal y `SelectMultiple` para jugadores con clase `form-select`.
 
-#### ✔ Widgets en BusquedaJugadorForm
-- `nombreBusqueda`: `TextInput`
-- `apellidoBusqueda`: `TextInput`
-- `posicionBusqueda`: `Select` basado en `Jugador.POSICIONES` (obligatorio)
+---
+
+## 3. Estadio
+**Validaciones:**
+- Nombre y ciudad únicos.
+- En la búsqueda: al menos un campo debe estar rellenado.
+- Capacidad mínima 1.
+- Para la imagen, usar `ClearableFileInput` (permite subir/limpiar imagen).
+
+**Widgets:**
+- `TextInput` para nombre y ciudad con clase `form-control`.
+- `NumberInput` para capacidad con clase `form-control`.
+- `CheckboxInput` para cubierto con clase `form-check-input`.
+- `ClearableFileInput` para imagen con clase `form-control`.
+
+---
+
+## 4. Sponsor
+**Validaciones:**
+- Nombre único.
+- En la búsqueda: al menos un campo debe estar rellenado.
+- Monto mínimo 1.
+
+**Widgets:**
+- `TextInput` para nombre y país con clase `form-control`.
+- `NumberInput` para monto con clase `form-control`.
+- `Select` para equipos con clase `form-select`.
+
+---
+
+## 5. Partido
+**Validaciones:**
+- Fecha única (no puede haber otro partido en la misma fecha).
+- Resultado con formato `x-x` (ej: 2-1).
+- En la búsqueda: al menos un campo debe estar rellenado.
+- Fecha hasta no puede ser anterior a fecha desde.
+
+**Widgets:**
+- `DateTimeInput` para fecha (`type="datetime-local"`, clase `form-control`).
+- `Select` para equipo local, visitante y torneo con clase `form-control`.
+- `TextInput` para resultado con clase `form-control`.
+
+---
+
+## 6. Torneo
+**Validaciones:**
+- Nombre único.
+- Fecha fin no puede ser anterior a fecha inicio.
+- En la búsqueda: al menos un campo debe estar rellenado.
+- País no puede contener números.
+
+**Widgets:**
+- `TextInput` para nombre y país con clase `form-control`.
+- `DateInput` para fecha_inicio y fecha_fin (`type="date"`, clase `form-control`).
+- `Select` para árbitro principal con clase `form-control`.
+
+---
+
+## Subida de imágenes
+Para cualquier modelo que incluya imágenes (ej: `Estadio`):
+1. En el formulario usar `ClearableFileInput`.
+2. En la vista al crear o editar, recoger archivos con `files=request.FILES`.
+3. Asegurarse de configurar `MEDIA_URL` y `MEDIA_ROOT` en `settings.py` y añadir `urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)` en `urls.py`.
+
+---
+
+**Resumen de Widgets por Modelo:**
+- **Jugador:** TextInput, DateInput, Select, NumberInput.
+- **Equipo:** TextInput, DateInput, CheckboxInput, Select, SelectMultiple.
+- **Estadio:** TextInput, NumberInput, CheckboxInput, ClearableFileInput.
+- **Sponsor:** TextInput, NumberInput, Select.
+- **Partido:** DateTimeInput, Select, TextInput.
+- **Torneo:** TextInput, DateInput, Select.
