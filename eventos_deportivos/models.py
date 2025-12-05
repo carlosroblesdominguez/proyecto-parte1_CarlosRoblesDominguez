@@ -17,9 +17,6 @@ class Usuario(AbstractUser):
 class Manager(models.Model):
     usuario=models.OneToOneField(Usuario,on_delete=models.CASCADE)
 
-class Arbitro(models.Model):
-    usuario=models.OneToOneField(Usuario,on_delete=models.CASCADE)
-
 # Estadisticas Jugador
 class EstadisticasJugador(models.Model):
     partidos_jugados = models.IntegerField()
@@ -131,6 +128,7 @@ class Partido(models.Model):
 
 # Arbitro    
 class Arbitro(models.Model):
+    usuario=models.OneToOneField(Usuario,on_delete=models.CASCADE)
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
     licencia = models.CharField(
