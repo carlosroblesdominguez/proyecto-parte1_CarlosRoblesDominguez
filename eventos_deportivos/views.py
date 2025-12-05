@@ -3,7 +3,7 @@ from django.db.models import Prefetch, Count, Max, Q
 from django.contrib import messages
 from .models import *
 from .forms import *
-from datetime import date
+from datetime import datetime, date, time
 
 # Create your views here.
 def index(request):
@@ -18,6 +18,10 @@ def index(request):
     formularioSP = BusquedaSponsorForm(request.GET or None)
     formularioP = BusquedaPartidoForm(request.GET or None)
     formularioT = BusquedaTorneoForm(request.GET or None)
+    
+    if(not "fecha_inicio" in request.session):
+        request.session["fecha_inicio"]=datetime.now().strftime('%d/%m/%Y %H:%M')
+    
     return render(
         request, 
         "eventos_deportivos/index.html",
