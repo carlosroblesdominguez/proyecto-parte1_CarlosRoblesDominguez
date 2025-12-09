@@ -2,7 +2,7 @@
 {% block title %}Crear Torneo{% endblock %}
 
 {% block contenido %}
-<form action="" method="post">
+<form action="{% url 'torneo_create' %}" method="post">
     {% csrf_token %}
     <h3>Datos del torneo</h3>
     {{ formularioT }}

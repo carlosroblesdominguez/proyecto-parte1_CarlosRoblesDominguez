@@ -2,7 +2,7 @@
 {% block title %}Crear Jugador{% endblock %}
 
 {% block contenido %}
-<form action="" method="post">
+<form action="{% url 'jugador_create' %}" method="post">
     {% csrf_token %}
     <h3>Datos del Jugador</h3>
     {{ formularioJ }}

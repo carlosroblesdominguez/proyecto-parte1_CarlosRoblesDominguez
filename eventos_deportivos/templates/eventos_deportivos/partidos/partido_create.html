@@ -2,7 +2,7 @@
 {% block title %}Crear Partido{% endblock %}
 
 {% block contenido %}
-<form action="" method="post">
+<form action="{% url 'partido_create' %}" method="post">
     {% csrf_token %}
     <h3>Datos del Partido</h3>
     {{ formularioP }}

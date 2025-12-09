@@ -2,7 +2,7 @@
 {% block title %}Crear Sponsor{% endblock %}
 
 {% block contenido %}
-<form action="" method="post">
+<form action="{% url 'sponsor_create' %}" method="post">
     {% csrf_token %}
     <h3>Datos del Sponsor</h3>
     {{ formularioSP }}
