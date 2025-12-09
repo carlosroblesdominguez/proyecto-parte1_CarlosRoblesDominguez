@@ -359,8 +359,7 @@ def jugador_create_valid(formularioJ):
             )
             # Guarda el jugador en la base de datos
             # Crear el jugador asignando la estadística
-            formularioJ = formularioJ.save(commit=False)
-            formularioJ.estadisticas = estadisticas
+            formularioJ = formularioJ.save(commit=False) # <-- Crea el objeto del modelo con los datos validados, pero no lo guardes todavia en la BD.
             formularioJ.save()
             
             jugador_creado = True
