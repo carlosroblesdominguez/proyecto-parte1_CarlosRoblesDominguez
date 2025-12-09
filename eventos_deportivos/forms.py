@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from .models import *
 
 # Create your forms here.
@@ -12,7 +13,7 @@ class JugadorModelForm(forms.ModelForm):
     )
     goles = forms.IntegerField(
         label="Goles",
-        widget=forms.NumberInput(attrs={'class': 'form-control'})
+        widget=forms.NumberInput(attrs={'class': 'form-control'}) 
     )
     asistencias = forms.IntegerField(
         label="Asistencias",
@@ -419,3 +420,17 @@ class BusquedaTorneoForm(forms.Form):
             self.add_error('paisBusqueda', "El país no puede contener números")
 
         return cleaned_data
+    
+# ----------------------------
+# Sesiones, Ussuarios y permisos
+# ----------------------------
+
+class RegistroForm(UserCreationForm):
+    roles=(
+        (Usuario.MANAGER,'manager'),
+        (Usuario.ARBITRO,'arbotro'),
+    )
+    rol=forms.ChoiceField(choices=roles)
+    class Meta:
+        model = Usuario
+        fields=('user','email','pass1','pass2','rol')

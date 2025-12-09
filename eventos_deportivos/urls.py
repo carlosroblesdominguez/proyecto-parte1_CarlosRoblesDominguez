@@ -7,6 +7,10 @@ urlpatterns = [
     # Página principal con enlaces a todas las vistas
     path('', views.index, name='index'),
     
+    # Registro y Login
+    path('registrar',views.registrar_usuario,name="registrar_usuario"),
+    
+    
     # Formularios
     # Crear Jugador
     path('jugadores/create', views.jugador_create, name='jugador_create'),

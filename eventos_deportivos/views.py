@@ -1089,3 +1089,23 @@ def torneo_eliminar(request,torneo_id):
     except:
         pass
     return redirect('lista_torneos')
+
+# ------------------------------------
+# Autenticacion, Sesiones y Permisos 
+# ------------------------------------
+def registrar_usuario(request):
+    if request.method=='POST':
+        formularioRegistro = RegistroForm(request.POST)
+        if formularioRegistro.is_valid():
+            user=formularioRegistro.save()
+            rol=int(formularioRegistro.cleaned_data.get('rol'))
+            
+            if(rol==Usuario().ARBITRO):
+                arbitro=Arbitro.objects.create(usuario=user)
+                arbitro.save()
+            elif(rol==Usuario().MANAGER):
+                manager=Manager.objects.create(usuario=user)
+                manager.save()
+    else:
+        formularioRegistro=RegistroForm()
+    return render(request, 'registration/signup.html',{'formularioRegisro':formularioRegistro})
