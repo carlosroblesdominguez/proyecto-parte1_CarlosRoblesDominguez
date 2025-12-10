@@ -18,6 +18,7 @@ def index(request):
     formularioSP = BusquedaSponsorForm(request.GET or None)
     formularioP = BusquedaPartidoForm(request.GET or None)
     formularioT = BusquedaTorneoForm(request.GET or None)
+    formularioRegistro = RegistroForm(request.GET or None)
     
     if(not "fecha_inicio" in request.session):
         request.session["fecha_inicio"]=datetime.now().strftime('%d/%m/%Y %H:%M')
@@ -26,6 +27,7 @@ def index(request):
         request, 
         "eventos_deportivos/index.html",
         {
+            "formularioRegistro":formularioRegistro,
             "formularioJ":formularioJ,
             "formularioE":formularioE,
             "formularioES":formularioES,

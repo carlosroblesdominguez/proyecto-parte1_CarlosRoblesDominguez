@@ -8,8 +8,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     
     # Registro y Login
-    path('registrar',views.registrar_usuario,name="registrar_usuario"),
-    
+    path('registration',views.registrar_usuario,name="registrar_usuario"),
     
     # Formularios
     # Crear Jugador
