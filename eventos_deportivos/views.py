@@ -373,6 +373,7 @@ def jugador_create_valid(formularioJ):
         print("Formulario no valido: ", formularioJ.errors)
     return jugador_creado
 
+@login_required
 @permission_required('eventos_deportivos.add_jugador')
 def jugador_create(request):
     # si la peticion es GET se crea el formulario vacio
@@ -442,6 +443,7 @@ def jugador_buscar(request):
     )
 
 # EDITAR/ACTUALIZAR
+@login_required
 @permission_required('eventos_deportivos.change_jugador')
 def jugador_editar(request,jugador_id):
     jugador = Jugador.objects.get(id=jugador_id)
@@ -465,6 +467,7 @@ def jugador_editar(request,jugador_id):
     return render(request, 'eventos_deportivos/jugadores/jugador_editar.html',{"formularioJ":formularioJ,"jugador":jugador})
 
 # ELIMINAR
+@login_required
 @permission_required('eventos_deportivos.delete_jugador')
 def jugador_eliminar(request,jugador_id):
     jugador=Jugador.objects.get(id=jugador_id)
@@ -503,6 +506,7 @@ def equipo_create_valid(formularioE):
         print("Formulario no valido: ", formularioE.errors)
     return equipo_creado
 
+@login_required
 @permission_required('eventos_deportivos.add_equipo')
 def equipo_create(request):
     # si la peticion es GET se crea el formulario vacio
@@ -574,6 +578,7 @@ def equipo_buscar(request):
     )
 
 # EDITAR/ACTUALIZAR
+@login_required
 @permission_required('eventos_deportivos.change_equipo')
 def equipo_editar(request,equipo_id):
     equipo = Equipo.objects.get(id=equipo_id)
@@ -597,6 +602,7 @@ def equipo_editar(request,equipo_id):
     return render(request, 'eventos_deportivos/equipos/equipo_editar.html',{"formularioE":formularioE,"equipo":equipo})
 
 # ELIMINAR
+@login_required
 @permission_required('eventos_deportivos.delete_equipo')
 def equipo_eliminar(request,equipo_id):
     equipo=Equipo.objects.get(id=equipo_id)
@@ -626,6 +632,7 @@ def estadio_create_valid(formularioES):
         print("Formulario no valido: ", formularioES.errors)
     return estadio_creado
 
+@login_required
 @permission_required('eventos_deportivos.add_estadio')
 def estadio_create(request):
     # si la peticion es GET se crea el formulario vacio
@@ -697,6 +704,7 @@ def estadio_buscar(request):
     )
 
 # EDITAR/ACTUALIZAR
+@login_required
 @permission_required('eventos_deportivos.change_estadio')
 def estadio_editar(request,estadio_id):
     estadio = Estadio.objects.get(id=estadio_id)
@@ -720,6 +728,7 @@ def estadio_editar(request,estadio_id):
     return render(request, 'eventos_deportivos/estadios/estadio_editar.html',{"formularioES":formularioES,"estadio":estadio})
 
 # ELIMINAR
+@login_required
 @permission_required('eventos_deportivos.delete_estadio')
 def estadio_eliminar(request,estadio_id):
     estadio=Estadio.objects.get(id=estadio_id)
@@ -749,6 +758,7 @@ def sponsor_create_valid(formularioSP):
         print("Formulario no valido: ", formularioSP.errors)
     return sponsor_creado
 
+@login_required
 @permission_required('eventos_deportivos.add_sponsor')
 def sponsor_create(request):
     # si la peticion es GET se crea el formulario vacio
@@ -821,6 +831,7 @@ def sponsor_buscar(request):
     )
 
 # EDITAR/ACTUALIZAR
+@login_required
 @permission_required('eventos_deportivos.change_sponsor')
 def  sponsor_editar(request,sponsor_id):
     sponsor = Sponsor.objects.get(id=sponsor_id)
@@ -844,6 +855,7 @@ def  sponsor_editar(request,sponsor_id):
     return render(request, 'eventos_deportivos/sponsors/sponsor_editar.html',{"formularioSP":formularioSP,"sponsor":sponsor})
 
 # ELIMINAR
+@login_required
 @permission_required('eventos_deportivos.delete_sponsor')
 def sponsor_eliminar(request,sponsor_id):
     sponsor=Sponsor.objects.get(id=sponsor_id)
@@ -873,6 +885,7 @@ def partido_create_valid(formularioP):
         print("Formulario no valido: ", formularioP.errors)
     return partido_creado
 
+@login_required
 @permission_required('eventos_deportivos.add_partido')
 def partido_create(request):
     # si la peticion es GET se crea el formulario vacio
@@ -949,6 +962,7 @@ def partido_buscar(request):
     )
 
 # EDITAR/ACTUALIZAR
+@login_required
 @permission_required('eventos_deportivos.change_partido')
 def  partido_editar(request,partido_id):
     partido = Partido.objects.get(id=partido_id)
@@ -976,6 +990,7 @@ def  partido_editar(request,partido_id):
     return render(request, 'eventos_deportivos/partidos/partido_editar.html',{"formularioP":formularioP,"partido":partido})
 
 # ELIMINAR
+@login_required
 @permission_required('eventos_deportivos.delete_partido')
 def partido_eliminar(request,partido_id):
     partido=Partido.objects.get(id=partido_id)
@@ -1005,6 +1020,7 @@ def torneo_create_valid(formularioT):
         print("Formulario no valido: ", formularioT.errors)
     return torneo_creado
 
+@login_required
 @permission_required('eventos_deportivos.add_torneo')
 def torneo_create(request):
     # si la peticion es GET se crea el formulario vacio
@@ -1080,6 +1096,7 @@ def torneo_buscar(request):
     )
     
 # EDITAR/ACTUALIZAR
+@login_required
 @permission_required('eventos_deportivos.change_torneo')
 def  torneo_editar(request,torneo_id):
     torneo = Torneo.objects.get(id=torneo_id)
@@ -1103,6 +1120,7 @@ def  torneo_editar(request,torneo_id):
     return render(request, 'eventos_deportivos/torneos/torneo_editar.html',{"formularioT":formularioT,"torneo":torneo})
 
 # ELIMINAR
+@login_required
 @permission_required('eventos_deportivos.delete_torneo')
 def torneo_eliminar(request,torneo_id):
     torneo=Torneo.objects.get(id=torneo_id)
