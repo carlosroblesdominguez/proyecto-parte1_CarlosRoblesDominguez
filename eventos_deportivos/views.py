@@ -1108,6 +1108,7 @@ def registrar_usuario(request):
             elif(rol==Usuario().MANAGER):
                 manager=Manager.objects.create(usuario=user)
                 manager.save()
+            return redirect('login')
     else:
         formularioRegistro=RegistroForm()
     return render(request, 'registration/signup.html',{'formularioRegistro':formularioRegistro})

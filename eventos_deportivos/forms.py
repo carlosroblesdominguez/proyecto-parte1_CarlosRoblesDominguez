@@ -428,7 +428,7 @@ class BusquedaTorneoForm(forms.Form):
 class RegistroForm(UserCreationForm):
     roles=(
         (Usuario.MANAGER,'manager'),
-        (Usuario.ARBITRO,'arbotro'),
+        (Usuario.ARBITRO,'arbitro'),
     )
     rol=forms.ChoiceField(choices=roles)
     class Meta:

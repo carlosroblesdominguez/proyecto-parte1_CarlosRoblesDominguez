@@ -1,145 +1,127 @@
 from django.core.management.base import BaseCommand
+from eventos_deportivos.models import *
 from faker import Faker
 import random
-from datetime import timedelta, date, datetime
-
-from eventos_deportivos.models import (
-    Usuario, Manager, Arbitro,
-    EstadisticasJugador, Jugador,
-    Equipo, EquipoJugador,
-    Torneo, Partido, Estadio,
-    Sponsor, Premio
-)
 
 fake = Faker()
 
 class Command(BaseCommand):
-    help = "Genera datos de prueba para la app eventos_deportivos"
+    help = 'Generar datos de prueba sin violar UNIQUE/OneToOne'
 
     def handle(self, *args, **kwargs):
-        self.stdout.write("Generando usuarios...")
+
+        # --- USUARIOS ---
         usuarios = []
         for _ in range(5):
+            rol = random.choice([Usuario.MANAGER, Usuario.ARBITRO])
             u = Usuario.objects.create_user(
                 username=fake.user_name(),
                 email=fake.email(),
-                password='123456',
-                rol=Usuario.MANAGER
-            )
-            Manager.objects.create(usuario=u)
-            usuarios.append(u)
-
-        for _ in range(5):
-            u = Usuario.objects.create_user(
-                username=fake.user_name(),
-                email=fake.email(),
-                password='123456',
-                rol=Usuario.ARBITRO
-            )
-            Arbitro.objects.create(
-                usuario=u,
-                nombre=fake.first_name(),
-                apellido=fake.last_name(),
-                licencia=fake.unique.bothify(text='LIC-#####')
+                password='1234',
+                rol=rol
             )
             usuarios.append(u)
+            if rol == Usuario.ARBITRO:
+                Arbitro.objects.create(
+                    usuario=u,
+                    nombre=fake.first_name(),
+                    apellido=fake.last_name(),
+                    licencia=fake.unique.bothify(text='LIC-#####')
+                )
+            else:
+                Manager.objects.create(usuario=u)
 
-        self.stdout.write("Generando estadisticas y jugadores...")
-        jugadores = []
-        for _ in range(20):
-            stats = EstadisticasJugador.objects.create(
-                partidos_jugados=random.randint(0, 50),
-                goles=random.randint(0, 30),
-                asistencias=random.randint(0, 20),
-                tarjetas=random.randint(0, 10)
-            )
-            jugador = Jugador.objects.create(
-                nombre=fake.first_name(),
-                apellido=fake.last_name(),
-                fecha_nacimiento=fake.date_of_birth(minimum_age=18, maximum_age=40),
-                posicion=random.choice(['DEL','MED','DEF','POR']),
-                estadisticas=stats
-            )
-            jugadores.append(jugador)
-
-        self.stdout.write("Generando estadios...")
+        # --- ESTADIOS ---
         estadios = []
-        for _ in range(5):
-            estadio = Estadio.objects.create(
-                nombre=fake.city() + " Stadium",
+        for _ in range(3):
+            e = Estadio.objects.create(
+                nombre=fake.company(),
                 ciudad=fake.city(),
                 capacidad=random.randint(5000, 50000),
                 cubierto=random.choice([True, False])
             )
-            estadios.append(estadio)
+            estadios.append(e)
 
-        self.stdout.write("Generando equipos...")
+        # --- EQUIPOS ---
         equipos = []
-        for i in range(5):
-            equipo = Equipo.objects.create(
+        for i in range(len(estadios)):
+            eq = Equipo.objects.create(
                 nombre=fake.company(),
                 ciudad=fake.city(),
-                fundacion=fake.date_this_century(before_today=True, after_today=False),
+                fundacion=fake.date_between(start_date='-100y', end_date='-10y'),
                 activo=True,
-                estadio_principal=random.choice(estadios)
+                estadio_principal=estadios[i]  # cada equipo un estadio
             )
-            # asignar jugadores aleatorios
-            for j in random.sample(jugadores, k=4):
+            equipos.append(eq)
+
+        # --- JUGADORES ---
+        jugadores = []
+        for _ in range(10):
+            stats = EstadisticasJugador.objects.create(
+                partidos_jugados=random.randint(0, 100),
+                goles=random.randint(0, 50),
+                asistencias=random.randint(0, 50),
+                tarjetas=random.randint(0, 20)
+            )
+            j = Jugador.objects.create(
+                nombre=fake.first_name(),
+                apellido=fake.last_name(),
+                fecha_nacimiento=fake.date_of_birth(minimum_age=18, maximum_age=40),
+                posicion=random.choice([p[0] for p in Jugador.POSICIONES]),
+                estadisticas=stats
+            )
+            jugadores.append(j)
+
+        # --- ASIGNAR JUGADORES A EQUIPOS ---
+        for eq in equipos:
+            eq_jugadores = random.sample(jugadores, k=3)
+            for j in eq_jugadores:
                 EquipoJugador.objects.create(
                     jugador=j,
-                    equipo=equipo,
+                    equipo=eq,
                     fecha_ingreso=fake.date_between(start_date='-5y', end_date='today'),
                     capitan=random.choice([True, False])
                 )
-            equipos.append(equipo)
 
-        self.stdout.write("Generando torneos...")
+        # --- TORNEOS ---
+        arbitros = list(Arbitro.objects.all())
         torneos = []
-        arbitros = Arbitro.objects.all()
-        for _ in range(3):
-            torneo = Torneo.objects.create(
-                nombre=fake.word() + " Cup",
+        for i, arb in enumerate(arbitros):
+            t = Torneo.objects.create(
+                nombre=fake.company(),
                 pais=fake.country(),
-                fecha_inicio=fake.date_this_decade(),
-                fecha_fin=fake.date_this_decade(),
-                arbitro_principal=random.choice(arbitros)
+                fecha_inicio=fake.date_between(start_date='-2y', end_date='today'),
+                fecha_fin=fake.date_between(start_date='today', end_date='+1y'),
+                arbitro_principal=arb  # cada torneo un árbitro distinto
             )
-            torneos.append(torneo)
+            torneos.append(t)
 
-        self.stdout.write("Generando partidos...")
-        partidos = []
-        for torneo in torneos:
-            for _ in range(5):
-                e1, e2 = random.sample(equipos, 2)
-                partido = Partido.objects.create(
-                    equipo_local=e1,
-                    equipo_visitante=e2,
-                    fecha=fake.date_time_this_year(),
-                    resultado=f"{random.randint(0,5)}-{random.randint(0,5)}",
-                    torneo=torneo
-                )
-                # asignar arbitros aleatorios
-                partido_arbitros = random.sample(list(arbitros), k=1)
-                for a in partido_arbitros:
-                    a.partidos.add(partido)
-                partidos.append(partido)
-
-        self.stdout.write("Generando sponsors...")
+        # --- PARTIDOS ---
         for _ in range(5):
-            sponsor = Sponsor.objects.create(
+            Partido.objects.create(
+                equipo_local=random.choice(equipos),
+                equipo_visitante=random.choice([e for e in equipos if e != equipos[0]]),
+                fecha=fake.date_time_between(start_date='-1y', end_date='now'),
+                resultado=f"{random.randint(0,5)}-{random.randint(0,5)}",
+                torneo=random.choice(torneos)
+            )
+
+        # --- SPONSORS ---
+        for _ in range(3):
+            s = Sponsor.objects.create(
                 nombre=fake.company(),
                 monto=random.uniform(1000, 50000),
                 pais=fake.country()
             )
-            sponsor.equipos.set(random.sample(equipos, k=2))
+            s.equipos.set(random.sample(equipos, k=2))
 
-        self.stdout.write("Generando premios...")
-        for torneo in torneos:
+        # --- PREMIOS ---
+        for t in torneos:
             Premio.objects.create(
-                nombre=fake.word() + " Award",
-                monto=random.uniform(500, 10000),
-                torneo=torneo,
+                nombre=fake.catch_phrase(),
+                monto=random.uniform(1000, 50000),
+                torneo=t,
                 ganador=random.choice(equipos)
             )
 
-        self.stdout.write(self.style.SUCCESS("¡Datos de prueba generados con éxito!"))
+        self.stdout.write(self.style.SUCCESS('Datos generados correctamente.'))
