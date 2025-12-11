@@ -918,6 +918,16 @@ def partido_buscar(request):
     formularioP = BusquedaPartidoForm(request.GET or None)
     formularioT = BusquedaTorneoForm(request.GET or None)
     
+    # Filtrado según el usuario logueado
+    if request.user.is_authenticated and request.user.es_arbitro():
+        try:
+            arbitro = request.user.arbitro
+            partidos = Partido.objects.filter(torneo__arbitro_principal=arbitro)
+        except Arbitro.DoesNotExist:
+            partidos = Partido.objects.none()
+    else:
+        partidos = Partido.objects.all()
+    
     if(len(request.GET)>0):
         
         if formularioP.is_valid():
@@ -1140,13 +1150,18 @@ def registrar_usuario(request):
             user=formularioRegistro.save()
             rol=int(formularioRegistro.cleaned_data.get('rol'))
             
-            if(rol==Usuario().ARBITRO):
+            if rol == Usuario.ARBITRO:
                 # Asignar grupo Arbitro
                 arbitro_group = Group.objects.get(name='Arbitros')
                 user.groups.add(arbitro_group)
                 
-                # Crear perfil de árbitro
-                arbitro=Arbitro.objects.create(usuario=user)
+                # Crear perfil de árbitro con los campos obligatorios
+                arbitro = Arbitro.objects.create(
+                    usuario=user,
+                    nombre=user.first_name or 'NombreArbitro',
+                    apellido=user.last_name or 'ApellidoArbitro',
+                    licencia=f"LIC-{user.id:04d}"  # Genera una licencia única
+                )
                 arbitro.save()
             elif(rol==Usuario().MANAGER):
                 # Asignar grupo Manager

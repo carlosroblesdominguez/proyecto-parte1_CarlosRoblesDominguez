@@ -147,7 +147,7 @@ class Arbitro(models.Model):
     partidos = models.ManyToManyField(Partido)
     
     def __str__(self):
-        return f"{self.nombre} {self.apellido}"
+        return f"{self.usuario}"
     
 # Estadio
 class Estadio(models.Model):
