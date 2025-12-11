@@ -1,9 +1,9 @@
-{% extends eventos_deportivos/body.html%}
+{% extends "eventos_deportivos/base.html" %}
 
 {% block contenido %}
-    <form action="{% url 'registrar_usuario' %} method='POST'">
+    <form action="{% url 'registrar_usuario' %}" method="POST">
 
-        {% load django bootstrap%}
+        {% load django_bootstrap5 %}
         {% csrf_token %}
 
         {% bootstrap_form formularioRegistro %}

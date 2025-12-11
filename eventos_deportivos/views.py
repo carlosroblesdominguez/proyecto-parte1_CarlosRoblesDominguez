@@ -1110,4 +1110,5 @@ def registrar_usuario(request):
                 manager.save()
     else:
         formularioRegistro=RegistroForm()
-    return render(request, 'registration/signup.html',{'formularioRegisro':formularioRegistro})
+    return render(request, 'registration/signup.html',{'formularioRegistro':formularioRegistro})
+
