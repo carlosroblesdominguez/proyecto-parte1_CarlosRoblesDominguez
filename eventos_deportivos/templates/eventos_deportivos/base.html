@@ -24,22 +24,28 @@
         <img src="{% static 'eventos_deportivos/img/logo.png' %}" alt="Logo" style="height:50px">
         <ul>
             <li><a href="{% url 'index' %}">Inicio</a></li>
-            <li><a href="{% url 'lista_jugadores' %}">Jugadores</a></li>
-            <li><a href="{% url 'lista_equipos' %}">Equipos</a></li>
-            <li><a href="{% url 'lista_partidos' %}">Partidos</a></li>
-            <li><a href="{% url 'lista_torneos' %}">Torneos</a></li>
-            <li><a href="{% url 'lista_estadios' %}">Estadios</a></li>
-            <li><a href="{% url 'lista_sponsors' %}">Sponsors</a></li>
-        
             {% if not request.user.is_authenticated %}
             <a class="btn btn-outline,warning" href="{% url 'login' %}">Log In</a>
-            {% endif %}
-
-            {% if not request.user.is_authenticated %}
-            <li><a class="btn btn-outline,warning" href="{% url 'registrar_usuario' %}">Sign Up</a></li>
+            <a class="btn btn-outline,warning" href="{% url 'registrar_usuario' %}">Sign Up</a>
             {% endif %}
 
             {% if request.user.is_authenticated %}
+                <li><a href="{% url 'lista_jugadores' %}">Jugadores</a></li>
+                <li><a href="{% url 'lista_equipos' %}">Equipos</a></li>
+                <li><a href="{% url 'lista_partidos' %}">Partidos</a></li>
+                <li><a href="{% url 'lista_torneos' %}">Torneos</a></li>
+                <li><a href="{% url 'lista_estadios' %}">Estadios</a></li>
+                <li><a href="{% url 'lista_sponsors' %}">Sponsors</a></li>
+                <li>
+                    Bienvenid@ <strong>{{ user.username }}</strong>,
+                    Perteneces a Grupo(s):
+                    {% for g in user.groups.all %}
+                        <span class="badge bg-info text-dark">{{ g.name }}</span>
+                    {% empty %}
+                        <span class="badge bg-secondary">Sin grupo</span>
+                    {% endfor %},
+                    Hora de inicio: <strong>{{ request.session.fecha_inicio }}</strong>
+                </li>
             <form action="{% url 'logout' %}" class="d-flex m-3" role="search" method="POST">
                 {% csrf_token %}
                 <button class=" btn btn-light btn-outline-dark" type="submit">Log Out</button>
@@ -54,7 +60,7 @@
 </main>
 
 <footer>
-    <p>Proyecto Django - {{ request.session.fecha_inicio }}</p>
+    <p>Proyecto Django</p>
 </footer>
 
 </body>

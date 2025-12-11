@@ -4,21 +4,11 @@
 {% block contenido %}
 <h1>Bienvenido al proyecto de eventos deportivos</h1>
 
-<p>Enlaces a las diferentes secciones:</p>
-
-<ul>
-    <li><a href="{% url 'lista_jugadores' %}">1. Lista de Jugadores</a></li>
-    <li><a href="{% url 'lista_equipos' %}">2. Lista de Equipos</a></li>
-    <li><a href="{% url 'lista_partidos' %}">3. Lista de Partidos</a></li>
-    <li><a href="{% url 'detalle_torneo' nombre_torneo='Leader Cup' %}">4. Detalle de un Torneo (torneo)</a></li>
-    <li><a href="{% url 'lista_torneos' %}">5. Lista de Torneos</a></li>
-    <li><a href="{% url 'detalle_arbitro_torneo' arbitro_id=1 torneo_id=1 %}">6. Detalle de Árbitro en un Torneo (id de arbitro e id de torneo)</a></li>
-    <li><a href="{% url 'lista_sponsors' %}">7. Lista de Sponsors</a></li>
-    <li><a href="{% url 'lista_estadios' %}">8. Lista de Estadios</a></li>
-</ul>
 <h2>CRUD Jugadores</h2>
 <ul>
-    <li><a href="{% url 'jugador_create' %}">1. Crear Jugadores</a></li>
+    {% if user.es_manager %}
+        <li><a href="{% url 'jugador_create' %}">1. Crear Jugadores</a></li>
+    {% endif %}
     <form action="{% url 'jugador_buscar' %}" class="d-flex mt-3" role="search" method="GET">
         {% bootstrap_form formularioJ %}
         <button class="btn btn-light btn-outline-dark" type="submit">2. Search Jugadores</button>
@@ -26,7 +16,9 @@
 </ul>
 <h2>CRUD Equipos</h2>
 <ul>
-    <li><a href="{% url 'equipo_create' %}">1. Crear Equipos</a></li>
+    {% if user.es_manager %}
+        <li><a href="{% url 'equipo_create' %}">1. Crear Equipos</a></li>
+    {% endif %}
     <form action="{% url 'equipo_buscar' %}" class="d-flex mt-3" role="search" method="GET">
         {% bootstrap_form formularioE %}
         <button class="btn btn-light btn-outline-dark" type="submit">2. Search Equipos</button>
@@ -34,7 +26,9 @@
 </ul>
 <h2>CRUD Estadios</h2>
 <ul>
-    <li><a href="{% url 'estadio_create' %}">1. Crear Estadios</a></li>
+    {% if user.es_arbitro %}
+        <li><a href="{% url 'estadio_create' %}">1. Crear Estadios</a></li>
+    {% endif %}
     <form action="{% url 'estadio_buscar' %}" class="d-flex mt-3" role="search" method="GET">
         {% bootstrap_form formularioES %}
         <button class="btn btn-light btn-outline-dark" type="submit">2. Search Estadios</button>
@@ -42,7 +36,9 @@
 </ul>
 <h2>CRUD Sponsors</h2>
 <ul>
-    <li><a href="{% url 'sponsor_create' %}">1. Crear Sponsors</a></li>
+    {% if user.es_manager %}
+        <li><a href="{% url 'sponsor_create' %}">1. Crear Sponsors</a></li>
+    {% endif %}
     <form action="{% url 'sponsor_buscar' %}" class="d-flex mt-3" role="search" method="GET">
         {% bootstrap_form formularioSP %}
         <button class="btn btn-light btn-outline-dark" type="submit">2. Search Sponsors</button>
@@ -50,7 +46,9 @@
 </ul>
 <h2>CRUD Partidos</h2>
 <ul>
-    <li><a href="{% url 'partido_create' %}">1. Crear Partidos</a></li>
+    {% if user.es_arbitro %}
+        <li><a href="{% url 'partido_create' %}">1. Crear Partidos</a></li>
+    {% endif %}
     <form action="{% url 'partido_buscar' %}" class="d-flex mt-3" role="search" method="GET">
         {% bootstrap_form formularioP %}
         <button class="btn btn-light btn-outline-dark" type="submit">2. Search Partidos</button>
@@ -58,7 +56,9 @@
 </ul>
 <h2>CRUD Torneos</h2>
 <ul>
-    <li><a href="{% url 'torneo_create' %}">1. Crear Torneos</a></li>
+    {% if user.es_arbitro %}
+        <li><a href="{% url 'torneo_create' %}">1. Crear Torneos</a></li>
+    {% endif %}
     <form action="{% url 'torneo_buscar' %}" class="d-flex mt-3" role="search" method="GET">
         {% bootstrap_form formularioT %}
         <button class="btn btn-light btn-outline-dark" type="submit">2. Search Torneos</button>

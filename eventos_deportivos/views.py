@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Prefetch, Count, Max, Q
 from django.contrib import messages
+from datetime import datetime, date, time
+from django.contrib.auth.decorators import permission_required, login_required
+from django.contrib.auth.models import Group
 from .models import *
 from .forms import *
-from datetime import datetime, date, time
 
 # Create your views here.
 def index(request):
@@ -371,6 +373,7 @@ def jugador_create_valid(formularioJ):
         print("Formulario no valido: ", formularioJ.errors)
     return jugador_creado
 
+@permission_required('eventos_deportivos.add_jugador')
 def jugador_create(request):
     # si la peticion es GET se crea el formulario vacio
     # en el caso de set POST se crea el formulario con datos
@@ -439,6 +442,7 @@ def jugador_buscar(request):
     )
 
 # EDITAR/ACTUALIZAR
+@permission_required('eventos_deportivos.change_jugador')
 def jugador_editar(request,jugador_id):
     jugador = Jugador.objects.get(id=jugador_id)
     
@@ -461,6 +465,7 @@ def jugador_editar(request,jugador_id):
     return render(request, 'eventos_deportivos/jugadores/jugador_editar.html',{"formularioJ":formularioJ,"jugador":jugador})
 
 # ELIMINAR
+@permission_required('eventos_deportivos.delete_jugador')
 def jugador_eliminar(request,jugador_id):
     jugador=Jugador.objects.get(id=jugador_id)
     try:
@@ -498,6 +503,7 @@ def equipo_create_valid(formularioE):
         print("Formulario no valido: ", formularioE.errors)
     return equipo_creado
 
+@permission_required('eventos_deportivos.add_equipo')
 def equipo_create(request):
     # si la peticion es GET se crea el formulario vacio
     # en el caso de set POST se crea el formulario con datos
@@ -568,6 +574,7 @@ def equipo_buscar(request):
     )
 
 # EDITAR/ACTUALIZAR
+@permission_required('eventos_deportivos.change_equipo')
 def equipo_editar(request,equipo_id):
     equipo = Equipo.objects.get(id=equipo_id)
     
@@ -590,6 +597,7 @@ def equipo_editar(request,equipo_id):
     return render(request, 'eventos_deportivos/equipos/equipo_editar.html',{"formularioE":formularioE,"equipo":equipo})
 
 # ELIMINAR
+@permission_required('eventos_deportivos.delete_equipo')
 def equipo_eliminar(request,equipo_id):
     equipo=Equipo.objects.get(id=equipo_id)
     try:
@@ -618,6 +626,7 @@ def estadio_create_valid(formularioES):
         print("Formulario no valido: ", formularioES.errors)
     return estadio_creado
 
+@permission_required('eventos_deportivos.add_estadio')
 def estadio_create(request):
     # si la peticion es GET se crea el formulario vacio
     # en el caso de set POST se crea el formulario con datos
@@ -688,6 +697,7 @@ def estadio_buscar(request):
     )
 
 # EDITAR/ACTUALIZAR
+@permission_required('eventos_deportivos.change_estadio')
 def estadio_editar(request,estadio_id):
     estadio = Estadio.objects.get(id=estadio_id)
     
@@ -710,6 +720,7 @@ def estadio_editar(request,estadio_id):
     return render(request, 'eventos_deportivos/estadios/estadio_editar.html',{"formularioES":formularioES,"estadio":estadio})
 
 # ELIMINAR
+@permission_required('eventos_deportivos.delete_estadio')
 def estadio_eliminar(request,estadio_id):
     estadio=Estadio.objects.get(id=estadio_id)
     try:
@@ -738,6 +749,7 @@ def sponsor_create_valid(formularioSP):
         print("Formulario no valido: ", formularioSP.errors)
     return sponsor_creado
 
+@permission_required('eventos_deportivos.add_sponsor')
 def sponsor_create(request):
     # si la peticion es GET se crea el formulario vacio
     # en el caso de set POST se crea el formulario con datos
@@ -809,6 +821,7 @@ def sponsor_buscar(request):
     )
 
 # EDITAR/ACTUALIZAR
+@permission_required('eventos_deportivos.change_sponsor')
 def  sponsor_editar(request,sponsor_id):
     sponsor = Sponsor.objects.get(id=sponsor_id)
     
@@ -831,6 +844,7 @@ def  sponsor_editar(request,sponsor_id):
     return render(request, 'eventos_deportivos/sponsors/sponsor_editar.html',{"formularioSP":formularioSP,"sponsor":sponsor})
 
 # ELIMINAR
+@permission_required('eventos_deportivos.delete_sponsor')
 def sponsor_eliminar(request,sponsor_id):
     sponsor=Sponsor.objects.get(id=sponsor_id)
     try:
@@ -859,6 +873,7 @@ def partido_create_valid(formularioP):
         print("Formulario no valido: ", formularioP.errors)
     return partido_creado
 
+@permission_required('eventos_deportivos.add_partido')
 def partido_create(request):
     # si la peticion es GET se crea el formulario vacio
     # en el caso de set POST se crea el formulario con datos
@@ -934,6 +949,7 @@ def partido_buscar(request):
     )
 
 # EDITAR/ACTUALIZAR
+@permission_required('eventos_deportivos.change_partido')
 def  partido_editar(request,partido_id):
     partido = Partido.objects.get(id=partido_id)
     
@@ -960,6 +976,7 @@ def  partido_editar(request,partido_id):
     return render(request, 'eventos_deportivos/partidos/partido_editar.html',{"formularioP":formularioP,"partido":partido})
 
 # ELIMINAR
+@permission_required('eventos_deportivos.delete_partido')
 def partido_eliminar(request,partido_id):
     partido=Partido.objects.get(id=partido_id)
     try:
@@ -988,6 +1005,7 @@ def torneo_create_valid(formularioT):
         print("Formulario no valido: ", formularioT.errors)
     return torneo_creado
 
+@permission_required('eventos_deportivos.add_torneo')
 def torneo_create(request):
     # si la peticion es GET se crea el formulario vacio
     # en el caso de set POST se crea el formulario con datos
@@ -1062,6 +1080,7 @@ def torneo_buscar(request):
     )
     
 # EDITAR/ACTUALIZAR
+@permission_required('eventos_deportivos.change_torneo')
 def  torneo_editar(request,torneo_id):
     torneo = Torneo.objects.get(id=torneo_id)
     
@@ -1084,6 +1103,7 @@ def  torneo_editar(request,torneo_id):
     return render(request, 'eventos_deportivos/torneos/torneo_editar.html',{"formularioT":formularioT,"torneo":torneo})
 
 # ELIMINAR
+@permission_required('eventos_deportivos.delete_torneo')
 def torneo_eliminar(request,torneo_id):
     torneo=Torneo.objects.get(id=torneo_id)
     try:
@@ -1103,9 +1123,19 @@ def registrar_usuario(request):
             rol=int(formularioRegistro.cleaned_data.get('rol'))
             
             if(rol==Usuario().ARBITRO):
+                # Asignar grupo Arbitro
+                arbitro_group = Group.objects.get(name='Arbitros')
+                user.groups.add(arbitro_group)
+                
+                # Crear perfil de árbitro
                 arbitro=Arbitro.objects.create(usuario=user)
                 arbitro.save()
             elif(rol==Usuario().MANAGER):
+                # Asignar grupo Manager
+                manager_group = Group.objects.get(name='Managers')
+                user.groups.add(manager_group)
+                
+                # Crear perfil de manager
                 manager=Manager.objects.create(usuario=user)
                 manager.save()
             return redirect('login')

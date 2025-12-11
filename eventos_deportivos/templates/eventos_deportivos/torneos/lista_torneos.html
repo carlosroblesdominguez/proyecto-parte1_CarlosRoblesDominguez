@@ -24,22 +24,24 @@
             <td>{{ torneo.fecha_fin|date:"d/m/Y" }}</td>
             <td>{{ torneo.arbitro_principal }}</td>
             <td>
-                <div class="row btn-group">
-                    <div class="mb-2">
-                        <button type="button" 
-                                class="btn btn-outline-primary"> 
-                                <a href="{% url 'torneo_editar' torneo.id %}"><span>{% bs_icon 'pencil' %}</span></a>
-                        </button>
+                {% if user.es_arbitro %}
+                    <div class="row btn-group">
+                        <div class="mb-2">
+                            <button type="button" 
+                                    class="btn btn-outline-primary"> 
+                                    <a href="{% url 'torneo_editar' torneo.id %}"><span>{% bs_icon 'pencil' %}</span></a>
+                            </button>
+                        </div>
+                        <div class="mb-2">
+                            <form action = "{% url 'torneo_eliminar' torneo.id %}" method = "post"> 
+                                {% csrf_token %}
+                                <button class="btn btn-danger" onclick="return eliminar();" type="submit">
+                                    <span>{% bs_icon 'trash' %}</span>
+                                </button> 
+                            </form>
+                        </div>
                     </div>
-                    <div class="mb-2">
-                        <form action = "{% url 'torneo_eliminar' torneo.id %}" method = "post"> 
-                            {% csrf_token %}
-                            <button class="btn btn-danger" onclick="return eliminar();" type="submit">
-                                <span>{% bs_icon 'trash' %}</span>
-                            </button> 
-                        </form>
-                    </div>
-                </div>
+                {% endif %}
             </td>
         </tr>
         {% empty %}

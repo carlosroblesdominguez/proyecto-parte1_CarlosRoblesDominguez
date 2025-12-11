@@ -14,8 +14,17 @@ class Usuario(AbstractUser):
         choices=ROLES,default=0
     )
 
+    def es_manager(self):
+        return self.groups.filter(name='Managers').exists()
+    
+    def es_arbitro(self):
+        return self.groups.filter(name='Arbitros').exists()
+
 class Manager(models.Model):
     usuario=models.OneToOneField(Usuario,on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return f"{self.usuario}"
 
 # Estadisticas Jugador
 class EstadisticasJugador(models.Model):
