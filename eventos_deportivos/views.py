@@ -918,16 +918,6 @@ def partido_buscar(request):
     formularioP = BusquedaPartidoForm(request.GET or None)
     formularioT = BusquedaTorneoForm(request.GET or None)
     
-    # Filtrado según el usuario logueado
-    if request.user.is_authenticated and request.user.es_arbitro():
-        try:
-            arbitro = request.user.arbitro
-            partidos = Partido.objects.filter(torneo__arbitro_principal=arbitro)
-        except Arbitro.DoesNotExist:
-            partidos = Partido.objects.none()
-    else:
-        partidos = Partido.objects.all()
-    
     if(len(request.GET)>0):
         
         if formularioP.is_valid():
