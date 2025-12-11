@@ -44,7 +44,8 @@
                     {% empty %}
                         <span class="badge bg-secondary">Sin grupo</span>
                     {% endfor %},
-                    Hora de inicio: <strong>{{ request.session.fecha_inicio }}</strong>
+                    Hora de inicio: <strong>{{ request.session.fecha_inicio }}</strong>,
+                    Tu correo: <strong>{{ user.email }}</strong>
                 </li>
             <form action="{% url 'logout' %}" class="d-flex m-3" role="search" method="POST">
                 {% csrf_token %}
