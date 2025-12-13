@@ -910,7 +910,7 @@ def partido_create(request):
 # LEER
 def partido_buscar(request):
     mensaje_busqueda = ""
-    partidos = Partido.objects.none() # Por defecto vacio
+    partidos = Partido.objects.all() # Por defecto vacio
     formularioJ = BusquedaJugadorForm(request.GET or None)
     formularioE = BusquedaEquipoForm(request.GET or None)
     formularioES = BusquedaEstadioForm(request.GET or None)
@@ -1040,10 +1040,16 @@ def torneo_create(request):
     return render(request, 'eventos_deportivos/torneos/torneo_create.html',{"formularioT":formularioT})
 
 # LEER
+# FILTRO EN BASE AL USUARIO CONECTADO
 def torneo_buscar(request):
-    mensaje_busqueda = ""
-    torneos = Torneo.objects.none()  # vacio por defecto
+    """
+    Vista para buscar y listar torneos.
+    Muestra un formulario de búsqueda y los resultados filtrados.
+    """
+    # Inicializar queryset completo
+    torneos = Torneo.objects.all()
 
+    # Inicializar formularios
     formularioJ = BusquedaJugadorForm(request.GET or None)
     formularioE = BusquedaEquipoForm(request.GET or None)
     formularioES = BusquedaEstadioForm(request.GET or None)
@@ -1051,35 +1057,51 @@ def torneo_buscar(request):
     formularioP = BusquedaPartidoForm(request.GET or None)
     formularioT = BusquedaTorneoForm(request.GET or None)
 
-    if len(request.GET) > 0:
+    # Filtrado base según el usuario
+    usuario = request.user
+    if usuario.is_authenticated and usuario.es_arbitro():
+        try:
+            arbitro = Arbitro.objects.get(usuario=usuario)
+            torneos = torneos.filter(arbitro_principal=arbitro)
+        except Arbitro.DoesNotExist:
+            torneos = Torneo.objects.none()
 
-        if formularioT.is_valid():
-            paisBusqueda = formularioT.cleaned_data.get('paisBusqueda')
-            fechaBusqueda = formularioT.cleaned_data.get('fechaDesdeBusqueda')
-            nombreBusqueda = formularioT.cleaned_data.get('nombreBusqueda')
+    # Procesar formulario de búsqueda
+    if formularioT.is_valid():
+        paisBusqueda = formularioT.cleaned_data.get('paisBusqueda')
+        fechaBusqueda = formularioT.cleaned_data.get('fechaDesdeBusqueda')
+        nombreBusqueda = formularioT.cleaned_data.get('nombreBusqueda')
 
-            # --- mensaje de filtros ---
-            filtros_aplicados = []
-            if paisBusqueda:
-                filtros_aplicados.append(f"Pais = '{paisBusqueda}'")
-            if fechaBusqueda:
-                filtros_aplicados.append(f"Fecha desde = '{fechaBusqueda}'")
-            if nombreBusqueda:
-                filtros_aplicados.append(f"Nombre = '{nombreBusqueda}'")
-            mensaje_busqueda = " | ".join(filtros_aplicados)
+        # Construcción del mensaje de filtros
+        filtros_aplicados = []
+        if paisBusqueda:
+            filtros_aplicados.append(f"País = '{paisBusqueda}'")
+        if fechaBusqueda:
+            filtros_aplicados.append(f"Fecha desde = '{fechaBusqueda}'")
+        if nombreBusqueda:
+            filtros_aplicados.append(f"Nombre = '{nombreBusqueda}'")
+        mensaje_busqueda = " | ".join(filtros_aplicados)
 
-            # --- Construccion del filtro ---
-            filtros = Q()
-            if paisBusqueda:
-                filtros &= Q(pais__icontains=paisBusqueda)
-            if fechaBusqueda:
-                filtros &= Q(fecha_inicio__gte=fechaBusqueda)
-            if nombreBusqueda:
-                filtros &= Q(nombre__icontains=nombreBusqueda)
+        # Aplicar filtros sobre el queryset existente
+        filtros = Q()
+        if paisBusqueda:
+            filtros &= Q(pais__icontains=paisBusqueda)
+        if fechaBusqueda:
+            filtros &= Q(fecha_inicio__gte=fechaBusqueda)
+        if nombreBusqueda:
+            filtros &= Q(nombre__icontains=nombreBusqueda)
 
-            torneos = Torneo.objects.filter(filtros)
+        torneos = torneos.filter(filtros)
 
-            return render(request,'eventos_deportivos/torneos/torneo_buscar.html',{"formularioT": formularioT,"texto_busqueda": mensaje_busqueda,"torneos": torneos})
+        return render(
+            request,
+            'eventos_deportivos/torneos/torneo_buscar.html',
+            {
+                "formularioT": formularioT,
+                "texto_busqueda": mensaje_busqueda,
+                "torneos": torneos
+            }
+        )
 
     # Si no hay GET: volver al index con todos los formularios
     return render(
@@ -1091,7 +1113,7 @@ def torneo_buscar(request):
             "formularioES": formularioES,
             "formularioSP": formularioSP,
             "formularioP": formularioP,
-            "formularioT": formularioT
+            "formularioT": formularioT,
         }
     )
     
