@@ -1,119 +1,119 @@
 [
 {
     "model": "admin.logentry",
-    "pk": 1,
+    "pk": 24,
     "fields": {
-        "action_time": "2025-11-23T09:04:26.588Z",
-        "user": 1,
-        "content_type": 11,
-        "object_id": "34",
-        "object_repr": "Pepe tumal",
-        "action_flag": 3,
-        "change_message": ""
+        "action_time": "2025-12-11T21:31:41.527Z",
+        "user": 11,
+        "content_type": 14,
+        "object_id": "5",
+        "object_repr": "Lola",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Nombre\", \"Apellido\", \"Partidos\"]}}]"
     }
 },
 {
     "model": "admin.logentry",
-    "pk": 2,
+    "pk": 25,
     "fields": {
-        "action_time": "2025-11-23T09:04:26.588Z",
-        "user": 1,
-        "content_type": 11,
-        "object_id": "33",
-        "object_repr": "Alberto Melto",
-        "action_flag": 3,
-        "change_message": ""
+        "action_time": "2025-12-11T21:33:45.759Z",
+        "user": 11,
+        "content_type": 14,
+        "object_id": "5",
+        "object_repr": "Lola",
+        "action_flag": 2,
+        "change_message": "[]"
     }
 },
 {
     "model": "admin.logentry",
-    "pk": 3,
+    "pk": 26,
     "fields": {
-        "action_time": "2025-11-23T09:04:31.908Z",
-        "user": 1,
-        "content_type": 11,
-        "object_id": "32",
-        "object_repr": "Pepe tumal",
-        "action_flag": 3,
-        "change_message": ""
+        "action_time": "2025-12-11T21:34:10.280Z",
+        "user": 11,
+        "content_type": 8,
+        "object_id": "11",
+        "object_repr": "carlos",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Groups\", \"Rol\"]}}]"
     }
 },
 {
     "model": "admin.logentry",
-    "pk": 4,
+    "pk": 27,
     "fields": {
-        "action_time": "2025-11-23T09:04:31.908Z",
-        "user": 1,
-        "content_type": 11,
-        "object_id": "31",
-        "object_repr": "Pepe tumal",
-        "action_flag": 3,
-        "change_message": ""
+        "action_time": "2025-12-11T21:37:40.359Z",
+        "user": 11,
+        "content_type": 14,
+        "object_id": "5",
+        "object_repr": "Lola",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Partidos\"]}}]"
     }
 },
 {
     "model": "admin.logentry",
-    "pk": 5,
+    "pk": 28,
     "fields": {
-        "action_time": "2025-11-29T10:50:46.598Z",
-        "user": 1,
-        "content_type": 7,
-        "object_id": "35",
-        "object_repr": "Betis",
-        "action_flag": 3,
-        "change_message": ""
+        "action_time": "2025-12-11T21:37:43.273Z",
+        "user": 11,
+        "content_type": 14,
+        "object_id": "5",
+        "object_repr": "Lola",
+        "action_flag": 2,
+        "change_message": "[]"
     }
 },
 {
     "model": "admin.logentry",
-    "pk": 6,
+    "pk": 29,
     "fields": {
-        "action_time": "2025-11-29T10:50:46.598Z",
-        "user": 1,
-        "content_type": 7,
-        "object_id": "34",
-        "object_repr": "a",
-        "action_flag": 3,
-        "change_message": ""
+        "action_time": "2025-12-11T22:29:38.053Z",
+        "user": 11,
+        "content_type": 14,
+        "object_id": "5",
+        "object_repr": "Lola",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Partidos\"]}}]"
     }
 },
 {
     "model": "admin.logentry",
-    "pk": 7,
+    "pk": 30,
     "fields": {
-        "action_time": "2025-11-29T10:50:46.598Z",
-        "user": 1,
-        "content_type": 7,
-        "object_id": "33",
-        "object_repr": "betis",
-        "action_flag": 3,
-        "change_message": ""
+        "action_time": "2025-12-13T10:58:16.358Z",
+        "user": 11,
+        "content_type": 14,
+        "object_id": "5",
+        "object_repr": "Lola",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Partidos\"]}}]"
     }
 },
 {
     "model": "admin.logentry",
-    "pk": 8,
+    "pk": 31,
     "fields": {
-        "action_time": "2025-11-29T10:50:46.598Z",
-        "user": 1,
-        "content_type": 7,
-        "object_id": "32",
-        "object_repr": "Sevilla",
-        "action_flag": 3,
-        "change_message": ""
+        "action_time": "2025-12-13T11:23:16.825Z",
+        "user": 11,
+        "content_type": 16,
+        "object_id": "3",
+        "object_repr": "Brown, Green and Robinson",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Arbitro principal\"]}}]"
     }
 },
 {
     "model": "admin.logentry",
-    "pk": 9,
+    "pk": 32,
     "fields": {
-        "action_time": "2025-11-29T10:50:46.598Z",
-        "user": 1,
-        "content_type": 7,
-        "object_id": "31",
-        "object_repr": "mancher",
-        "action_flag": 3,
-        "change_message": ""
+        "action_time": "2025-12-13T11:39:11.221Z",
+        "user": 11,
+        "content_type": 16,
+        "object_id": "2",
+        "object_repr": "Schmidt-Owens",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Arbitro principal\"]}}]"
     }
 },
 {
@@ -228,324 +228,324 @@
     "model": "auth.permission",
     "pk": 13,
     "fields": {
-        "name": "Can add user",
+        "name": "Can add content type",
         "content_type": 4,
-        "codename": "add_user"
+        "codename": "add_contenttype"
     }
 },
 {
     "model": "auth.permission",
     "pk": 14,
     "fields": {
-        "name": "Can change user",
+        "name": "Can change content type",
         "content_type": 4,
-        "codename": "change_user"
+        "codename": "change_contenttype"
     }
 },
 {
     "model": "auth.permission",
     "pk": 15,
     "fields": {
-        "name": "Can delete user",
+        "name": "Can delete content type",
         "content_type": 4,
-        "codename": "delete_user"
+        "codename": "delete_contenttype"
     }
 },
 {
     "model": "auth.permission",
     "pk": 16,
     "fields": {
-        "name": "Can view user",
+        "name": "Can view content type",
         "content_type": 4,
-        "codename": "view_user"
+        "codename": "view_contenttype"
     }
 },
 {
     "model": "auth.permission",
     "pk": 17,
     "fields": {
-        "name": "Can add content type",
+        "name": "Can add session",
         "content_type": 5,
-        "codename": "add_contenttype"
+        "codename": "add_session"
     }
 },
 {
     "model": "auth.permission",
     "pk": 18,
     "fields": {
-        "name": "Can change content type",
+        "name": "Can change session",
         "content_type": 5,
-        "codename": "change_contenttype"
+        "codename": "change_session"
     }
 },
 {
     "model": "auth.permission",
     "pk": 19,
     "fields": {
-        "name": "Can delete content type",
+        "name": "Can delete session",
         "content_type": 5,
-        "codename": "delete_contenttype"
+        "codename": "delete_session"
     }
 },
 {
     "model": "auth.permission",
     "pk": 20,
     "fields": {
-        "name": "Can view content type",
+        "name": "Can view session",
         "content_type": 5,
-        "codename": "view_contenttype"
+        "codename": "view_session"
     }
 },
 {
     "model": "auth.permission",
     "pk": 21,
     "fields": {
-        "name": "Can add session",
+        "name": "Can add estadio",
         "content_type": 6,
-        "codename": "add_session"
+        "codename": "add_estadio"
     }
 },
 {
     "model": "auth.permission",
     "pk": 22,
     "fields": {
-        "name": "Can change session",
+        "name": "Can change estadio",
         "content_type": 6,
-        "codename": "change_session"
+        "codename": "change_estadio"
     }
 },
 {
     "model": "auth.permission",
     "pk": 23,
     "fields": {
-        "name": "Can delete session",
+        "name": "Can delete estadio",
         "content_type": 6,
-        "codename": "delete_session"
+        "codename": "delete_estadio"
     }
 },
 {
     "model": "auth.permission",
     "pk": 24,
     "fields": {
-        "name": "Can view session",
+        "name": "Can view estadio",
         "content_type": 6,
-        "codename": "view_session"
+        "codename": "view_estadio"
     }
 },
 {
     "model": "auth.permission",
     "pk": 25,
     "fields": {
-        "name": "Can add equipo",
+        "name": "Can add estadisticas jugador",
         "content_type": 7,
-        "codename": "add_equipo"
+        "codename": "add_estadisticasjugador"
     }
 },
 {
     "model": "auth.permission",
     "pk": 26,
     "fields": {
-        "name": "Can change equipo",
+        "name": "Can change estadisticas jugador",
         "content_type": 7,
-        "codename": "change_equipo"
+        "codename": "change_estadisticasjugador"
     }
 },
 {
     "model": "auth.permission",
     "pk": 27,
     "fields": {
-        "name": "Can delete equipo",
+        "name": "Can delete estadisticas jugador",
         "content_type": 7,
-        "codename": "delete_equipo"
+        "codename": "delete_estadisticasjugador"
     }
 },
 {
     "model": "auth.permission",
     "pk": 28,
     "fields": {
-        "name": "Can view equipo",
+        "name": "Can view estadisticas jugador",
         "content_type": 7,
-        "codename": "view_equipo"
+        "codename": "view_estadisticasjugador"
     }
 },
 {
     "model": "auth.permission",
     "pk": 29,
     "fields": {
-        "name": "Can add estadio",
+        "name": "Can add user",
         "content_type": 8,
-        "codename": "add_estadio"
+        "codename": "add_usuario"
     }
 },
 {
     "model": "auth.permission",
     "pk": 30,
     "fields": {
-        "name": "Can change estadio",
+        "name": "Can change user",
         "content_type": 8,
-        "codename": "change_estadio"
+        "codename": "change_usuario"
     }
 },
 {
     "model": "auth.permission",
     "pk": 31,
     "fields": {
-        "name": "Can delete estadio",
+        "name": "Can delete user",
         "content_type": 8,
-        "codename": "delete_estadio"
+        "codename": "delete_usuario"
     }
 },
 {
     "model": "auth.permission",
     "pk": 32,
     "fields": {
-        "name": "Can view estadio",
+        "name": "Can view user",
         "content_type": 8,
-        "codename": "view_estadio"
+        "codename": "view_usuario"
     }
 },
 {
     "model": "auth.permission",
     "pk": 33,
     "fields": {
-        "name": "Can add estadisticas jugador",
+        "name": "Can add equipo",
         "content_type": 9,
-        "codename": "add_estadisticasjugador"
+        "codename": "add_equipo"
     }
 },
 {
     "model": "auth.permission",
     "pk": 34,
     "fields": {
-        "name": "Can change estadisticas jugador",
+        "name": "Can change equipo",
         "content_type": 9,
-        "codename": "change_estadisticasjugador"
+        "codename": "change_equipo"
     }
 },
 {
     "model": "auth.permission",
     "pk": 35,
     "fields": {
-        "name": "Can delete estadisticas jugador",
+        "name": "Can delete equipo",
         "content_type": 9,
-        "codename": "delete_estadisticasjugador"
+        "codename": "delete_equipo"
     }
 },
 {
     "model": "auth.permission",
     "pk": 36,
     "fields": {
-        "name": "Can view estadisticas jugador",
+        "name": "Can view equipo",
         "content_type": 9,
-        "codename": "view_estadisticasjugador"
+        "codename": "view_equipo"
     }
 },
 {
     "model": "auth.permission",
     "pk": 37,
     "fields": {
-        "name": "Can add torneo",
+        "name": "Can add jugador",
         "content_type": 10,
-        "codename": "add_torneo"
+        "codename": "add_jugador"
     }
 },
 {
     "model": "auth.permission",
     "pk": 38,
     "fields": {
-        "name": "Can change torneo",
+        "name": "Can change jugador",
         "content_type": 10,
-        "codename": "change_torneo"
+        "codename": "change_jugador"
     }
 },
 {
     "model": "auth.permission",
     "pk": 39,
     "fields": {
-        "name": "Can delete torneo",
+        "name": "Can delete jugador",
         "content_type": 10,
-        "codename": "delete_torneo"
+        "codename": "delete_jugador"
     }
 },
 {
     "model": "auth.permission",
     "pk": 40,
     "fields": {
-        "name": "Can view torneo",
+        "name": "Can view jugador",
         "content_type": 10,
-        "codename": "view_torneo"
+        "codename": "view_jugador"
     }
 },
 {
     "model": "auth.permission",
     "pk": 41,
     "fields": {
-        "name": "Can add jugador",
+        "name": "Can add equipo jugador",
         "content_type": 11,
-        "codename": "add_jugador"
+        "codename": "add_equipojugador"
     }
 },
 {
     "model": "auth.permission",
     "pk": 42,
     "fields": {
-        "name": "Can change jugador",
+        "name": "Can change equipo jugador",
         "content_type": 11,
-        "codename": "change_jugador"
+        "codename": "change_equipojugador"
     }
 },
 {
     "model": "auth.permission",
     "pk": 43,
     "fields": {
-        "name": "Can delete jugador",
+        "name": "Can delete equipo jugador",
         "content_type": 11,
-        "codename": "delete_jugador"
+        "codename": "delete_equipojugador"
     }
 },
 {
     "model": "auth.permission",
     "pk": 44,
     "fields": {
-        "name": "Can view jugador",
+        "name": "Can view equipo jugador",
         "content_type": 11,
-        "codename": "view_jugador"
+        "codename": "view_equipojugador"
     }
 },
 {
     "model": "auth.permission",
     "pk": 45,
     "fields": {
-        "name": "Can add equipo jugador",
+        "name": "Can add manager",
         "content_type": 12,
-        "codename": "add_equipojugador"
+        "codename": "add_manager"
     }
 },
 {
     "model": "auth.permission",
     "pk": 46,
     "fields": {
-        "name": "Can change equipo jugador",
+        "name": "Can change manager",
         "content_type": 12,
-        "codename": "change_equipojugador"
+        "codename": "change_manager"
     }
 },
 {
     "model": "auth.permission",
     "pk": 47,
     "fields": {
-        "name": "Can delete equipo jugador",
+        "name": "Can delete manager",
         "content_type": 12,
-        "codename": "delete_equipojugador"
+        "codename": "delete_manager"
     }
 },
 {
     "model": "auth.permission",
     "pk": 48,
     "fields": {
-        "name": "Can view equipo jugador",
+        "name": "Can view manager",
         "content_type": 12,
-        "codename": "view_equipojugador"
+        "codename": "view_manager"
     }
 },
 {
@@ -660,54 +660,108 @@
     "model": "auth.permission",
     "pk": 61,
     "fields": {
-        "name": "Can add premio",
+        "name": "Can add torneo",
         "content_type": 16,
-        "codename": "add_premio"
+        "codename": "add_torneo"
     }
 },
 {
     "model": "auth.permission",
     "pk": 62,
     "fields": {
-        "name": "Can change premio",
+        "name": "Can change torneo",
         "content_type": 16,
-        "codename": "change_premio"
+        "codename": "change_torneo"
     }
 },
 {
     "model": "auth.permission",
     "pk": 63,
     "fields": {
-        "name": "Can delete premio",
+        "name": "Can delete torneo",
         "content_type": 16,
-        "codename": "delete_premio"
+        "codename": "delete_torneo"
     }
 },
 {
     "model": "auth.permission",
     "pk": 64,
     "fields": {
-        "name": "Can view premio",
+        "name": "Can view torneo",
         "content_type": 16,
+        "codename": "view_torneo"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 65,
+    "fields": {
+        "name": "Can add premio",
+        "content_type": 17,
+        "codename": "add_premio"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 66,
+    "fields": {
+        "name": "Can change premio",
+        "content_type": 17,
+        "codename": "change_premio"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 67,
+    "fields": {
+        "name": "Can delete premio",
+        "content_type": 17,
+        "codename": "delete_premio"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 68,
+    "fields": {
+        "name": "Can view premio",
+        "content_type": 17,
         "codename": "view_premio"
     }
 },
 {
-    "model": "auth.user",
+    "model": "auth.group",
     "pk": 1,
     "fields": {
-        "password": "pbkdf2_sha256$870000$FqklrQR9DmvwRCqiXHHYOg$PlVbXHdSVLvv2CYHajeD+g2e9Ao5hXfFPIdq549PHGc=",
-        "last_login": "2025-11-23T07:57:35.825Z",
-        "is_superuser": true,
-        "username": "crd",
-        "first_name": "",
-        "last_name": "",
-        "email": "crd@gmail.com",
-        "is_staff": true,
-        "is_active": true,
-        "date_joined": "2025-11-23T07:57:26.892Z",
-        "groups": [],
-        "user_permissions": []
+        "name": "Arbitros",
+        "permissions": [
+            21,
+            22,
+            23,
+            49,
+            50,
+            51,
+            61,
+            62,
+            63
+        ]
+    }
+},
+{
+    "model": "auth.group",
+    "pk": 2,
+    "fields": {
+        "name": "Managers",
+        "permissions": [
+            33,
+            34,
+            35,
+            37,
+            38,
+            39,
+            57,
+            58,
+            59
+        ]
     }
 },
 {
@@ -738,21 +792,13 @@
     "model": "contenttypes.contenttype",
     "pk": 4,
     "fields": {
-        "app_label": "auth",
-        "model": "user"
-    }
-},
-{
-    "model": "contenttypes.contenttype",
-    "pk": 5,
-    "fields": {
         "app_label": "contenttypes",
         "model": "contenttype"
     }
 },
 {
     "model": "contenttypes.contenttype",
-    "pk": 6,
+    "pk": 5,
     "fields": {
         "app_label": "sessions",
         "model": "session"
@@ -760,15 +806,7 @@
 },
 {
     "model": "contenttypes.contenttype",
-    "pk": 7,
-    "fields": {
-        "app_label": "eventos_deportivos",
-        "model": "equipo"
-    }
-},
-{
-    "model": "contenttypes.contenttype",
-    "pk": 8,
+    "pk": 6,
     "fields": {
         "app_label": "eventos_deportivos",
         "model": "estadio"
@@ -776,7 +814,7 @@
 },
 {
     "model": "contenttypes.contenttype",
-    "pk": 9,
+    "pk": 7,
     "fields": {
         "app_label": "eventos_deportivos",
         "model": "estadisticasjugador"
@@ -784,15 +822,23 @@
 },
 {
     "model": "contenttypes.contenttype",
-    "pk": 10,
+    "pk": 8,
     "fields": {
         "app_label": "eventos_deportivos",
-        "model": "torneo"
+        "model": "usuario"
     }
 },
 {
     "model": "contenttypes.contenttype",
-    "pk": 11,
+    "pk": 9,
+    "fields": {
+        "app_label": "eventos_deportivos",
+        "model": "equipo"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 10,
     "fields": {
         "app_label": "eventos_deportivos",
         "model": "jugador"
@@ -800,10 +846,18 @@
 },
 {
     "model": "contenttypes.contenttype",
-    "pk": 12,
+    "pk": 11,
     "fields": {
         "app_label": "eventos_deportivos",
         "model": "equipojugador"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 12,
+    "fields": {
+        "app_label": "eventos_deportivos",
+        "model": "manager"
     }
 },
 {
@@ -835,85 +889,193 @@
     "pk": 16,
     "fields": {
         "app_label": "eventos_deportivos",
+        "model": "torneo"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 17,
+    "fields": {
+        "app_label": "eventos_deportivos",
         "model": "premio"
     }
 },
 {
     "model": "sessions.session",
-    "pk": "f1ikvjput8kmwdyieua9zf4cpdyqsurt",
+    "pk": "35fjkkjj0l4tc7hg3pb07ibuel17ozvd",
     "fields": {
-        "session_data": ".eJxVjMsOwiAQRf-FtSED5SEu3fcbyAwMUjU0Ke3K-O_apAvd3nPOfYmI21rj1nmJUxYXocTpdyNMD247yHdst1mmua3LRHJX5EG7HOfMz-vh_h1U7PVbYyrsnCkhACvjy6BYBySXyWrIxhEo6zV7GxwpB0lpfwZMAJCMHdiL9wff-Tcx:1vN4yV:g9M2RrdqN84pNFh0FNMD9GvCssqm5mbNJDbatVETnTc",
-        "expire_date": "2025-12-07T07:57:35.828Z"
+        "session_data": ".eJxVjDsOwyAQRO9CHSF-NpAyvc-AdoENTiKQjF1FuXtsyUXSjea9mTcLsK0lbD0vYU7syqRkl98SIT5zPUh6QL03Hltdlxn5ofCTdj61lF-30_07KNDLviavsjRWW-FtJhHVoKUAr0Y0wiXrCLNRhAMBISYpXEx7Hj1ocojo2OcLAOU4xg:1vUjhQ:AfSIG5yrjFC35EC8JqxHZot2qMvMQc-LFB3Wozlerz0",
+        "expire_date": "2025-12-28T10:51:36.185Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "a2cgsr3485gcvx4ksfnn33hgeez366bi",
+    "fields": {
+        "session_data": "eyJmZWNoYV9pbmljaW8iOiIxMS8xMi8yMDI1IDA5OjAyIn0:1vTbdb:EjH2oNiTfBbQUXYP_Mg0YVM1hn_Z5q6wbXBnepFlTcM",
+        "expire_date": "2025-12-25T08:02:59.733Z"
+    }
+},
+{
+    "model": "eventos_deportivos.usuario",
+    "pk": 11,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$36OobTrQQBD04pzGuUikJw$LML3I+UMMItuIIeynBQb3J18ZDw0bXTxuG/RMnkoeJc=",
+        "last_login": "2025-12-14T10:51:36.181Z",
+        "is_superuser": true,
+        "username": "carlos",
+        "first_name": "",
+        "last_name": "",
+        "email": "carlos@carlos.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2025-12-11T21:25:33Z",
+        "rol": 1,
+        "groups": [
+            1,
+            2
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "eventos_deportivos.usuario",
+    "pk": 12,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$C0v38uqVDLgcnEC3Y2bU3R$cgrLpLl1kUw83wV3q0rzKssBakdYAlgyvCUd1aAHVxY=",
+        "last_login": "2025-12-13T11:23:54.766Z",
+        "is_superuser": false,
+        "username": "Lola",
+        "first_name": "",
+        "last_name": "",
+        "email": "lola@hotmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-12-11T21:26:42.462Z",
+        "rol": 2,
+        "groups": [
+            1
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "eventos_deportivos.usuario",
+    "pk": 13,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$tzpgMJ8ZnUiOaPfPw4p60n$+a+cEw7fxQFObG0SaAKgRbhb3oN65TdNCXotodIc+fs=",
+        "last_login": "2025-12-14T09:31:26.700Z",
+        "is_superuser": false,
+        "username": "Marcos",
+        "first_name": "Marcos",
+        "last_name": "Gonzalez",
+        "email": "marcos@hotmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-12-11T21:30:10.528Z",
+        "rol": 1,
+        "groups": [
+            2
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "eventos_deportivos.usuario",
+    "pk": 14,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$JFZpnCHnftZ3avZkBGEGIx$1wGsp/Y4MlB/8SceXDelEkqucwElzgGdHtO3jd/Ceaw=",
+        "last_login": "2025-12-13T11:39:44.727Z",
+        "is_superuser": false,
+        "username": "Felipe",
+        "first_name": "Felipe",
+        "last_name": "Matorral",
+        "email": "felipe@hotmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-12-13T11:38:18.799Z",
+        "rol": 2,
+        "groups": [
+            1
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "eventos_deportivos.manager",
+    "pk": 5,
+    "fields": {
+        "usuario": 13
     }
 },
 {
     "model": "eventos_deportivos.estadisticasjugador",
     "pk": 1,
     "fields": {
-        "partidos_jugados": 62,
-        "goles": 50,
-        "asistencias": 8,
-        "tarjetas": 18
+        "partidos_jugados": 74,
+        "goles": 25,
+        "asistencias": 10,
+        "tarjetas": 13
     }
 },
 {
     "model": "eventos_deportivos.estadisticasjugador",
     "pk": 2,
     "fields": {
-        "partidos_jugados": 23,
-        "goles": 15,
-        "asistencias": 29,
-        "tarjetas": 3
+        "partidos_jugados": 72,
+        "goles": 48,
+        "asistencias": 26,
+        "tarjetas": 19
     }
 },
 {
     "model": "eventos_deportivos.estadisticasjugador",
     "pk": 3,
     "fields": {
-        "partidos_jugados": 59,
-        "goles": 42,
-        "asistencias": 31,
-        "tarjetas": 2
+        "partidos_jugados": 34,
+        "goles": 36,
+        "asistencias": 41,
+        "tarjetas": 3
     }
 },
 {
     "model": "eventos_deportivos.estadisticasjugador",
     "pk": 4,
     "fields": {
-        "partidos_jugados": 78,
-        "goles": 46,
-        "asistencias": 15,
-        "tarjetas": 17
+        "partidos_jugados": 70,
+        "goles": 33,
+        "asistencias": 17,
+        "tarjetas": 6
     }
 },
 {
     "model": "eventos_deportivos.estadisticasjugador",
     "pk": 5,
     "fields": {
-        "partidos_jugados": 27,
-        "goles": 44,
-        "asistencias": 17,
-        "tarjetas": 20
+        "partidos_jugados": 94,
+        "goles": 45,
+        "asistencias": 25,
+        "tarjetas": 11
     }
 },
 {
     "model": "eventos_deportivos.estadisticasjugador",
     "pk": 6,
     "fields": {
-        "partidos_jugados": 0,
-        "goles": 44,
-        "asistencias": 10,
-        "tarjetas": 4
+        "partidos_jugados": 48,
+        "goles": 6,
+        "asistencias": 28,
+        "tarjetas": 3
     }
 },
 {
     "model": "eventos_deportivos.estadisticasjugador",
     "pk": 7,
     "fields": {
-        "partidos_jugados": 85,
-        "goles": 34,
-        "asistencias": 31,
-        "tarjetas": 19
+        "partidos_jugados": 39,
+        "goles": 10,
+        "asistencias": 34,
+        "tarjetas": 5
     }
 },
 {
@@ -921,1519 +1083,553 @@
     "pk": 8,
     "fields": {
         "partidos_jugados": 16,
-        "goles": 36,
-        "asistencias": 7,
-        "tarjetas": 0
-    }
-},
-{
-    "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 9,
-    "fields": {
-        "partidos_jugados": 98,
-        "goles": 43,
-        "asistencias": 4,
-        "tarjetas": 14
-    }
-},
-{
-    "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 10,
-    "fields": {
-        "partidos_jugados": 20,
-        "goles": 23,
-        "asistencias": 5,
-        "tarjetas": 19
-    }
-},
-{
-    "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 11,
-    "fields": {
-        "partidos_jugados": 82,
-        "goles": 7,
-        "asistencias": 1,
-        "tarjetas": 0
-    }
-},
-{
-    "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 12,
-    "fields": {
-        "partidos_jugados": 92,
-        "goles": 39,
-        "asistencias": 45,
-        "tarjetas": 11
-    }
-},
-{
-    "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 13,
-    "fields": {
-        "partidos_jugados": 30,
-        "goles": 5,
-        "asistencias": 31,
-        "tarjetas": 13
-    }
-},
-{
-    "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 14,
-    "fields": {
-        "partidos_jugados": 75,
-        "goles": 46,
-        "asistencias": 9,
-        "tarjetas": 18
-    }
-},
-{
-    "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 15,
-    "fields": {
-        "partidos_jugados": 88,
-        "goles": 12,
-        "asistencias": 28,
-        "tarjetas": 10
-    }
-},
-{
-    "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 16,
-    "fields": {
-        "partidos_jugados": 2,
-        "goles": 39,
-        "asistencias": 45,
-        "tarjetas": 9
-    }
-},
-{
-    "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 17,
-    "fields": {
-        "partidos_jugados": 26,
-        "goles": 3,
-        "asistencias": 11,
-        "tarjetas": 4
-    }
-},
-{
-    "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 18,
-    "fields": {
-        "partidos_jugados": 53,
-        "goles": 30,
-        "asistencias": 45,
-        "tarjetas": 17
-    }
-},
-{
-    "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 19,
-    "fields": {
-        "partidos_jugados": 91,
-        "goles": 7,
-        "asistencias": 20,
-        "tarjetas": 5
-    }
-},
-{
-    "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 20,
-    "fields": {
-        "partidos_jugados": 69,
-        "goles": 11,
-        "asistencias": 44,
-        "tarjetas": 16
-    }
-},
-{
-    "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 21,
-    "fields": {
-        "partidos_jugados": 6,
-        "goles": 13,
-        "asistencias": 38,
-        "tarjetas": 7
-    }
-},
-{
-    "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 22,
-    "fields": {
-        "partidos_jugados": 79,
-        "goles": 20,
-        "asistencias": 39,
-        "tarjetas": 4
-    }
-},
-{
-    "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 23,
-    "fields": {
-        "partidos_jugados": 84,
-        "goles": 16,
-        "asistencias": 23,
-        "tarjetas": 6
-    }
-},
-{
-    "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 24,
-    "fields": {
-        "partidos_jugados": 57,
-        "goles": 24,
-        "asistencias": 46,
-        "tarjetas": 17
-    }
-},
-{
-    "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 25,
-    "fields": {
-        "partidos_jugados": 74,
-        "goles": 13,
-        "asistencias": 35,
-        "tarjetas": 12
-    }
-},
-{
-    "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 26,
-    "fields": {
-        "partidos_jugados": 47,
-        "goles": 43,
-        "asistencias": 35,
-        "tarjetas": 5
-    }
-},
-{
-    "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 27,
-    "fields": {
-        "partidos_jugados": 78,
-        "goles": 47,
-        "asistencias": 7,
-        "tarjetas": 1
-    }
-},
-{
-    "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 28,
-    "fields": {
-        "partidos_jugados": 24,
-        "goles": 49,
-        "asistencias": 6,
+        "goles": 10,
+        "asistencias": 16,
         "tarjetas": 20
     }
 },
 {
     "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 29,
+    "pk": 9,
     "fields": {
-        "partidos_jugados": 87,
-        "goles": 39,
-        "asistencias": 10,
+        "partidos_jugados": 82,
+        "goles": 25,
+        "asistencias": 3,
         "tarjetas": 5
     }
 },
 {
     "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 30,
+    "pk": 10,
     "fields": {
-        "partidos_jugados": 57,
-        "goles": 18,
-        "asistencias": 19,
-        "tarjetas": 0
+        "partidos_jugados": 60,
+        "goles": 48,
+        "asistencias": 12,
+        "tarjetas": 7
     }
 },
 {
     "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 31,
+    "pk": 11,
     "fields": {
-        "partidos_jugados": 1,
-        "goles": 1,
-        "asistencias": 1,
+        "partidos_jugados": 7,
+        "goles": 8,
+        "asistencias": 3,
         "tarjetas": 1
     }
 },
 {
     "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 32,
+    "pk": 12,
     "fields": {
         "partidos_jugados": 1,
-        "goles": 1,
-        "asistencias": 0,
-        "tarjetas": 1
-    }
-},
-{
-    "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 33,
-    "fields": {
-        "partidos_jugados": 3,
-        "goles": 2,
-        "asistencias": 4,
-        "tarjetas": 5
-    }
-},
-{
-    "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 34,
-    "fields": {
-        "partidos_jugados": 1,
-        "goles": 1,
-        "asistencias": 0,
-        "tarjetas": 1
-    }
-},
-{
-    "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 35,
-    "fields": {
-        "partidos_jugados": 3,
-        "goles": 2,
-        "asistencias": 4,
-        "tarjetas": 5
-    }
-},
-{
-    "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 36,
-    "fields": {
-        "partidos_jugados": 5,
-        "goles": 1,
-        "asistencias": 2,
+        "goles": 5,
+        "asistencias": 76,
         "tarjetas": 3
     }
 },
 {
     "model": "eventos_deportivos.estadisticasjugador",
-    "pk": 37,
+    "pk": 13,
     "fields": {
-        "partidos_jugados": 2,
-        "goles": 2,
-        "asistencias": 2,
-        "tarjetas": 4
+        "partidos_jugados": 1,
+        "goles": 5,
+        "asistencias": 76,
+        "tarjetas": 3
+    }
+},
+{
+    "model": "eventos_deportivos.estadisticasjugador",
+    "pk": 14,
+    "fields": {
+        "partidos_jugados": 1,
+        "goles": 5,
+        "asistencias": 76,
+        "tarjetas": 3
+    }
+},
+{
+    "model": "eventos_deportivos.estadisticasjugador",
+    "pk": 15,
+    "fields": {
+        "partidos_jugados": 1,
+        "goles": 5,
+        "asistencias": 76,
+        "tarjetas": 3
+    }
+},
+{
+    "model": "eventos_deportivos.estadisticasjugador",
+    "pk": 16,
+    "fields": {
+        "partidos_jugados": 1,
+        "goles": 4,
+        "asistencias": 6,
+        "tarjetas": 0
+    }
+},
+{
+    "model": "eventos_deportivos.estadisticasjugador",
+    "pk": 17,
+    "fields": {
+        "partidos_jugados": 1,
+        "goles": 4,
+        "asistencias": 6,
+        "tarjetas": 0
+    }
+},
+{
+    "model": "eventos_deportivos.estadisticasjugador",
+    "pk": 18,
+    "fields": {
+        "partidos_jugados": 1,
+        "goles": 4,
+        "asistencias": 6,
+        "tarjetas": 0
+    }
+},
+{
+    "model": "eventos_deportivos.estadisticasjugador",
+    "pk": 19,
+    "fields": {
+        "partidos_jugados": 1,
+        "goles": 4,
+        "asistencias": 6,
+        "tarjetas": 0
+    }
+},
+{
+    "model": "eventos_deportivos.estadisticasjugador",
+    "pk": 20,
+    "fields": {
+        "partidos_jugados": 1,
+        "goles": 4,
+        "asistencias": 6,
+        "tarjetas": 0
+    }
+},
+{
+    "model": "eventos_deportivos.estadisticasjugador",
+    "pk": 21,
+    "fields": {
+        "partidos_jugados": 1,
+        "goles": 4,
+        "asistencias": 6,
+        "tarjetas": 0
+    }
+},
+{
+    "model": "eventos_deportivos.estadisticasjugador",
+    "pk": 22,
+    "fields": {
+        "partidos_jugados": 1,
+        "goles": 4,
+        "asistencias": 6,
+        "tarjetas": 0
+    }
+},
+{
+    "model": "eventos_deportivos.estadisticasjugador",
+    "pk": 23,
+    "fields": {
+        "partidos_jugados": 1,
+        "goles": 4,
+        "asistencias": 6,
+        "tarjetas": 0
+    }
+},
+{
+    "model": "eventos_deportivos.estadisticasjugador",
+    "pk": 24,
+    "fields": {
+        "partidos_jugados": 1,
+        "goles": 4,
+        "asistencias": 6,
+        "tarjetas": 0
     }
 },
 {
     "model": "eventos_deportivos.jugador",
     "pk": 1,
     "fields": {
-        "nombre": "Denise",
-        "apellido": "Garza",
-        "fecha_nacimiento": "1995-06-21",
-        "posicion": "DEL",
-        "estadisticas": 1
+        "nombre": "Melissa",
+        "apellido": "Frye",
+        "fecha_nacimiento": "2001-12-02",
+        "posicion": "POR",
+        "estadisticas": 1,
+        "creado_por": null
+    }
+},
+{
+    "model": "eventos_deportivos.jugador",
+    "pk": 2,
+    "fields": {
+        "nombre": "Julie",
+        "apellido": "May",
+        "fecha_nacimiento": "1989-04-06",
+        "posicion": "DEF",
+        "estadisticas": 2,
+        "creado_por": null
     }
 },
 {
     "model": "eventos_deportivos.jugador",
     "pk": 3,
     "fields": {
-        "nombre": "Brooke",
-        "apellido": "Brooks",
-        "fecha_nacimiento": "2001-04-27",
-        "posicion": "DEL",
-        "estadisticas": 3
+        "nombre": "James",
+        "apellido": "Hubbard",
+        "fecha_nacimiento": "1993-12-14",
+        "posicion": "MED",
+        "estadisticas": 3,
+        "creado_por": null
     }
 },
 {
     "model": "eventos_deportivos.jugador",
     "pk": 4,
     "fields": {
-        "nombre": "Corey",
-        "apellido": "Allen",
-        "fecha_nacimiento": "1989-02-22",
-        "posicion": "MED",
-        "estadisticas": 4
+        "nombre": "Holly",
+        "apellido": "Gonzales",
+        "fecha_nacimiento": "1991-12-02",
+        "posicion": "DEF",
+        "estadisticas": 4,
+        "creado_por": null
+    }
+},
+{
+    "model": "eventos_deportivos.jugador",
+    "pk": 5,
+    "fields": {
+        "nombre": "Holly",
+        "apellido": "Howard",
+        "fecha_nacimiento": "1991-04-28",
+        "posicion": "DEL",
+        "estadisticas": 5,
+        "creado_por": null
     }
 },
 {
     "model": "eventos_deportivos.jugador",
     "pk": 6,
     "fields": {
-        "nombre": "Ricardo",
-        "apellido": "Zavala",
-        "fecha_nacimiento": "2001-07-30",
-        "posicion": "DEF",
-        "estadisticas": 6
+        "nombre": "Christopher",
+        "apellido": "Johnson",
+        "fecha_nacimiento": "1999-10-23",
+        "posicion": "MED",
+        "estadisticas": 6,
+        "creado_por": null
+    }
+},
+{
+    "model": "eventos_deportivos.jugador",
+    "pk": 7,
+    "fields": {
+        "nombre": "Nicole",
+        "apellido": "Pollard",
+        "fecha_nacimiento": "1984-12-31",
+        "posicion": "POR",
+        "estadisticas": 7,
+        "creado_por": null
     }
 },
 {
     "model": "eventos_deportivos.jugador",
     "pk": 8,
     "fields": {
-        "nombre": "Rachel",
-        "apellido": "Love",
-        "fecha_nacimiento": "1998-11-21",
-        "posicion": "POR",
-        "estadisticas": 8
+        "nombre": "Shelly",
+        "apellido": "Williams",
+        "fecha_nacimiento": "2006-02-16",
+        "posicion": "DEF",
+        "estadisticas": 8,
+        "creado_por": null
     }
 },
 {
     "model": "eventos_deportivos.jugador",
     "pk": 9,
     "fields": {
-        "nombre": "Parker",
-        "apellido": "Howard",
-        "fecha_nacimiento": "1989-10-24",
-        "posicion": "MED",
-        "estadisticas": 9
+        "nombre": "Robert",
+        "apellido": "Johnson",
+        "fecha_nacimiento": "1991-02-03",
+        "posicion": "POR",
+        "estadisticas": 9,
+        "creado_por": null
     }
 },
 {
     "model": "eventos_deportivos.jugador",
     "pk": 10,
     "fields": {
-        "nombre": "Michael",
-        "apellido": "Sanchez",
-        "fecha_nacimiento": "2007-03-27",
-        "posicion": "MED",
-        "estadisticas": 10
+        "nombre": "Daniel",
+        "apellido": "Clark",
+        "fecha_nacimiento": "1995-12-19",
+        "posicion": "POR",
+        "estadisticas": 10,
+        "creado_por": null
     }
 },
 {
     "model": "eventos_deportivos.jugador",
     "pk": 11,
     "fields": {
-        "nombre": "Jeanette",
-        "apellido": "Gibson",
-        "fecha_nacimiento": "2005-10-16",
-        "posicion": "POR",
-        "estadisticas": 11
-    }
-},
-{
-    "model": "eventos_deportivos.jugador",
-    "pk": 12,
-    "fields": {
-        "nombre": "Mark",
-        "apellido": "Wong",
-        "fecha_nacimiento": "2000-01-10",
+        "nombre": "Tifani",
+        "apellido": "Ramirez",
+        "fecha_nacimiento": "2002-03-07",
         "posicion": "DEL",
-        "estadisticas": 12
+        "estadisticas": 24,
+        "creado_por": null
     }
 },
 {
-    "model": "eventos_deportivos.jugador",
-    "pk": 13,
+    "model": "eventos_deportivos.equipo",
+    "pk": 1,
     "fields": {
-        "nombre": "James",
-        "apellido": "Holmes",
-        "fecha_nacimiento": "1997-05-02",
-        "posicion": "POR",
-        "estadisticas": 13
-    }
-},
-{
-    "model": "eventos_deportivos.jugador",
-    "pk": 14,
-    "fields": {
-        "nombre": "Nicole",
-        "apellido": "Moon",
-        "fecha_nacimiento": "1995-11-08",
-        "posicion": "MED",
-        "estadisticas": 14
-    }
-},
-{
-    "model": "eventos_deportivos.jugador",
-    "pk": 15,
-    "fields": {
-        "nombre": "Jared",
-        "apellido": "Wolfe",
-        "fecha_nacimiento": "2000-02-13",
-        "posicion": "DEL",
-        "estadisticas": 15
-    }
-},
-{
-    "model": "eventos_deportivos.jugador",
-    "pk": 16,
-    "fields": {
-        "nombre": "Brandon",
-        "apellido": "Rodriguez",
-        "fecha_nacimiento": "1993-04-11",
-        "posicion": "DEL",
-        "estadisticas": 16
-    }
-},
-{
-    "model": "eventos_deportivos.jugador",
-    "pk": 17,
-    "fields": {
-        "nombre": "Lindsay",
-        "apellido": "Obrien",
-        "fecha_nacimiento": "1987-07-21",
-        "posicion": "DEF",
-        "estadisticas": 17
-    }
-},
-{
-    "model": "eventos_deportivos.jugador",
-    "pk": 18,
-    "fields": {
-        "nombre": "Jonathan",
-        "apellido": "Simmons",
-        "fecha_nacimiento": "1995-08-22",
-        "posicion": "POR",
-        "estadisticas": 18
-    }
-},
-{
-    "model": "eventos_deportivos.jugador",
-    "pk": 19,
-    "fields": {
-        "nombre": "Justin",
-        "apellido": "Vasquez",
-        "fecha_nacimiento": "1989-06-06",
-        "posicion": "POR",
-        "estadisticas": 19
-    }
-},
-{
-    "model": "eventos_deportivos.jugador",
-    "pk": 20,
-    "fields": {
-        "nombre": "Gina",
-        "apellido": "Pitts",
-        "fecha_nacimiento": "1987-06-25",
-        "posicion": "POR",
-        "estadisticas": 20
-    }
-},
-{
-    "model": "eventos_deportivos.jugador",
-    "pk": 21,
-    "fields": {
-        "nombre": "Jennifer",
-        "apellido": "Frazier",
-        "fecha_nacimiento": "2003-08-23",
-        "posicion": "POR",
-        "estadisticas": 21
-    }
-},
-{
-    "model": "eventos_deportivos.jugador",
-    "pk": 22,
-    "fields": {
-        "nombre": "Penny",
-        "apellido": "Burns",
-        "fecha_nacimiento": "2003-07-12",
-        "posicion": "DEL",
-        "estadisticas": 22
-    }
-},
-{
-    "model": "eventos_deportivos.jugador",
-    "pk": 25,
-    "fields": {
-        "nombre": "John",
-        "apellido": "Miller",
-        "fecha_nacimiento": "1987-10-16",
-        "posicion": "DEF",
-        "estadisticas": 25
-    }
-},
-{
-    "model": "eventos_deportivos.jugador",
-    "pk": 26,
-    "fields": {
-        "nombre": "Derrick",
-        "apellido": "Mckinney",
-        "fecha_nacimiento": "1988-06-26",
-        "posicion": "POR",
-        "estadisticas": 26
-    }
-},
-{
-    "model": "eventos_deportivos.jugador",
-    "pk": 27,
-    "fields": {
-        "nombre": "Alexander",
-        "apellido": "Gutierrez",
-        "fecha_nacimiento": "1996-11-09",
-        "posicion": "POR",
-        "estadisticas": 27
-    }
-},
-{
-    "model": "eventos_deportivos.jugador",
-    "pk": 28,
-    "fields": {
-        "nombre": "Lindsey",
-        "apellido": "Young",
-        "fecha_nacimiento": "1987-10-01",
-        "posicion": "DEL",
-        "estadisticas": 28
-    }
-},
-{
-    "model": "eventos_deportivos.jugador",
-    "pk": 29,
-    "fields": {
-        "nombre": "Michael",
-        "apellido": "Taylor",
-        "fecha_nacimiento": "2005-07-14",
-        "posicion": "POR",
-        "estadisticas": 29
-    }
-},
-{
-    "model": "eventos_deportivos.jugador",
-    "pk": 30,
-    "fields": {
-        "nombre": "Michelle",
-        "apellido": "Rangel",
-        "fecha_nacimiento": "2003-09-17",
-        "posicion": "POR",
-        "estadisticas": 30
-    }
-},
-{
-    "model": "eventos_deportivos.jugador",
-    "pk": 35,
-    "fields": {
-        "nombre": "Alberto",
-        "apellido": "Melto",
-        "fecha_nacimiento": "1996-12-31",
-        "posicion": "DEF",
-        "estadisticas": 35
-    }
-},
-{
-    "model": "eventos_deportivos.jugador",
-    "pk": 36,
-    "fields": {
-        "nombre": "Alberto",
-        "apellido": "presto",
-        "fecha_nacimiento": "1989-03-09",
-        "posicion": "POR",
-        "estadisticas": 36
-    }
-},
-{
-    "model": "eventos_deportivos.jugador",
-    "pk": 37,
-    "fields": {
-        "nombre": "Pepe",
-        "apellido": "Melto",
-        "fecha_nacimiento": "2025-11-01",
-        "posicion": "DEF",
-        "estadisticas": 37
+        "nombre": "Mathews LLC",
+        "ciudad": "Milesmouth",
+        "fundacion": "1991-03-19",
+        "activo": true,
+        "estadio_principal": 1,
+        "creado_por": null
     }
 },
 {
     "model": "eventos_deportivos.equipo",
     "pk": 2,
     "fields": {
-        "nombre": "Phillips, Richardson and Cooper",
-        "ciudad": "Gabrielleton",
-        "fundacion": "1985-04-26",
+        "nombre": "Spencer-Phillips",
+        "ciudad": "Robinmouth",
+        "fundacion": "1975-05-24",
         "activo": true,
-        "estadio_principal": null
+        "estadio_principal": 2,
+        "creado_por": null
     }
 },
 {
     "model": "eventos_deportivos.equipo",
     "pk": 3,
     "fields": {
-        "nombre": "Young, Cruz and Donovan",
-        "ciudad": "Baileybury",
-        "fundacion": "2000-10-03",
-        "activo": false,
-        "estadio_principal": null
+        "nombre": "Richardson, Waters and Hunter",
+        "ciudad": "Prestonhaven",
+        "fundacion": "1981-06-24",
+        "activo": true,
+        "estadio_principal": 3,
+        "creado_por": null
     }
 },
 {
     "model": "eventos_deportivos.equipo",
     "pk": 4,
     "fields": {
-        "nombre": "Moore, Fernandez and White",
-        "ciudad": "North Scottview",
-        "fundacion": "1993-12-02",
-        "activo": false,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 5,
-    "fields": {
-        "nombre": "Martin, Garrison and Jones",
-        "ciudad": "West Connor",
-        "fundacion": "2008-03-02",
-        "activo": false,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 6,
-    "fields": {
-        "nombre": "Vang, Bowman and Smith",
-        "ciudad": "Myersfort",
-        "fundacion": "2022-12-09",
-        "activo": false,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 7,
-    "fields": {
-        "nombre": "Mcfarland and Sons",
-        "ciudad": "Deannaview",
-        "fundacion": "2005-04-20",
+        "nombre": "ZooProtector",
+        "ciudad": "Londres",
+        "fundacion": "2025-12-14",
         "activo": true,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 8,
-    "fields": {
-        "nombre": "Macdonald, Gardner and Collins",
-        "ciudad": "Lake Nicolestad",
-        "fundacion": "2019-12-22",
-        "activo": true,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 9,
-    "fields": {
-        "nombre": "Taylor-Thompson",
-        "ciudad": "West Donald",
-        "fundacion": "1981-06-29",
-        "activo": true,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 10,
-    "fields": {
-        "nombre": "Jones, Graham and Matthews",
-        "ciudad": "Carolstad",
-        "fundacion": "1987-12-26",
-        "activo": false,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 11,
-    "fields": {
-        "nombre": "Barrett LLC",
-        "ciudad": "Reeveschester",
-        "fundacion": "2018-03-01",
-        "activo": false,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 12,
-    "fields": {
-        "nombre": "Wood, Price and Robbins",
-        "ciudad": "Smithchester",
-        "fundacion": "2025-10-31",
-        "activo": true,
-        "estadio_principal": 12
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 13,
-    "fields": {
-        "nombre": "Garcia-Gonzalez",
-        "ciudad": "North Benjamin",
-        "fundacion": "2012-09-29",
-        "activo": true,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 14,
-    "fields": {
-        "nombre": "Cox, Lopez and Morse",
-        "ciudad": "Maxwellfort",
-        "fundacion": "1977-01-14",
-        "activo": true,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 15,
-    "fields": {
-        "nombre": "Weber, Miller and Roberts",
-        "ciudad": "North Ashleystad",
-        "fundacion": "1988-11-17",
-        "activo": false,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 16,
-    "fields": {
-        "nombre": "Jackson-Smith",
-        "ciudad": "New Debbie",
-        "fundacion": "1986-08-31",
-        "activo": true,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 17,
-    "fields": {
-        "nombre": "Huffman and Sons",
-        "ciudad": "West Courtney",
-        "fundacion": "2024-08-28",
-        "activo": true,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 18,
-    "fields": {
-        "nombre": "Dennis PLC",
-        "ciudad": "Lake Danielle",
-        "fundacion": "2008-02-22",
-        "activo": false,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 19,
-    "fields": {
-        "nombre": "Peterson-Mccarty",
-        "ciudad": "Rickyfort",
-        "fundacion": "2024-01-05",
-        "activo": false,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 20,
-    "fields": {
-        "nombre": "Francis-Stewart",
-        "ciudad": "North Carmen",
-        "fundacion": "1990-04-20",
-        "activo": false,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 21,
-    "fields": {
-        "nombre": "Hodges-Odom",
-        "ciudad": "East Susan",
-        "fundacion": "1987-08-28",
-        "activo": true,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 22,
-    "fields": {
-        "nombre": "Kelly, Huerta and Jacobs",
-        "ciudad": "Robertland",
-        "fundacion": "2014-04-23",
-        "activo": true,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 23,
-    "fields": {
-        "nombre": "Wall Ltd",
-        "ciudad": "Grantborough",
-        "fundacion": "1978-04-22",
-        "activo": true,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 24,
-    "fields": {
-        "nombre": "Hunter Group",
-        "ciudad": "Coxborough",
-        "fundacion": "2012-05-18",
-        "activo": false,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 25,
-    "fields": {
-        "nombre": "Sims LLC",
-        "ciudad": "South Mallorymouth",
-        "fundacion": "2012-11-23",
-        "activo": false,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 26,
-    "fields": {
-        "nombre": "Butler-Bowen",
-        "ciudad": "Lake Karen",
-        "fundacion": "1977-04-03",
-        "activo": true,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 27,
-    "fields": {
-        "nombre": "Barnes Ltd",
-        "ciudad": "Mendozaport",
-        "fundacion": "1992-05-01",
-        "activo": false,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 28,
-    "fields": {
-        "nombre": "Scott, Cameron and Mccarthy",
-        "ciudad": "East Renee",
-        "fundacion": "2012-01-12",
-        "activo": false,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 29,
-    "fields": {
-        "nombre": "Mcneil-Huynh",
-        "ciudad": "Alexandrachester",
-        "fundacion": "1988-09-17",
-        "activo": false,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 30,
-    "fields": {
-        "nombre": "Perkins, Colon and Baker",
-        "ciudad": "Whitestad",
-        "fundacion": "2022-08-05",
-        "activo": true,
-        "estadio_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 36,
-    "fields": {
-        "nombre": "Sevilla",
-        "ciudad": "Sevilla",
-        "fundacion": "2025-11-11",
-        "activo": true,
-        "estadio_principal": 7
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 37,
-    "fields": {
-        "nombre": "Betis",
-        "ciudad": "Sevilla",
-        "fundacion": "2023-02-16",
-        "activo": true,
-        "estadio_principal": 3
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 38,
-    "fields": {
-        "nombre": "Potatos",
-        "ciudad": "Sevilla",
-        "fundacion": "2025-11-29",
-        "activo": true,
-        "estadio_principal": 8
-    }
-},
-{
-    "model": "eventos_deportivos.equipo",
-    "pk": 39,
-    "fields": {
-        "nombre": "Pipos",
-        "ciudad": "Sevilla",
-        "fundacion": "2025-11-22",
-        "activo": false,
-        "estadio_principal": 14
+        "estadio_principal": 4,
+        "creado_por": null
     }
 },
 {
     "model": "eventos_deportivos.equipojugador",
     "pk": 1,
     "fields": {
-        "jugador": 1,
-        "equipo": 10,
-        "fecha_ingreso": "2021-08-23",
-        "capitan": true
+        "jugador": 2,
+        "equipo": 1,
+        "fecha_ingreso": "2020-12-11",
+        "capitan": false
+    }
+},
+{
+    "model": "eventos_deportivos.equipojugador",
+    "pk": 2,
+    "fields": {
+        "jugador": 7,
+        "equipo": 1,
+        "fecha_ingreso": "2023-01-07",
+        "capitan": false
     }
 },
 {
     "model": "eventos_deportivos.equipojugador",
     "pk": 3,
     "fields": {
-        "jugador": 3,
-        "equipo": 5,
-        "fecha_ingreso": "2022-04-17",
-        "capitan": false
+        "jugador": 1,
+        "equipo": 1,
+        "fecha_ingreso": "2023-04-19",
+        "capitan": true
     }
 },
 {
     "model": "eventos_deportivos.equipojugador",
     "pk": 4,
     "fields": {
-        "jugador": 4,
-        "equipo": 7,
-        "fecha_ingreso": "2025-04-11",
+        "jugador": 1,
+        "equipo": 2,
+        "fecha_ingreso": "2021-09-20",
+        "capitan": true
+    }
+},
+{
+    "model": "eventos_deportivos.equipojugador",
+    "pk": 5,
+    "fields": {
+        "jugador": 6,
+        "equipo": 2,
+        "fecha_ingreso": "2024-05-11",
         "capitan": false
     }
 },
 {
     "model": "eventos_deportivos.equipojugador",
     "pk": 6,
-    "fields": {
-        "jugador": 6,
-        "equipo": 8,
-        "fecha_ingreso": "2022-07-02",
-        "capitan": true
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 8,
     "fields": {
         "jugador": 8,
         "equipo": 2,
-        "fecha_ingreso": "2023-11-10",
+        "fecha_ingreso": "2024-12-10",
         "capitan": false
     }
 },
 {
     "model": "eventos_deportivos.equipojugador",
-    "pk": 9,
-    "fields": {
-        "jugador": 9,
-        "equipo": 5,
-        "fecha_ingreso": "2023-11-08",
-        "capitan": true
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 10,
-    "fields": {
-        "jugador": 10,
-        "equipo": 4,
-        "fecha_ingreso": "2024-03-17",
-        "capitan": true
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 11,
-    "fields": {
-        "jugador": 11,
-        "equipo": 19,
-        "fecha_ingreso": "2024-08-23",
-        "capitan": false
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 12,
-    "fields": {
-        "jugador": 12,
-        "equipo": 18,
-        "fecha_ingreso": "2025-05-30",
-        "capitan": false
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 13,
-    "fields": {
-        "jugador": 13,
-        "equipo": 18,
-        "fecha_ingreso": "2024-09-02",
-        "capitan": true
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 14,
-    "fields": {
-        "jugador": 14,
-        "equipo": 13,
-        "fecha_ingreso": "2023-06-21",
-        "capitan": false
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 15,
-    "fields": {
-        "jugador": 15,
-        "equipo": 19,
-        "fecha_ingreso": "2020-12-16",
-        "capitan": false
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 16,
-    "fields": {
-        "jugador": 16,
-        "equipo": 14,
-        "fecha_ingreso": "2025-06-19",
-        "capitan": true
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 17,
-    "fields": {
-        "jugador": 17,
-        "equipo": 19,
-        "fecha_ingreso": "2024-04-26",
-        "capitan": true
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 18,
-    "fields": {
-        "jugador": 18,
-        "equipo": 20,
-        "fecha_ingreso": "2025-05-29",
-        "capitan": false
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 19,
-    "fields": {
-        "jugador": 19,
-        "equipo": 16,
-        "fecha_ingreso": "2022-10-31",
-        "capitan": true
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 20,
-    "fields": {
-        "jugador": 20,
-        "equipo": 12,
-        "fecha_ingreso": "2022-08-29",
-        "capitan": false
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 21,
-    "fields": {
-        "jugador": 21,
-        "equipo": 30,
-        "fecha_ingreso": "2022-07-05",
-        "capitan": true
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 22,
-    "fields": {
-        "jugador": 22,
-        "equipo": 25,
-        "fecha_ingreso": "2022-11-16",
-        "capitan": true
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 25,
-    "fields": {
-        "jugador": 25,
-        "equipo": 29,
-        "fecha_ingreso": "2021-09-28",
-        "capitan": false
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 26,
-    "fields": {
-        "jugador": 26,
-        "equipo": 23,
-        "fecha_ingreso": "2025-01-13",
-        "capitan": false
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 27,
-    "fields": {
-        "jugador": 27,
-        "equipo": 25,
-        "fecha_ingreso": "2025-08-03",
-        "capitan": true
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 28,
-    "fields": {
-        "jugador": 28,
-        "equipo": 30,
-        "fecha_ingreso": "2022-06-19",
-        "capitan": true
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 29,
-    "fields": {
-        "jugador": 29,
-        "equipo": 27,
-        "fecha_ingreso": "2024-02-23",
-        "capitan": false
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 30,
-    "fields": {
-        "jugador": 30,
-        "equipo": 28,
-        "fecha_ingreso": "2022-05-14",
-        "capitan": true
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 39,
-    "fields": {
-        "jugador": 3,
-        "equipo": 36,
-        "fecha_ingreso": "2025-11-29",
-        "capitan": false
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 40,
-    "fields": {
-        "jugador": 4,
-        "equipo": 36,
-        "fecha_ingreso": "2025-11-29",
-        "capitan": false
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 41,
-    "fields": {
-        "jugador": 6,
-        "equipo": 36,
-        "fecha_ingreso": "2025-11-29",
-        "capitan": false
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 42,
-    "fields": {
-        "jugador": 8,
-        "equipo": 37,
-        "fecha_ingreso": "2025-11-29",
-        "capitan": false
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 43,
-    "fields": {
-        "jugador": 9,
-        "equipo": 37,
-        "fecha_ingreso": "2025-11-29",
-        "capitan": false
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 44,
-    "fields": {
-        "jugador": 10,
-        "equipo": 37,
-        "fecha_ingreso": "2025-11-29",
-        "capitan": false
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 45,
-    "fields": {
-        "jugador": 11,
-        "equipo": 37,
-        "fecha_ingreso": "2025-11-29",
-        "capitan": false
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 46,
-    "fields": {
-        "jugador": 1,
-        "equipo": 38,
-        "fecha_ingreso": "2025-11-29",
-        "capitan": false
-    }
-},
-{
-    "model": "eventos_deportivos.equipojugador",
-    "pk": 48,
-    "fields": {
-        "jugador": 21,
-        "equipo": 39,
-        "fecha_ingreso": "2025-11-29",
-        "capitan": false
-    }
-},
-{
-    "model": "eventos_deportivos.torneo",
-    "pk": 1,
-    "fields": {
-        "nombre": "fly Cup",
-        "pais": "Sierra Leone",
-        "fecha_inicio": "2025-02-09",
-        "fecha_fin": "2025-10-30",
-        "arbitro_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.torneo",
-    "pk": 2,
-    "fields": {
-        "nombre": "prove Cup",
-        "pais": "Western Sahara",
-        "fecha_inicio": "2025-01-27",
-        "fecha_fin": "2026-02-09",
-        "arbitro_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.torneo",
-    "pk": 3,
-    "fields": {
-        "nombre": "structure Cup",
-        "pais": "Slovenia",
-        "fecha_inicio": "2025-08-17",
-        "fecha_fin": "2026-06-20",
-        "arbitro_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.torneo",
-    "pk": 4,
-    "fields": {
-        "nombre": "imagine Cup",
-        "pais": "Brazil",
-        "fecha_inicio": "2025-09-15",
-        "fecha_fin": "2026-07-29",
-        "arbitro_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.torneo",
-    "pk": 5,
-    "fields": {
-        "nombre": "seek Cup",
-        "pais": "Kiribati",
-        "fecha_inicio": "2025-02-28",
-        "fecha_fin": "2026-07-27",
-        "arbitro_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.torneo",
-    "pk": 6,
-    "fields": {
-        "nombre": "small Cup",
-        "pais": "Ukraine",
-        "fecha_inicio": "2025-03-12",
-        "fecha_fin": "2026-08-29",
-        "arbitro_principal": null
-    }
-},
-{
-    "model": "eventos_deportivos.torneo",
     "pk": 7,
     "fields": {
-        "nombre": "tree Cup",
-        "pais": "Bhutan",
-        "fecha_inicio": "2025-12-02",
-        "fecha_fin": "2026-02-28",
-        "arbitro_principal": 12
+        "jugador": 5,
+        "equipo": 3,
+        "fecha_ingreso": "2021-08-15",
+        "capitan": true
     }
 },
 {
-    "model": "eventos_deportivos.torneo",
+    "model": "eventos_deportivos.equipojugador",
     "pk": 8,
     "fields": {
-        "nombre": "think Cup",
-        "pais": "Lithuania",
-        "fecha_inicio": "2025-04-18",
-        "fecha_fin": "2026-03-17",
-        "arbitro_principal": null
+        "jugador": 8,
+        "equipo": 3,
+        "fecha_ingreso": "2023-04-20",
+        "capitan": false
     }
 },
 {
-    "model": "eventos_deportivos.torneo",
+    "model": "eventos_deportivos.equipojugador",
     "pk": 9,
     "fields": {
-        "nombre": "explain Cup",
-        "pais": "Mauritania",
-        "fecha_inicio": "2025-12-21",
-        "fecha_fin": "2026-01-02",
-        "arbitro_principal": 7
+        "jugador": 1,
+        "equipo": 3,
+        "fecha_ingreso": "2021-04-05",
+        "capitan": true
     }
 },
 {
-    "model": "eventos_deportivos.torneo",
+    "model": "eventos_deportivos.equipojugador",
     "pk": 10,
     "fields": {
-        "nombre": "benefit Cup",
-        "pais": "Yemen",
-        "fecha_inicio": "2025-01-24",
-        "fecha_fin": "2026-08-26",
-        "arbitro_principal": null
+        "jugador": 2,
+        "equipo": 4,
+        "fecha_ingreso": "2025-12-14",
+        "capitan": false
     }
 },
 {
-    "model": "eventos_deportivos.torneo",
+    "model": "eventos_deportivos.equipojugador",
     "pk": 11,
     "fields": {
-        "nombre": "trade Cup",
-        "pais": "Saint Vincent and the Grenadines",
-        "fecha_inicio": "2025-01-22",
-        "fecha_fin": "2026-04-09",
-        "arbitro_principal": null
+        "jugador": 3,
+        "equipo": 4,
+        "fecha_ingreso": "2025-12-14",
+        "capitan": false
     }
 },
 {
-    "model": "eventos_deportivos.torneo",
+    "model": "eventos_deportivos.equipojugador",
     "pk": 12,
     "fields": {
-        "nombre": "smile Cup",
-        "pais": "Vietnam",
-        "fecha_inicio": "2025-02-08",
-        "fecha_fin": "2026-08-10",
-        "arbitro_principal": null
+        "jugador": 4,
+        "equipo": 4,
+        "fecha_ingreso": "2025-12-14",
+        "capitan": false
     }
 },
 {
     "model": "eventos_deportivos.torneo",
-    "pk": 13,
+    "pk": 1,
     "fields": {
-        "nombre": "response Cup",
-        "pais": "Papua New Guinea",
-        "fecha_inicio": "2025-01-16",
-        "fecha_fin": "2026-07-26",
-        "arbitro_principal": null
+        "nombre": "Benjamin, Davies and Davis",
+        "pais": "Ukraine",
+        "fecha_inicio": "2025-01-02",
+        "fecha_fin": "2026-08-23",
+        "arbitro_principal": null,
+        "creado_por": null
     }
 },
 {
     "model": "eventos_deportivos.torneo",
-    "pk": 14,
+    "pk": 2,
     "fields": {
-        "nombre": "fall Cup",
-        "pais": "Seychelles",
-        "fecha_inicio": "2025-08-20",
-        "fecha_fin": "2026-09-23",
-        "arbitro_principal": null
+        "nombre": "Schmidt-Owens",
+        "pais": "South Georgia and the South Sandwich Islands",
+        "fecha_inicio": "2025-01-22",
+        "fecha_fin": "2026-09-26",
+        "arbitro_principal": 6,
+        "creado_por": null
     }
 },
 {
     "model": "eventos_deportivos.torneo",
-    "pk": 15,
+    "pk": 3,
     "fields": {
-        "nombre": "factor Cup",
-        "pais": "Saint Kitts and Nevis",
-        "fecha_inicio": "2025-08-08",
-        "fecha_fin": "2026-03-06",
-        "arbitro_principal": null
+        "nombre": "Brown, Green and Robinson",
+        "pais": "Trinidad and Tobago",
+        "fecha_inicio": "2024-02-18",
+        "fecha_fin": "2026-01-02",
+        "arbitro_principal": 5,
+        "creado_por": null
     }
 },
 {
     "model": "eventos_deportivos.partido",
     "pk": 1,
     "fields": {
-        "equipo_local": 4,
-        "equipo_visitante": 2,
-        "fecha": "2025-05-13T13:05:01.703Z",
-        "resultado": "4-3",
-        "torneo": 3
+        "equipo_local": 2,
+        "equipo_visitante": 3,
+        "fecha": "2025-02-19T01:10:42.737Z",
+        "resultado": "2-5",
+        "torneo": 3,
+        "creado_por": null
     }
 },
 {
     "model": "eventos_deportivos.partido",
     "pk": 2,
     "fields": {
-        "equipo_local": 3,
-        "equipo_visitante": 4,
-        "fecha": "2025-05-06T12:38:37.008Z",
-        "resultado": "0-5",
-        "torneo": 2
+        "equipo_local": 2,
+        "equipo_visitante": 2,
+        "fecha": "2025-01-12T09:19:24.474Z",
+        "resultado": "4-5",
+        "torneo": 3,
+        "creado_por": null
     }
 },
 {
     "model": "eventos_deportivos.partido",
     "pk": 3,
     "fields": {
-        "equipo_local": 8,
-        "equipo_visitante": 5,
-        "fecha": "2025-03-11T04:48:46.069Z",
-        "resultado": "2-3",
-        "torneo": 1
+        "equipo_local": 3,
+        "equipo_visitante": 2,
+        "fecha": "2025-03-01T15:58:36.851Z",
+        "resultado": "1-0",
+        "torneo": 2,
+        "creado_por": null
     }
 },
 {
     "model": "eventos_deportivos.partido",
     "pk": 4,
     "fields": {
-        "equipo_local": 9,
-        "equipo_visitante": 7,
-        "fecha": "2025-07-06T15:15:24.595Z",
-        "resultado": "4-0",
-        "torneo": 2
+        "equipo_local": 1,
+        "equipo_visitante": 2,
+        "fecha": "2025-03-10T00:16:09.097Z",
+        "resultado": "2-1",
+        "torneo": 3,
+        "creado_por": null
     }
 },
 {
@@ -2441,944 +1637,181 @@
     "pk": 5,
     "fields": {
         "equipo_local": 3,
-        "equipo_visitante": 6,
-        "fecha": "2025-09-07T22:35:44.926Z",
-        "resultado": "1-0",
-        "torneo": 4
+        "equipo_visitante": 3,
+        "fecha": "2025-07-06T07:34:55.405Z",
+        "resultado": "3-5",
+        "torneo": 3,
+        "creado_por": null
     }
 },
 {
     "model": "eventos_deportivos.partido",
     "pk": 6,
     "fields": {
-        "equipo_local": 9,
-        "equipo_visitante": 7,
-        "fecha": "2025-04-27T01:02:24.526Z",
-        "resultado": "3-2",
-        "torneo": 1
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 8,
-    "fields": {
-        "equipo_local": 2,
-        "equipo_visitante": 6,
-        "fecha": "2025-03-19T06:58:33.554Z",
-        "resultado": "2-4",
-        "torneo": 5
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 10,
-    "fields": {
-        "equipo_local": 9,
-        "equipo_visitante": 2,
-        "fecha": "2025-02-15T14:16:09.783Z",
-        "resultado": "2-5",
-        "torneo": 3
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 11,
-    "fields": {
-        "equipo_local": 11,
-        "equipo_visitante": 19,
-        "fecha": "2025-01-23T01:42:02.133Z",
-        "resultado": "2-3",
-        "torneo": 7
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 12,
-    "fields": {
-        "equipo_local": 15,
-        "equipo_visitante": 13,
-        "fecha": "2025-04-06T14:54:49.051Z",
-        "resultado": "4-1",
-        "torneo": 7
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 13,
-    "fields": {
-        "equipo_local": 14,
-        "equipo_visitante": 16,
-        "fecha": "2025-09-25T02:29:18.011Z",
-        "resultado": "5-1",
-        "torneo": 8
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 14,
-    "fields": {
-        "equipo_local": 15,
-        "equipo_visitante": 12,
-        "fecha": "2025-05-12T01:18:03.364Z",
-        "resultado": "1-2",
-        "torneo": 7
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 15,
-    "fields": {
-        "equipo_local": 17,
-        "equipo_visitante": 19,
-        "fecha": "2025-02-26T14:36:42.337Z",
-        "resultado": "0-1",
-        "torneo": 10
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 16,
-    "fields": {
-        "equipo_local": 13,
-        "equipo_visitante": 15,
-        "fecha": "2025-02-08T12:05:15.961Z",
-        "resultado": "1-1",
-        "torneo": 7
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 17,
-    "fields": {
-        "equipo_local": 17,
-        "equipo_visitante": 11,
-        "fecha": "2025-02-19T07:03:07.815Z",
-        "resultado": "3-0",
-        "torneo": 7
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 18,
-    "fields": {
-        "equipo_local": 16,
-        "equipo_visitante": 11,
-        "fecha": "2025-07-23T23:37:50.916Z",
-        "resultado": "4-0",
-        "torneo": 7
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 19,
-    "fields": {
-        "equipo_local": 18,
-        "equipo_visitante": 15,
-        "fecha": "2025-08-09T13:55:47.846Z",
-        "resultado": "5-0",
-        "torneo": 8
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 20,
-    "fields": {
-        "equipo_local": 15,
-        "equipo_visitante": 12,
-        "fecha": "2025-07-08T05:41:00.102Z",
-        "resultado": "0-0",
-        "torneo": 7
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 21,
-    "fields": {
-        "equipo_local": 26,
-        "equipo_visitante": 22,
-        "fecha": "2025-02-04T04:20:25.262Z",
-        "resultado": "3-2",
-        "torneo": 14
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 22,
-    "fields": {
-        "equipo_local": 22,
-        "equipo_visitante": 29,
-        "fecha": "2025-02-16T19:42:24.979Z",
-        "resultado": "2-1",
-        "torneo": 15
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 23,
-    "fields": {
-        "equipo_local": 21,
-        "equipo_visitante": 29,
-        "fecha": "2025-10-19T23:08:00.626Z",
+        "equipo_local": 3,
+        "equipo_visitante": 1,
+        "fecha": "2026-01-02T12:00:00Z",
         "resultado": "3-5",
-        "torneo": 13
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 24,
-    "fields": {
-        "equipo_local": 30,
-        "equipo_visitante": 23,
-        "fecha": "2025-04-14T04:48:17.939Z",
-        "resultado": "4-4",
-        "torneo": 15
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 25,
-    "fields": {
-        "equipo_local": 23,
-        "equipo_visitante": 22,
-        "fecha": "2025-10-10T08:52:16.032Z",
-        "resultado": "2-0",
-        "torneo": 14
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 26,
-    "fields": {
-        "equipo_local": 30,
-        "equipo_visitante": 26,
-        "fecha": "2025-09-13T01:28:08.218Z",
-        "resultado": "0-2",
-        "torneo": 12
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 27,
-    "fields": {
-        "equipo_local": 28,
-        "equipo_visitante": 29,
-        "fecha": "2025-01-13T03:50:00.938Z",
-        "resultado": "5-5",
-        "torneo": 14
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 28,
-    "fields": {
-        "equipo_local": 23,
-        "equipo_visitante": 28,
-        "fecha": "2025-02-02T07:36:38.298Z",
-        "resultado": "5-5",
-        "torneo": 14
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 29,
-    "fields": {
-        "equipo_local": 27,
-        "equipo_visitante": 22,
-        "fecha": "2025-08-22T15:46:29.544Z",
-        "resultado": "2-2",
-        "torneo": 15
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 30,
-    "fields": {
-        "equipo_local": 27,
-        "equipo_visitante": 30,
-        "fecha": "2025-07-05T18:29:53.098Z",
-        "resultado": "2-5",
-        "torneo": 11
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 35,
-    "fields": {
-        "equipo_local": 16,
-        "equipo_visitante": 4,
-        "fecha": "2025-11-15T12:55:00Z",
-        "resultado": "2-6",
-        "torneo": 6
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 36,
-    "fields": {
-        "equipo_local": 10,
-        "equipo_visitante": 11,
-        "fecha": "2025-11-14T14:01:00Z",
-        "resultado": "3-2",
-        "torneo": 5
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 37,
-    "fields": {
-        "equipo_local": 7,
-        "equipo_visitante": 13,
-        "fecha": "2025-11-22T17:05:00Z",
-        "resultado": "3-5",
-        "torneo": 10
-    }
-},
-{
-    "model": "eventos_deportivos.partido",
-    "pk": 38,
-    "fields": {
-        "equipo_local": 7,
-        "equipo_visitante": 13,
-        "fecha": "2025-11-06T17:09:00Z",
-        "resultado": "3-5",
-        "torneo": 7
+        "torneo": 2,
+        "creado_por": null
     }
 },
 {
     "model": "eventos_deportivos.arbitro",
+    "pk": 5,
+    "fields": {
+        "usuario": 12,
+        "nombre": "Lola",
+        "apellido": "Ramirez",
+        "licencia": "LIC-0012",
+        "partidos": [
+            2
+        ]
+    }
+},
+{
+    "model": "eventos_deportivos.arbitro",
+    "pk": 6,
+    "fields": {
+        "usuario": 14,
+        "nombre": "Felipe",
+        "apellido": "Matorral",
+        "licencia": "LIC-0014",
+        "partidos": []
+    }
+},
+{
+    "model": "eventos_deportivos.estadio",
     "pk": 1,
     "fields": {
-        "nombre": "Kevin",
-        "apellido": "Johnson",
-        "licencia": "LIC0647",
-        "partidos": [
+        "nombre": "Mcdaniel, Collins and Daniels",
+        "ciudad": "South Laurenburgh",
+        "capacidad": 21228,
+        "cubierto": true,
+        "imagen": "",
+        "creado_por": null
+    }
+},
+{
+    "model": "eventos_deportivos.estadio",
+    "pk": 2,
+    "fields": {
+        "nombre": "Austin Inc",
+        "ciudad": "Josephburgh",
+        "capacidad": 8559,
+        "cubierto": true,
+        "imagen": "",
+        "creado_por": null
+    }
+},
+{
+    "model": "eventos_deportivos.estadio",
+    "pk": 3,
+    "fields": {
+        "nombre": "Taylor LLC",
+        "ciudad": "Shannonmouth",
+        "capacidad": 28118,
+        "cubierto": true,
+        "imagen": "",
+        "creado_por": null
+    }
+},
+{
+    "model": "eventos_deportivos.estadio",
+    "pk": 4,
+    "fields": {
+        "nombre": "GRAND PEPE",
+        "ciudad": "Londres",
+        "capacidad": 546456,
+        "cubierto": true,
+        "imagen": "",
+        "creado_por": null
+    }
+},
+{
+    "model": "eventos_deportivos.sponsor",
+    "pk": 1,
+    "fields": {
+        "nombre": "Duran-Dyer",
+        "monto": "21032.64",
+        "pais": "Iran",
+        "creado_por": null,
+        "equipos": [
             2,
             3
         ]
     }
 },
 {
-    "model": "eventos_deportivos.arbitro",
+    "model": "eventos_deportivos.sponsor",
     "pk": 2,
     "fields": {
-        "nombre": "Courtney",
-        "apellido": "Wood",
-        "licencia": "LIC0012",
-        "partidos": [
+        "nombre": "Wilson-Scott",
+        "monto": "46929.07",
+        "pais": "Sweden",
+        "creado_por": null,
+        "equipos": [
             1,
-            5
+            2
         ]
     }
 },
 {
-    "model": "eventos_deportivos.arbitro",
+    "model": "eventos_deportivos.sponsor",
     "pk": 3,
     "fields": {
-        "nombre": "Kayla",
-        "apellido": "Castillo",
-        "licencia": "LIC4044",
-        "partidos": [
-            2,
-            3,
-            6
+        "nombre": "Harris Inc",
+        "monto": "35411.40",
+        "pais": "Ecuador",
+        "creado_por": null,
+        "equipos": [
+            1,
+            2
         ]
     }
 },
 {
-    "model": "eventos_deportivos.arbitro",
+    "model": "eventos_deportivos.sponsor",
     "pk": 4,
     "fields": {
-        "nombre": "Dwayne",
-        "apellido": "Key",
-        "licencia": "LIC9156",
-        "partidos": [
-            1,
-            2,
+        "nombre": "TakeCare",
+        "monto": "999999.00",
+        "pais": "Portugal",
+        "creado_por": null,
+        "equipos": [
+            2
+        ]
+    }
+},
+{
+    "model": "eventos_deportivos.sponsor",
+    "pk": 5,
+    "fields": {
+        "nombre": "TakeCareTEAM",
+        "monto": "5647447.00",
+        "pais": "Bhutan",
+        "creado_por": null,
+        "equipos": [
             4
         ]
     }
 },
 {
-    "model": "eventos_deportivos.arbitro",
-    "pk": 5,
-    "fields": {
-        "nombre": "Angela",
-        "apellido": "Byrd",
-        "licencia": "LIC0736",
-        "partidos": [
-            4,
-            10
-        ]
-    }
-},
-{
-    "model": "eventos_deportivos.arbitro",
-    "pk": 6,
-    "fields": {
-        "nombre": "Christopher",
-        "apellido": "Graves",
-        "licencia": "LIC9830",
-        "partidos": [
-            11,
-            13,
-            18
-        ]
-    }
-},
-{
-    "model": "eventos_deportivos.arbitro",
-    "pk": 7,
-    "fields": {
-        "nombre": "Rhonda",
-        "apellido": "Farmer",
-        "licencia": "LIC2870",
-        "partidos": [
-            12,
-            14,
-            15
-        ]
-    }
-},
-{
-    "model": "eventos_deportivos.arbitro",
-    "pk": 8,
-    "fields": {
-        "nombre": "Susan",
-        "apellido": "Sanchez",
-        "licencia": "LIC9434",
-        "partidos": [
-            15,
-            17,
-            19
-        ]
-    }
-},
-{
-    "model": "eventos_deportivos.arbitro",
-    "pk": 9,
-    "fields": {
-        "nombre": "Beth",
-        "apellido": "Alvarez",
-        "licencia": "LIC3556",
-        "partidos": [
-            13,
-            15,
-            19
-        ]
-    }
-},
-{
-    "model": "eventos_deportivos.arbitro",
-    "pk": 10,
-    "fields": {
-        "nombre": "Joseph",
-        "apellido": "Walsh",
-        "licencia": "LIC5942",
-        "partidos": [
-            12,
-            14,
-            18
-        ]
-    }
-},
-{
-    "model": "eventos_deportivos.arbitro",
-    "pk": 11,
-    "fields": {
-        "nombre": "Sarah",
-        "apellido": "Giles",
-        "licencia": "LIC5063",
-        "partidos": [
-            21,
-            22,
-            27
-        ]
-    }
-},
-{
-    "model": "eventos_deportivos.arbitro",
-    "pk": 12,
-    "fields": {
-        "nombre": "Jennifer",
-        "apellido": "Morgan",
-        "licencia": "LIC3847",
-        "partidos": [
-            26,
-            27,
-            29
-        ]
-    }
-},
-{
-    "model": "eventos_deportivos.arbitro",
-    "pk": 13,
-    "fields": {
-        "nombre": "Brett",
-        "apellido": "Miller",
-        "licencia": "LIC8180",
-        "partidos": [
-            26,
-            27,
-            28
-        ]
-    }
-},
-{
-    "model": "eventos_deportivos.arbitro",
-    "pk": 14,
-    "fields": {
-        "nombre": "Lisa",
-        "apellido": "Vincent",
-        "licencia": "LIC0233",
-        "partidos": [
-            21,
-            25,
-            29
-        ]
-    }
-},
-{
-    "model": "eventos_deportivos.arbitro",
-    "pk": 15,
-    "fields": {
-        "nombre": "Maria",
-        "apellido": "Perez",
-        "licencia": "LIC2979",
-        "partidos": [
-            21,
-            26,
-            30
-        ]
-    }
-},
-{
-    "model": "eventos_deportivos.estadio",
-    "pk": 1,
-    "fields": {
-        "nombre": "East James Stadium",
-        "ciudad": "Lake Robertfurt",
-        "capacidad": 43467,
-        "cubierto": false,
-        "imagen": ""
-    }
-},
-{
-    "model": "eventos_deportivos.estadio",
-    "pk": 2,
-    "fields": {
-        "nombre": "Schroederville Stadium",
-        "ciudad": "East Micheleport",
-        "capacidad": 24416,
-        "cubierto": true,
-        "imagen": ""
-    }
-},
-{
-    "model": "eventos_deportivos.estadio",
-    "pk": 3,
-    "fields": {
-        "nombre": "Deborahshire Stadium",
-        "ciudad": "Jacksonchester",
-        "capacidad": 45221,
-        "cubierto": false,
-        "imagen": ""
-    }
-},
-{
-    "model": "eventos_deportivos.estadio",
-    "pk": 4,
-    "fields": {
-        "nombre": "New Barbara Stadium",
-        "ciudad": "Barbaraview",
-        "capacidad": 6148,
-        "cubierto": false,
-        "imagen": ""
-    }
-},
-{
-    "model": "eventos_deportivos.estadio",
-    "pk": 5,
-    "fields": {
-        "nombre": "North Jacobport Stadium",
-        "ciudad": "Jacksonbury",
-        "capacidad": 25689,
-        "cubierto": false,
-        "imagen": ""
-    }
-},
-{
-    "model": "eventos_deportivos.estadio",
-    "pk": 6,
-    "fields": {
-        "nombre": "Lake Chadberg Stadium",
-        "ciudad": "West Stephen",
-        "capacidad": 18905,
-        "cubierto": false,
-        "imagen": ""
-    }
-},
-{
-    "model": "eventos_deportivos.estadio",
-    "pk": 7,
-    "fields": {
-        "nombre": "Taylorburgh Stadium",
-        "ciudad": "West Kyle",
-        "capacidad": 14166,
-        "cubierto": false,
-        "imagen": ""
-    }
-},
-{
-    "model": "eventos_deportivos.estadio",
-    "pk": 8,
-    "fields": {
-        "nombre": "Port Michaelville Stadium",
-        "ciudad": "Carpenterport",
-        "capacidad": 26903,
-        "cubierto": true,
-        "imagen": ""
-    }
-},
-{
-    "model": "eventos_deportivos.estadio",
-    "pk": 9,
-    "fields": {
-        "nombre": "Barberton Stadium",
-        "ciudad": "Toddhaven",
-        "capacidad": 36635,
-        "cubierto": false,
-        "imagen": ""
-    }
-},
-{
-    "model": "eventos_deportivos.estadio",
-    "pk": 10,
-    "fields": {
-        "nombre": "East Kevinport Stadium",
-        "ciudad": "Port Sandraside",
-        "capacidad": 6936,
-        "cubierto": true,
-        "imagen": ""
-    }
-},
-{
-    "model": "eventos_deportivos.estadio",
-    "pk": 11,
-    "fields": {
-        "nombre": "East Ryan Stadium",
-        "ciudad": "Jenniferland",
-        "capacidad": 39590,
-        "cubierto": true,
-        "imagen": ""
-    }
-},
-{
-    "model": "eventos_deportivos.estadio",
-    "pk": 12,
-    "fields": {
-        "nombre": "Gregoryview Stadium",
-        "ciudad": "Andrewchester",
-        "capacidad": 19754,
-        "cubierto": true,
-        "imagen": ""
-    }
-},
-{
-    "model": "eventos_deportivos.estadio",
-    "pk": 13,
-    "fields": {
-        "nombre": "South Angelville Stadium",
-        "ciudad": "New Thomaston",
-        "capacidad": 47048,
-        "cubierto": true,
-        "imagen": ""
-    }
-},
-{
-    "model": "eventos_deportivos.estadio",
-    "pk": 14,
-    "fields": {
-        "nombre": "Smithmouth Stadium",
-        "ciudad": "Kathleenberg",
-        "capacidad": 40511,
-        "cubierto": false,
-        "imagen": ""
-    }
-},
-{
-    "model": "eventos_deportivos.estadio",
-    "pk": 15,
-    "fields": {
-        "nombre": "East Sharonville Stadium",
-        "ciudad": "North Joseph",
-        "capacidad": 14097,
-        "cubierto": false,
-        "imagen": ""
-    }
-},
-{
-    "model": "eventos_deportivos.estadio",
-    "pk": 17,
-    "fields": {
-        "nombre": "GRAND PEPE",
-        "ciudad": "Sevilla",
-        "capacidad": 5000,
-        "cubierto": true,
-        "imagen": ""
-    }
-},
-{
-    "model": "eventos_deportivos.estadio",
-    "pk": 19,
-    "fields": {
-        "nombre": "GRAND PEPA",
-        "ciudad": "Malaga",
-        "capacidad": 6000,
-        "cubierto": false,
-        "imagen": ""
-    }
-},
-{
-    "model": "eventos_deportivos.estadio",
-    "pk": 20,
-    "fields": {
-        "nombre": "GRAND PEPE",
-        "ciudad": "Londres",
-        "capacidad": 6363,
-        "cubierto": true,
-        "imagen": ""
-    }
-},
-{
-    "model": "eventos_deportivos.estadio",
-    "pk": 22,
-    "fields": {
-        "nombre": "ChatGPT FC",
-        "ciudad": "Sevilla",
-        "capacidad": 100000,
-        "cubierto": true,
-        "imagen": "eventos_deportivos/estadios/7e9b9daf-a145-4cb0-a19e-3babfb4f40a7.png"
-    }
-},
-{
-    "model": "eventos_deportivos.estadio",
-    "pk": 23,
-    "fields": {
-        "nombre": "BETIS FC",
-        "ciudad": "Sevilla",
-        "capacidad": 10000,
-        "cubierto": true,
-        "imagen": "eventos_deportivos/estadios/descarga_1.jpeg"
-    }
-},
-{
-    "model": "eventos_deportivos.estadio",
-    "pk": 24,
-    "fields": {
-        "nombre": "SEVILLA FC",
-        "ciudad": "Sevilla",
-        "capacidad": 10000,
-        "cubierto": true,
-        "imagen": "eventos_deportivos/estadios/descarga.jpeg"
-    }
-},
-{
-    "model": "eventos_deportivos.sponsor",
-    "pk": 2,
-    "fields": {
-        "nombre": "Hudson, Reed and Fields",
-        "monto": "2435.71",
-        "pais": "Kenya",
-        "equipos": [
-            5,
-            6
-        ]
-    }
-},
-{
-    "model": "eventos_deportivos.sponsor",
-    "pk": 3,
-    "fields": {
-        "nombre": "Nguyen, Lucas and Owen",
-        "monto": "3329.73",
-        "pais": "Tuvalu",
-        "equipos": [
-            4,
-            8
-        ]
-    }
-},
-{
-    "model": "eventos_deportivos.sponsor",
-    "pk": 4,
-    "fields": {
-        "nombre": "Bradford, Johnston and Barrett",
-        "monto": "51335.96",
-        "pais": "Tokelau",
-        "equipos": [
-            10
-        ]
-    }
-},
-{
-    "model": "eventos_deportivos.sponsor",
-    "pk": 5,
-    "fields": {
-        "nombre": "Bowers-Weber",
-        "monto": "18184.52",
-        "pais": "Montenegro",
-        "equipos": [
-            3,
-            10
-        ]
-    }
-},
-{
-    "model": "eventos_deportivos.sponsor",
-    "pk": 6,
-    "fields": {
-        "nombre": "Brown Ltd",
-        "monto": "49978.50",
-        "pais": "Bulgaria",
-        "equipos": [
-            17,
-            19
-        ]
-    }
-},
-{
-    "model": "eventos_deportivos.sponsor",
-    "pk": 7,
-    "fields": {
-        "nombre": "Jones-Ho",
-        "monto": "16237.88",
-        "pais": "Latvia",
-        "equipos": [
-            11,
-            20
-        ]
-    }
-},
-{
-    "model": "eventos_deportivos.sponsor",
-    "pk": 8,
-    "fields": {
-        "nombre": "Ford, Morales and Hopkins",
-        "monto": "9748.39",
-        "pais": "Kenya",
-        "equipos": [
-            12,
-            20
-        ]
-    }
-},
-{
-    "model": "eventos_deportivos.sponsor",
-    "pk": 9,
-    "fields": {
-        "nombre": "Burch-Lynch",
-        "monto": "77886.93",
-        "pais": "British Virgin Islands",
-        "equipos": [
-            13,
-            14
-        ]
-    }
-},
-{
-    "model": "eventos_deportivos.sponsor",
-    "pk": 10,
-    "fields": {
-        "nombre": "Stewart Group",
-        "monto": "55446.92",
-        "pais": "Vanuatu",
-        "equipos": [
-            11,
-            16
-        ]
-    }
-},
-{
-    "model": "eventos_deportivos.sponsor",
-    "pk": 11,
-    "fields": {
-        "nombre": "Castillo, Greene and Moore",
-        "monto": "42780.08",
-        "pais": "Algeria",
-        "equipos": [
-            25,
-            28
-        ]
-    }
-},
-{
-    "model": "eventos_deportivos.sponsor",
-    "pk": 12,
-    "fields": {
-        "nombre": "Zhang-Simmons",
-        "monto": "15412.08",
-        "pais": "New Caledonia",
-        "equipos": [
-            26,
-            28
-        ]
-    }
-},
-{
-    "model": "eventos_deportivos.sponsor",
-    "pk": 13,
-    "fields": {
-        "nombre": "Byrd and Sons",
-        "monto": "96954.90",
-        "pais": "Mauritania",
-        "equipos": [
-            23,
-            28
-        ]
-    }
-},
-{
-    "model": "eventos_deportivos.sponsor",
-    "pk": 14,
-    "fields": {
-        "nombre": "Patterson-Aguilar",
-        "monto": "47926.80",
-        "pais": "Faroe Islands",
-        "equipos": [
-            23,
-            27
-        ]
-    }
-},
-{
-    "model": "eventos_deportivos.sponsor",
-    "pk": 15,
-    "fields": {
-        "nombre": "Sanchez Ltd",
-        "monto": "27716.49",
-        "pais": "Isle of Man",
-        "equipos": [
-            23,
-            30
-        ]
-    }
-},
-{
     "model": "eventos_deportivos.premio",
     "pk": 1,
     "fields": {
-        "nombre": "affect Trophy",
-        "monto": "19172.03",
+        "nombre": "Expanded bifurcated instruction set",
+        "monto": "15003.63",
         "torneo": 1,
-        "ganador": 5
+        "ganador": 1
     }
 },
 {
     "model": "eventos_deportivos.premio",
     "pk": 2,
     "fields": {
-        "nombre": "top Trophy",
-        "monto": "45065.05",
+        "nombre": "Upgradable attitude-oriented synergy",
+        "monto": "20588.06",
         "torneo": 2,
         "ganador": 2
     }
@@ -3387,130 +1820,10 @@
     "model": "eventos_deportivos.premio",
     "pk": 3,
     "fields": {
-        "nombre": "window Trophy",
-        "monto": "8635.38",
+        "nombre": "Fundamental disintermediate projection",
+        "monto": "23528.03",
         "torneo": 3,
-        "ganador": 8
-    }
-},
-{
-    "model": "eventos_deportivos.premio",
-    "pk": 4,
-    "fields": {
-        "nombre": "each Trophy",
-        "monto": "14853.58",
-        "torneo": 4,
-        "ganador": 7
-    }
-},
-{
-    "model": "eventos_deportivos.premio",
-    "pk": 5,
-    "fields": {
-        "nombre": "though Trophy",
-        "monto": "19120.54",
-        "torneo": 5,
-        "ganador": 3
-    }
-},
-{
-    "model": "eventos_deportivos.premio",
-    "pk": 6,
-    "fields": {
-        "nombre": "remember Trophy",
-        "monto": "30083.70",
-        "torneo": 6,
-        "ganador": 17
-    }
-},
-{
-    "model": "eventos_deportivos.premio",
-    "pk": 7,
-    "fields": {
-        "nombre": "find Trophy",
-        "monto": "6309.69",
-        "torneo": 7,
-        "ganador": 12
-    }
-},
-{
-    "model": "eventos_deportivos.premio",
-    "pk": 8,
-    "fields": {
-        "nombre": "fine Trophy",
-        "monto": "7077.40",
-        "torneo": 8,
-        "ganador": 14
-    }
-},
-{
-    "model": "eventos_deportivos.premio",
-    "pk": 9,
-    "fields": {
-        "nombre": "attack Trophy",
-        "monto": "17359.21",
-        "torneo": 9,
-        "ganador": 14
-    }
-},
-{
-    "model": "eventos_deportivos.premio",
-    "pk": 10,
-    "fields": {
-        "nombre": "front Trophy",
-        "monto": "48847.28",
-        "torneo": 10,
-        "ganador": 18
-    }
-},
-{
-    "model": "eventos_deportivos.premio",
-    "pk": 11,
-    "fields": {
-        "nombre": "politics Trophy",
-        "monto": "25032.72",
-        "torneo": 11,
-        "ganador": 22
-    }
-},
-{
-    "model": "eventos_deportivos.premio",
-    "pk": 12,
-    "fields": {
-        "nombre": "able Trophy",
-        "monto": "14711.28",
-        "torneo": 12,
-        "ganador": 28
-    }
-},
-{
-    "model": "eventos_deportivos.premio",
-    "pk": 13,
-    "fields": {
-        "nombre": "contain Trophy",
-        "monto": "41438.48",
-        "torneo": 13,
-        "ganador": 27
-    }
-},
-{
-    "model": "eventos_deportivos.premio",
-    "pk": 14,
-    "fields": {
-        "nombre": "tend Trophy",
-        "monto": "26999.70",
-        "torneo": 14,
-        "ganador": 27
-    }
-},
-{
-    "model": "eventos_deportivos.premio",
-    "pk": 15,
-    "fields": {
-        "nombre": "change Trophy",
-        "monto": "15053.06",
-        "torneo": 15,
-        "ganador": 22
+        "ganador": 2
     }
 }
 ]
