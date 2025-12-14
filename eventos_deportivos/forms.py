@@ -30,7 +30,7 @@ class JugadorModelForm(forms.ModelForm):
         labels = {
             'nombre': 'Nombre',
             'apellido': 'Apellido',
-            'fecha_naciemiento': 'Fecha de Nacimiento',
+            'fecha_nacimiento': 'Fecha de Nacimiento',
             'posicion': 'Posición',
         }
         widgets = {
@@ -39,6 +39,11 @@ class JugadorModelForm(forms.ModelForm):
             'fecha_nacimiento': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'posicion': forms.Select(attrs={'class': 'form-select'}),
         }
+        
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        
     def clean(self):
         cleaned_data = super().clean()
         nombre = cleaned_data.get('nombre')
@@ -48,7 +53,8 @@ class JugadorModelForm(forms.ModelForm):
             # Comprueba si ya existe un jugador con los mismos datos ignorandose a si mismo
             jugador_id = self.instance.id if self.instance else None
             if Jugador.objects.filter(nombre=nombre, apellido=apellido).exclude(id=jugador_id).exists():
-                self.add_error("Ya existe un jugador con ese nombre y apellido.")
+                self.add_error('nombre',"Ya existe un jugador con ese nombre y apellido.")
+                self.add_error('apellido',"Ya existe un jugador con ese nombre y apellido.")
         
         return cleaned_data
 # Jugador buscar
@@ -103,6 +109,11 @@ class EquipoModelForm(forms.ModelForm):
             'activo': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'estadio_principal': forms.Select(attrs={'class': 'form-select'}),
         }
+ 
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
     def clean(self):
         cleaned_data = super().clean()
         nombre = cleaned_data.get('nombre')
@@ -171,6 +182,11 @@ class EstadioModelForm(forms.ModelForm):
             'cubierto': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'imagen': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }
+        
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        
     def clean(self):
         cleaned_data = super().clean()
         nombre = cleaned_data.get('nombre')
@@ -233,8 +249,15 @@ class SponsorModelForm(forms.ModelForm):
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
             'pais': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: España'}),
             'monto': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Introduce monto'}),
-            'equipos': forms.Select(attrs={'class': 'form-select'}),
+            'equipos': forms.SelectMultiple(attrs={'class': 'form-select'}),
         }
+        
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields['equipos'].queryset = Equipo.objects.filter(creado_por=user)
+        
     def clean(self):
         cleaned_data = super().clean()
         nombre = cleaned_data.get('nombre')
@@ -242,7 +265,7 @@ class SponsorModelForm(forms.ModelForm):
         if nombre:
             # Comprueba si ya existe un sponsor con los mismos datos ignorandose a si mismo
             sponsor_id = self.instance.id if self.instance else None
-            if Estadio.objects.filter(nombre=nombre).exclude(id=sponsor_id).exists():
+            if Sponsor.objects.filter(nombre=nombre).exclude(id=sponsor_id).exists():
                 self.add_error('nombre',"Ya existe un sponsor con ese nombre")
         
         return cleaned_data
@@ -293,7 +316,16 @@ class PartidoModelForm(forms.ModelForm):
             'torneo': forms.Select(attrs={'class': 'form-control'}),
             'resultado': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'x-x'}),
         }
-        
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields['equipo_local'].queryset = Equipo.objects.filter(creado_por=user)
+            self.fields['equipo_visitante'].queryset = Equipo.objects.filter(creado_por=user)
+            self.fields['torneo'].queryset = Torneo.objects.filter(creado_por=user)
+
+
     def clean(self):
         cleaned_data = super().clean()
         fecha = cleaned_data.get('fecha')
@@ -368,7 +400,13 @@ class TorneoModelForm(forms.ModelForm):
             'fecha_fin': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'arbitro_principal': forms.Select(attrs={'class': 'form-control'}),
         }
-        
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields['arbitro_principal'].queryset = Arbitro.objects.filter(creado_por=user)
+
     def clean(self):
         cleaned_data = super().clean()
         nombre = cleaned_data.get('nombre')

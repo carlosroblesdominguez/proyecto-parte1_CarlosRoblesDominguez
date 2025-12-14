@@ -717,3 +717,65 @@ Para cualquier modelo que incluya imágenes (ej: `Estadio`):
 - **Sponsor:** TextInput, NumberInput, Select.
 - **Partido:** DateTimeInput, Select, TextInput.
 - **Torneo:** TextInput, DateInput, Select.
+
+---
+
+# Proyecto Deportes - Roles y Permisos
+
+## Tipos de usuario y funcionalidades
+
+En la aplicación existen **dos roles/usuarios principales**: **Managers** y **Arbitros**.  
+
+---
+
+### 1. Grupo: Arbitros
+Usuarios que pertenecen a este grupo pueden gestionar **estadios, partidos y torneos**.  
+
+**Permisos asociados:**
+
+| Modelo   | Permiso            |
+|----------|--------------------|
+| Estadio  | Can add estadio    |
+| Estadio  | Can change estadio |
+| Estadio  | Can delete estadio |
+| Partido  | Can add partido    |
+| Partido  | Can change partido |
+| Partido  | Can delete partido |
+| Torneo   | Can add torneo     |
+| Torneo   | Can change torneo  |
+| Torneo   | Can delete torneo  |
+
+**Funcionalidades:**
+- Crear, modificar y eliminar estadios.
+- Crear, modificar y eliminar partidos.
+- Crear, modificar y eliminar torneos.
+- Ver solo los objetos asignados o creados por ellos (si aplica).
+- Gestionar solo los objetos que ellos mismos han creado (`creado_por=user`).
+
+---
+
+### 2. Grupo: Managers
+Usuarios que pertenecen a este grupo pueden gestionar **equipos, jugadores y sponsors**.  
+
+**Permisos asociados:**
+
+| Modelo   | Permiso            |
+|----------|--------------------|
+| Equipo   | Can add equipo     |
+| Equipo   | Can change equipo  |
+| Equipo   | Can delete equipo  |
+| Jugador  | Can add jugador    |
+| Jugador  | Can change jugador |
+| Jugador  | Can delete jugador |
+| Sponsor  | Can add sponsor    |
+| Sponsor  | Can change sponsor |
+| Sponsor  | Can delete sponsor |
+
+**Funcionalidades:**
+- Crear, modificar y eliminar equipos.
+- Crear, modificar y eliminar jugadores.
+- Crear, modificar y eliminar sponsors.
+- Ver solo los objetos asignados o creados por ellos (si aplica).
+- Gestionar solo los objetos que ellos mismos han creado (`creado_por=user`).
+
+---

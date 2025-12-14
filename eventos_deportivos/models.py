@@ -56,6 +56,7 @@ class Jugador(models.Model):
         EstadisticasJugador,
         on_delete=models.CASCADE
     )
+    creado_por = models.ForeignKey('Usuario', on_delete=models.CASCADE, null=True, blank=True)
     
     def __str__(self):
         return f"{self.nombre} {self.apellido}"
@@ -77,6 +78,7 @@ class Equipo(models.Model):
         blank=True,
         related_name='torneo_dirigido'
     )
+    creado_por = models.ForeignKey('Usuario', on_delete=models.CASCADE, null=True, blank=True)
     
     def __str__(self):
         return f"{self.nombre}"
@@ -109,6 +111,7 @@ class Torneo(models.Model):
         null=True,
         related_name='torneo_dirigido'
     )
+    creado_por = models.ForeignKey('Usuario', on_delete=models.CASCADE, null=True, blank=True)
     
     def __str__(self):
         return f"{self.nombre}"
@@ -131,6 +134,7 @@ class Partido(models.Model):
         Torneo,
         on_delete=models.CASCADE
     )
+    creado_por = models.ForeignKey('Usuario', on_delete=models.CASCADE, null=True, blank=True)
     
     def __str__(self):
         return f"{self.equipo_local.nombre} vs {self.equipo_visitante.nombre}"
@@ -156,6 +160,7 @@ class Estadio(models.Model):
     capacidad = models.IntegerField()
     cubierto = models.BooleanField(default=False)
     imagen = models.ImageField(upload_to='eventos_deportivos/estadios/', null=True, blank=True)
+    creado_por = models.ForeignKey('Usuario', on_delete=models.CASCADE, null=True, blank=True)
     
     def __str__(self):
         return f"{self.nombre}"
@@ -169,6 +174,7 @@ class Sponsor(models.Model):
     )
     pais = models.CharField(max_length=50)
     equipos = models.ManyToManyField(Equipo)
+    creado_por = models.ForeignKey('Usuario', on_delete=models.CASCADE, null=True, blank=True)
     
     def __str__(self):
         return f"{self.nombre}"

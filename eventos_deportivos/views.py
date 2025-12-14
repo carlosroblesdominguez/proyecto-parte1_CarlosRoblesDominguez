@@ -363,8 +363,10 @@ def jugador_create_valid(formularioJ):
             )
             # Guarda el jugador en la base de datos
             # Crear el jugador asignando la estadística
-            formularioJ = formularioJ.save(commit=False) # <-- Crea el objeto del modelo con los datos validados, pero no lo guardes todavia en la BD.
-            formularioJ.save()
+            # Guardar el jugador y asignar estadísticas
+            jugador = formularioJ.save(commit=False)
+            jugador.estadisticas = estadisticas
+            jugador.save()
             
             jugador_creado = True
         except Exception as e:
@@ -378,11 +380,7 @@ def jugador_create_valid(formularioJ):
 def jugador_create(request):
     # si la peticion es GET se crea el formulario vacio
     # en el caso de set POST se crea el formulario con datos
-    datosFormulario = None
-    if request.method == "POST":
-        datosFormulario = request.POST
-        
-    formularioJ = JugadorModelForm(datosFormulario)
+    formularioJ = JugadorModelForm(request.POST, user=request.user)
     
     if (request.method == "POST"):
         jugador_creado = jugador_create_valid(formularioJ)
@@ -515,7 +513,7 @@ def equipo_create(request):
     if request.method == "POST":
         datosFormulario = request.POST
         
-    formularioE = EquipoModelForm(datosFormulario)
+    formularioE = EquipoModelForm(datosFormulario,request.POST or None, user=request.user)
     
     if (request.method == "POST"):
         equipo_creado = equipo_create_valid(formularioE)
@@ -637,11 +635,7 @@ def estadio_create_valid(formularioES):
 def estadio_create(request):
     # si la peticion es GET se crea el formulario vacio
     # en el caso de set POST se crea el formulario con datos
-    datosFormulario = None
-    if request.method == "POST":
-        datosFormulario = request.POST
-        
-    formularioES = EstadioModelForm(datosFormulario,files=request.FILES) # <-- Aquí se recogen los archivos
+    formularioES = EstadioModelForm(request.POST or None, files=request.FILES, user=request.user) # <-- Aquí se recogen los archivos
     
     if (request.method == "POST"):
         estadio_creado = estadio_create_valid(formularioES)
@@ -761,6 +755,7 @@ def sponsor_create_valid(formularioSP):
 @login_required
 @permission_required('eventos_deportivos.add_sponsor')
 def sponsor_create(request):
+    formularioSP = SponsorModelForm(request.POST or None, user=request.user)
     # si la peticion es GET se crea el formulario vacio
     # en el caso de set POST se crea el formulario con datos
     datosFormulario = None
@@ -894,7 +889,7 @@ def partido_create(request):
     if request.method == "POST":
         datosFormulario = request.POST
         
-    formularioP = PartidoModelForm(datosFormulario)
+    formularioP = PartidoModelForm(datosFormulario,request.POST or None, user=request.user)
     
     if (request.method == "POST"):
         partido_creado = partido_create_valid(formularioP)
@@ -1029,7 +1024,7 @@ def torneo_create(request):
     if request.method == "POST":
         datosFormulario = request.POST
         
-    formularioT = TorneoModelForm(datosFormulario)
+    formularioT = TorneoModelForm(datosFormulario,request.POST or None, user=request.user)
     
     if (request.method == "POST"):
         torneo_creado = torneo_create_valid(formularioT)
